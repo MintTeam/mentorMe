@@ -1,0 +1,51 @@
+<div class="modal fade" id="taskPreview" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p class="taskDeadline"></p>
+                <p class="taskDescription"></p>
+                <p class="taskResources"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="col-md-12 animated fadeIn">
+    <div class="col-md-6 col-xs-12">
+        <h2>Tasks</h2>
+        <a href="#/new-task/" class="btn-primary btn-lg">Create New Task</a>
+        <div class="margin-top-20">
+            {{#tasks}}
+            <div class="col-md-12 taskElement" id="{{_id}}">
+                    <h5>{{title}}</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Deadline: </strong>{{deadline}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            Status:
+                            <a type="button" class="btn btn-default btn-xs viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a>
+                            {{^assigned}}
+                            <a type="button" class="btn btn-default btn-xs assignTaskBtn">Assign</a>
+                            <a type="button" class="btn btn-default btn-xs deleteTaskBtn">Delete</a>
+                            {{/assigned}}
+                            {{#hasSubmissions}}
+                            <a type="button" class="btn btn-default btn-xs checkSubmissions">Check</a>
+                            {{/hasSubmissions}}
+                        </div>
+                    </div>
+                    <!--<p><strong>Description: </strong>{{description}}</p>-->
+            </div>
+            {{/tasks}}
+        </div>
+    </div>
+    <div class="col-md-4" id="preview"></div>
+</div>

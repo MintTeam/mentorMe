@@ -1,0 +1,74 @@
+.margin-top-20{
+    margin-top: 20px;
+}
+
+.margin-top-60{
+    margin-top: 60px;
+}
+
+.preview-background-color{
+    border-radius: 6px;
+    background-color: #eeeeee;
+    padding: 20px;
+}
+
+dd, td {
+    word-wrap: break-word;
+}
+.margin-bottom-0{
+    margin-bottom: 0;
+}
+
+.table {
+    table-layout:fixed;
+}
+
+.table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.width-height-140{
+    width: 140px;
+    height: 140px;
+    margin: 10px;
+    box-shadow: 1px 1px 1px 0px;
+}
+
+.margin-top-20{
+    margin-top: 20px;
+}
+
+.studentElement{
+
+}
+
+.taskElement{
+    border: 1px dashed #8DC6C1;
+    border-radius: 3px;
+    height: 100px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.vc-logo {
+    margin-top: -12px;
+}

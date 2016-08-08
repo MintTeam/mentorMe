@@ -1,0 +1,39 @@
+<div class="col-md-12 animated fadeIn">
+    <div class="col-md-6 col-xs-12">
+        <h2>New Task</h2>
+        <form name="createTaskForm">
+            <div class="form-group">
+                <label for="title">Title: </label>
+                <input type="text" id="title" class="form-control" placeholder="set a title" required="required">
+
+                <label for="description">Description: </label>
+                <textarea id="description" class="form-control" placeholder="give short description" required="required"></textarea>
+
+                <label for="resource">Resources: </label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="resource" placeholder="paste a url">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" id="addUrl" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                    </span>
+                </div>
+
+                <label for="deadline">Deadline: </label>
+                <div class="input-group date" data-provide="datepicker">
+                    <input type="text" class="form-control datepicker-me" data-date-format="dd-mm-yyyy" data-date-orientation="left" data-date-autoclose="true" id="deadline" placeholder="pick a deadline" required="required">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline margin-top-20">
+                <a class="btn-info btn-lg" type="button" id="previewTask">Preview</a>
+                <a class="btn-warning btn-lg" type="button" id="clearForm">Reset</a>
+                <a class="btn-success btn-lg" type="button" id="addTask">Submit Task</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6" id="preview"></div>
+<!--<div class="col-md-12">-->
+    <!--<iframe src="https://drive.google.com/folderview?id=0B96F2FRMA4esYUdFMkJDZ1poUjg&usp=sharing" width="100%" height="800" frameborder="0"></iframe>-->
+</div>

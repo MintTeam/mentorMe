@@ -1,0 +1,16 @@
+<div class="col-md-12 animated fadeIn">
+    <div class="col-md-8 col-xs-12">
+        <h2>All students</h2>
+        <div>
+            {{#students}}
+            <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 studentElement" id="{{_id}}">
+                <img src="img/vc-logo.png" alt="logo" class=".width-height-140 img-square">
+                <p>{{username}}</p>
+                <p>{{firstName}} {{lastName}}</p>
+                {{#connected}}<div class="btn btn-sm btn-default"><span class="glyphicon glyphicon-ok"></span>Added</div>{{/connected}}
+                {{^connected}}<button class="btn btn-sm btn-success connectBtn"><span class="glyphicon glyphicon-plus"></span>Connect</button>{{/connected}}
+            </div>
+            {{/students}}
+        </div>
+    </div>
+</div>
