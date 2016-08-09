@@ -1,0 +1,17 @@
+<div>
+    {{#posts}}
+        <div id="{{_id}}">
+            <h5 id="title">{{title}}</h5>
+            <p>{{content}}</p>
+            <p>{{author}}</p>
+            <p>{{date}}</p>
+            {{#isAuthor}}
+            <button id="editButton">Edit</button>
+            <button id="deleteButton">Delete post</button>
+            {{/isAuthor}}
+        </div>
+    {{/posts}}
+
+    <a href="#/new-post/" class="btn-primary btn-lg">Create New Post</a>
+
+</div>
