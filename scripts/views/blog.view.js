@@ -5,7 +5,7 @@ app.blogView = class BlogView {
     }
     
     showAllPosts(container, posts) {
-        console.log(posts);
+        this.showUserMenu();
         $.get('templates/blog/posts.html', function (templ) {
             var rendered = Mustache.render(templ, {posts: posts});
             $(container).html(rendered);
@@ -56,6 +56,7 @@ app.blogView = class BlogView {
     }
 
     showEditPostPage(container, post){
+        this.showUserMenu();
         $.get('templates/blog/edit-post.html', function (templ) {
             var rendered = Mustache.render(templ, {title: post.title, content: post.content, _id:post._id});
             $(container).html(rendered);
@@ -81,6 +82,7 @@ app.blogView = class BlogView {
     }
 
     showCreateNewPostPage(container) {
+        this.showUserMenu();
         $.get('templates/blog/create-post.html', function (templ) {
             $(container).html(templ);
 
@@ -103,6 +105,15 @@ app.blogView = class BlogView {
         });
     }
 
+    showUserMenu(){
+        $('#loginMenuLink').hide();
+        $('#registerMenuLink').hide();
+        $('#tasksMenuLink').show();
+        $('#studentsMenuLink').show();
+        $('#teamsMenuLink').show();
+        $('#blogMenuLink').show();
+        $('#logoutMenuLink').show();
+    }
 
     clearFormFields(){
         $('input').val('');
