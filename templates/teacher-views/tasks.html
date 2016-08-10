@@ -3,49 +3,106 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"></h4>
+                <h3 class="modal-title"></h3>
             </div>
             <div class="modal-body">
-                <p class="taskDeadline"></p>
-                <p class="taskDescription"></p>
-                <p class="taskResources"></p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3 col-xs-4">
+                            <p><strong>Deadline:</strong></p>
+                            <p><strong>Description:</strong></p>
+                            <p><strong>Resources:</strong></p>
+                            <p><strong>Progress:</strong></p>
+                        </div>
+                        <div class="col-md-8 col-xs-7 col-xs-offset-1">
+                            <p class="taskDeadline"></p>
+                            <p class="taskDescription"></p>
+                            <p class="taskResources"></p>
+                            <p class="taskProgress"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
                 <!--<button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!--modal-->
 
-<div class="col-md-12 animated fadeIn">
-    <div class="col-md-6 col-xs-12">
-        <h2>Tasks</h2>
-        <a href="#/new-task/" class="btn-primary btn-lg">Create New Task</a>
-        <div class="margin-top-20">
-            {{#tasks}}
-            <div class="col-md-12 taskElement" id="{{_id}}">
-                    <h5>{{title}}</h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>Deadline: </strong>{{deadline}}</p>
+<div class="col-md-12 col-sx-12 animated fadeIn">
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+                <header>
+                    <h1><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Tasks</h1>
+
+                    <p class="text-right">
+                        <a href="#/new-task/" class="btn-primary btn">Create New Task</a>
+                        <button class="text-right btn btn-default" onclick="window.history.back()">
+                            <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
+                        </button>
+                    </p>
+                </header>
+
+                <div>
+                    <!--<header>-->
+                        <!--<h2>All tasks</h2>-->
+                    <!--</header>-->
+                    {{#tasks}}
+                    <article class="col-md-12 taskElement well well-sm" id="{{_id}}">
+                        <header>
+                            <h4 class="lead">&quot;{{title}}&quot;</h4>
+                        </header>
+                        <div class="tabbed-task-body">
+                            <!--dropdown actions-->
+                            <div class="col-md-3">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="actionsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="actionsMenu">
+                                        <li><a href="#" class="viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a></li>
+                                        <li><a href="#" class="assignTaskBtn">Assign</a></li>
+                                        <li><a href="#/edit-task/" class="editTaskBtn">Edit</a></li>
+                                        <li><a href="#" class="deleteTaskBtn">Delete</a></li>
+
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" class="checkSubmissions">Check submissions</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <section id="progress-bar">
+                                    <p><span class="glyphicon glyphicon-thumbs-up"></span><strong>&nbsp;Submissions progress:</strong>&nbsp;</p>
+                                    <div class="progress">
+                                        <!--TODO uncomment-->
+                                        <!--<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="{{(progress}}" aria-valuemin="0" aria-valuemax="100"-->
+                                        <!--style="width: {{progress}}%">-->
+                                        <!--{{progress}}% Submitted
+                                        <!--</div>-->
+                                        <div class="progress-bar progress-bar-default" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                             style="width: 20%; min-width: 2em">
+                                            20%
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-md-4">
+                                <p><span class="glyphicon glyphicon-calendar"></span><strong>&nbsp;Deadline:&nbsp;</strong>{{deadline}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            Status:
-                            <a type="button" class="btn btn-default btn-xs viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a>
-                            {{^assigned}}
-                            <a type="button" class="btn btn-default btn-xs assignTaskBtn">Assign</a>
-                            <a type="button" class="btn btn-default btn-xs deleteTaskBtn">Delete</a>
-                            {{/assigned}}
-                            {{#hasSubmissions}}
-                            <a type="button" class="btn btn-default btn-xs checkSubmissions">Check</a>
-                            {{/hasSubmissions}}
-                        </div>
-                    </div>
-                    <!--<p><strong>Description: </strong>{{description}}</p>-->
-            </div>
-            {{/tasks}}
+                    </article>
+                    {{/tasks}}
+                    {{^tasks}}
+                    <p>No tasks created so far, do you want to <a href="#/new-task/">create new task</a></p>
+                    {{/tasks}}
+                </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+
         </div>
     </div>
-    <div class="col-md-4" id="preview"></div>
 </div>

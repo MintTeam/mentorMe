@@ -1,3 +1,10 @@
+body{
+    background: url(../img/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 .margin-top-20{
     margin-top: 20px;
 }
@@ -57,18 +64,33 @@ dd, td {
     margin-top: 20px;
 }
 
+.padding-top-20{
+    padding-top: 20px;
+}
+
 .studentElement{
 
 }
 
 .taskElement{
-    border: 1px dashed #8DC6C1;
-    border-radius: 3px;
-    height: 100px;
-    margin-bottom: 10px;
-    overflow: hidden;
+    background-color: rgba(204, 255, 204, 0.2);
+}
+
+.taskElement h4{
+    /*background-color: rgba(204, 255, 204, 0.1);*/
+    border-radius: 2px;
+    padding: 2px;
+}
+
+.tabbed-task-body{
+    margin-left:20px;
 }
 
 .vc-logo {
     margin-top: -12px;
 }
+
+.border-top{
+    border-top: 1px solid grey;
+}
+

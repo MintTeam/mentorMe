@@ -25,5 +25,4 @@ app.taskModel = class TaskModel{
         var requestUrl = this.serviceUrl + id;
         return this.requester.get(requestUrl, true);
     };
-
 };

@@ -1,0 +1,12 @@
+<div>
+    <h2>Teams</h2>
+    <a href="#/new-team/" class="btn-primary btn-lg margin-top-20" type="button">Create New Team</a>
+    {{#teams}}
+        <div class="margin-top-20">
+            <p><strong>Team: </strong>{{name}}</p>
+            <p><strong>Members: </strong> {{studentsCount}}</p>
+            <p><strong>Tasks: </strong>{{tasksCount}}</p>
+            <button class="btn-primary btn-md" type="button">Details</button>
+        </div>
+    {{/teams}}
+</div>

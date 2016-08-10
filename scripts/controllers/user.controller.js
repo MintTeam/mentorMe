@@ -6,32 +6,29 @@ app.userController = class UserController{
         this.model = model;
     }
 
-    loadGuestHomePage(menu, container){
-        this.view.showLoginPage(menu, container);
-    };
-
-    loadUserHomePage(menu, container){
+    loadUserHomePage(container){
         var type;
         var _this = this;
         var id = sessionStorage.userId;
         return this.model.getUserById(id)
             .then(function(data){
                 type = data.type._obj.name;
-                _this.view.showUserHomePage(menu, container, type);
+                _this.view.showUserHomePage(container, type);
             }, function(error){
                 console.error(error);
             }).done();
     };
 
-    loadLoginPage(menu, container){
-        this.view.showLoginPage(menu, container);
+    loadLoginPage(container){
+        this.view.showLoginPage(container);
     };
 
-    loadRegisterPage(menu, container){
-        this.view.showRegisterPage(menu, container);
+    loadRegisterPage(container){
+        this.view.showRegisterPage(container);
     };
 
     registerUser(data){
+        //var _this = this;
         //var _this = this;
         var userData = {
             firstName: data.firstName,
@@ -46,9 +43,7 @@ app.userController = class UserController{
             email: data.email,
             connections: [],
             teams: [],
-            tasks: [],
-            posts: [],
-            comments: [],
+            tasks: []
         };
 
         return this.model.register(userData)
@@ -60,6 +55,7 @@ app.userController = class UserController{
 
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'success',
                     text: "Successful registration!",
                     dismissQueue: true,
@@ -79,6 +75,7 @@ app.userController = class UserController{
             }, function(error){
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'error',
                     text: "Unsuccessful registration! Please try again!",
                     dismissQueue: true,
@@ -103,6 +100,7 @@ app.userController = class UserController{
 
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'success',
                     text: "Successful login!",
                     dismissQueue: true,
@@ -112,16 +110,16 @@ app.userController = class UserController{
                         easing: 'swing',
                         speed: 500
                     },
-                    timeout: 200
+                    timeout: 500
                 });
 
                 Sammy(function(){
                     this.trigger('redirectUrl',{url: "#/"});
                 });
-
             }, function(error){
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'error',
                     text: "Unsuccessful login! Please try again!",
                     dismissQueue: true,
@@ -131,7 +129,7 @@ app.userController = class UserController{
                         easing: 'swing',
                         speed: 500
                     },
-                    timeout: 200
+                    timeout: 500
                 });
             })
             .done();
@@ -143,6 +141,7 @@ app.userController = class UserController{
                 sessionStorage.clear();
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'success',
                     text: "You logged out successfully!",
                     dismissQueue: true,
@@ -171,7 +170,7 @@ app.userController = class UserController{
             });
     };
 
-    loadAllStudents(menu, container){
+    loadAllStudents(container){
         var students = [];
         var _this = this;
         var allUsers = [];
@@ -186,7 +185,7 @@ app.userController = class UserController{
                     .then(function(data){
                         currentConnections = data.connections;
                         for(var user in allUsers){
-                            if(allUsers[user].type._obj.name === 'student'){
+                            if(allUsers[user].type._obj.name === 'student' && currentUserId != allUsers[user]._id){
                                 var student = allUsers[user];
                                 if(_.findWhere(currentConnections, {_id: student._id})){
                                     student['connected'] = true;
@@ -196,7 +195,7 @@ app.userController = class UserController{
                                 students.push(student);
                             }
                         }
-                        _this.view.showAllStudents(menu, container, students, currentUserType);
+                        _this.view.showAllStudents(container, students);
                     });
 
             }).done();
@@ -241,7 +240,7 @@ app.userController = class UserController{
     //                    lastName: data[index]._obj.lastName
     //                });
     //            }
-    //            //this.view.showAllConnections(menu, container, connections);
+    //            //this.view.showAllConnections(container, connections);
     //        }, function(error){
     //            console.error(error);
     //        });

@@ -4,46 +4,47 @@ app.taskView = class TaskView{
     constructor(){
     }
 
-    showAllTeacherTasks(menu, container, tasks){
+    showAllTeacherTasks(container, tasks){
+        var _this = this;
         var username = sessionStorage['username'];
-        $.get('templates/menus/menu-teacher.html', function(template){
-            $(menu).html(template);
-        });
+        this.showUserMenu();
         $.get('templates/teacher-views/tasks.html', function(templ){
             var rendered = Mustache.render(templ, {username: username, tasks: tasks});
             $(container).html(rendered);
 
-            //$('.viewTaskBtn').on('click', function(ev){
-            //    var id = $(ev.target).parent().parent().parent().attr('id');
-            //    var task = tasks.filter(function(a){
-            //        return a._id == id;
-            //    })[0];
-            //
-            //    var selector= "#preview";
-            //    $.get('templates/teacher-views/view-task.html', function(template){
-            //        var rendered = Mustache.render(template, task);
-            //        $(selector).html(rendered);
-            //    })
-            //});
-
             $('#taskPreview').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
-                var taskId = $(button).parent().parent().parent().attr('id');
+                var taskId = $(button).closest('.taskElement').attr('id');
                 var task  = tasks.filter( t => t._id == taskId )[0];
                 var title = task.title;
                 var description = task.description;
                 var deadline = task.deadline;
                 var resources = task.resources;
+                var progress = 0;
+                if (task.students.length > 0){
+                    progress = (task.submissions.length / task.students.length)*100;
+                }
                 var modal = $(this);
                 modal.find('.modal-title').text(title);
-                modal.find('.modal-body .taskDescription').html("<strong>Description: </strong>" + description);
-                modal.find('.modal-body .taskDeadline').html("<strong>Deadline: </strong>" + deadline);
-                modal.find('.modal-body .taskResources').html("<strong>Resources: </strong>" + resources);
+                modal.find('.modal-body .taskDescription').html(description);
+                modal.find('.modal-body .taskDeadline').html(deadline);
+                modal.find('.modal-body .taskResources').html((resources.length)>0?_this.resourcesAsList(resources): "no resources");
+                modal.find('.modal-body .taskProgress').html(progress + "%");
             });
+
+            //TODO assign
+            //TODO edit
+            $('.editTaskBtn').on('click', function(ev){
+                var id = $(ev.target).closest('.taskElement').attr('id');
+
+                Sammy(function(){
+                    this.trigger('load-edit-task-page', {id:id});
+                })
+            })
 
 
             $('.deleteTaskBtn').on('click', function(ev){
-                var id = $(ev.target).parent().parent().parent().attr('id');
+                var id = $(ev.target).closest('.taskElement').attr('id');
                 var task = tasks.filter(function(a){
                     return a._id == id;
                 })[0];
@@ -53,6 +54,7 @@ app.taskView = class TaskView{
 
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'confirm',
                     text: "Are you sure you want to delete task with Title: <strong>"
                     + title + "</strong><br>Description: <strong>" + description + "</strong><br>Deadline: <strong>" + deadline + "</strong>?",
@@ -84,18 +86,24 @@ app.taskView = class TaskView{
         });
     }
 
-    showCreateNewTaskPage(menu, container){
+    showEditTaskPage(container, task){
+        $.get('templates/teacher-views/edit-task.html', function(template){
+            var rendered = Mustache.render(template, {task: task});
+            $(container).html(rendered);
+        });
+    }
+
+
+    showCreateNewTaskPage(container){
         var _this = this;
         var username = sessionStorage['username'];
-        $.get('templates/menus/menu-teacher.html', function(template){
-            $(menu).html(template);
-        });
-
+        this.showUserMenu();
         $.get('templates/teacher-views/create-task.html', function(template){
             $(container).html(template);
             var today = new Date();
             var data = {
-                resources: []
+                resources: [],
+                students: []
             };
 
             $(function(){
@@ -104,7 +112,8 @@ app.taskView = class TaskView{
                     startDate: today,
                     autoclose: true,
                     todayHighlight: true,
-                    language: 'bg'
+                    language: 'bg',
+                    orientation: 'auto'
                 });
             });
 
@@ -116,6 +125,7 @@ app.taskView = class TaskView{
                     data.resources.push(link);
                     noty({
                         layout: 'topLeft',
+                        theme: "bootstrapTheme",
                         type: 'success',
                         text: "Successfully added a link!",
                         dismissQueue: true,
@@ -132,6 +142,7 @@ app.taskView = class TaskView{
                     linkField.addClass('has-error');
                     noty({
                         layout: 'topLeft',
+                        theme: "bootstrapTheme",
                         type: 'error',
                         text: "The input doesn't look like a link!",
                         dismissQueue: true,
@@ -146,17 +157,24 @@ app.taskView = class TaskView{
                 }
             });
 
-            $('#previewTask').click(function(){
-                var descriptionArea = $("#description");
-                data.title = $("#title").val();
-                data.description = descriptionArea.val();
-                data.deadline = $("#deadline").val();
-                var selector= "#preview";
+            $('#addStudent').on('click', function(){
 
-                $.get('templates/teacher-views/view-task.html', function(template){
-                    var rendered = Mustache.render(template, data);
-                    $(selector).html(rendered);
-                })
+            });
+
+            $('#taskPreview').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var descriptionArea = $("#description");
+                var title = $("#title").val() || 'no title';
+                var description  =  descriptionArea.val() || 'no description';
+                var deadline = $("#deadline").val() || 'no deadline specified';
+                var resources = data.resources;
+                var students = data.students;
+                var modal = $(this);
+                modal.find('.modal-title').text(title);
+                modal.find('.modal-body .taskDescription').html(description);
+                modal.find('.modal-body .taskDeadline').html(deadline);
+                modal.find('.modal-body .taskResources').html(((resources.length)> 0? _this.resourcesAsList(resources) : "no resources"));
+                modal.find('.modal-body .taskStudents').html(((students.length)> 0? _this.studentssAsList(resources) : "no students"));
             });
 
             $('#addTask').click(function(){
@@ -164,10 +182,8 @@ app.taskView = class TaskView{
                 data.title = $("#title").val();
                 data.description = descriptionArea.val();
                 data.deadline = $("#deadline").val();
-                data.assigned = false;
-                data.hasSubmissions = false;
-                data.submissionsCount = 0;
-                //TODO substitute the above with data.submissions = []
+                data.students = [];
+                data.submissions = [];
 
                 if(data.title && data.description && data.deadline){
                     Sammy(function(){
@@ -176,6 +192,7 @@ app.taskView = class TaskView{
                 }else{
                     noty({
                         layout: 'topLeft',
+                        theme: "bootstrapTheme",
                         type: 'error',
                         text: "Please fill in all required fields!",
                         dismissQueue: true,
@@ -196,22 +213,34 @@ app.taskView = class TaskView{
         })
     }
 
-    showTaskPage(data){
-        var selector= "#preview";
-        console.log(data.title);
-        $.get('templates/teacher-views/view-task.html', function(template){
-            var rendered = Mustache.render(template, data);
-            $(selector).html(rendered);
-        })
-    }
-
     clearFormFields(){
         $('input').val('');
         $('textarea').val('');
         $('select').val('default');
     }
 
-    resourcesAsList(){
-
+    resourcesAsList(array){
+        var htmlElement = "";
+        array.forEach(l =>
+            htmlElement += "<a href='" + l + "' target='_blank'>" + l +"</a>&NewLine;"
+        );
+        return htmlElement;
     }
+
+    studentsAsList(array){
+        var htmlElement = "";
+        array.forEach(s => htmlElement += s + "&NewLine;");
+        return htmlElement;
+    }
+
+    showUserMenu(){
+        $('#loginMenuLink').hide();
+        $('#registerMenuLink').hide();
+        $('#tasksMenuLink').show();
+        $('#studentsMenuLink').show();
+        $('#teamsMenuLink').show();
+        $('#blogMenuLink').show();
+        $('#logoutMenuLink').show();
+    }
+
 };

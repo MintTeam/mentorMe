@@ -6,8 +6,16 @@ app.taskController = class TaskController{
         this.model = model;
     }
 
-    loadCreateNewTaskPage(menu, container){
-        this.view.showCreateNewTaskPage(menu, container);
+    loadCreateNewTaskPage(container){
+        this.view.showCreateNewTaskPage(container);
+    }
+
+    loadEditTaskHomePage(container, id){
+        var _this = this;
+        return this.model.getTaskById(id)
+            .then(function(task){
+                _this.view.showEditTaskPage(container, task);
+            }).done();
     }
 
     loadTaskPage(id){
@@ -15,7 +23,7 @@ app.taskController = class TaskController{
         return this.model.getTaskById(id)
             .then(function(assignment){
                 _this.view.showTaskPage(assignment);
-            })
+            }).done();
     };
 
     createTask(data){
@@ -24,6 +32,7 @@ app.taskController = class TaskController{
             .then(function(success){
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'success',
                     text: "Successfully created an assignment!",
                     dismissQueue: true,
@@ -33,14 +42,17 @@ app.taskController = class TaskController{
                         easing: 'swing',
                         speed: 500
                     },
-                    timeout: 200
+                    timeout: 500
                 });
                 _this.view.clearFormFields();
-            });
+                Sammy(function(){
+                    this.trigger('redirectUrl', {url: "#/tasks/"});
+                })
+            }).done();
     };
 
     assignTask(){
-        //TODO teacher only
+        //TODO teachers only
     };
 
     deleteTaskById(id){
@@ -52,6 +64,7 @@ app.taskController = class TaskController{
                 $(taskRow).remove();
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'success',
                     text: "Successfully deleted an assignment!",
                     dismissQueue: true,
@@ -63,12 +76,28 @@ app.taskController = class TaskController{
                     },
                     timeout: 500
                 });
+                Sammy(function(){
+                    this.trigger('redirectUrl', {url: "#/tasks/"});
+                });
             }, function(error){
-                console.error(error);
-            });
+                noty({
+                    layout: 'topLeft',
+                    theme: "bootstrapTheme",
+                    type: 'error',
+                    text: "Couldn't delete the assignment!",
+                    dismissQueue: true,
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500
+                    },
+                    timeout: 500
+                });
+            }).done();
     };
 
-    loadAllTeacherTasks(menu, container){
+    loadAllTeacherTasks(container){
         var id = sessionStorage['userId'];
         var _this = this;
         return this.model.getAllTeacherTasks(id)
@@ -76,11 +105,11 @@ app.taskController = class TaskController{
                 var sorted = data.sort(function(a,b){
                     return a.deadline > b.deadline;
                 });
-                _this.view.showAllTeacherTasks(menu, container, sorted);
-            })
+                _this.view.showAllTeacherTasks(container, sorted);
+            }).done();
     };
 
-    loadAllStudentTasks(menu, container){
+    loadAllStudentTasks(container){
         //TODO
     }
 }

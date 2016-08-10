@@ -62,7 +62,5 @@ app.requester = class Requester{
         let headers = this.getHeaders(false, useSession);
         return this.makeRequest('DELETE', url, headers, null);
     }
-
-
 }
 

@@ -5,8 +5,8 @@ app.homeController = class HomeController{
         this.view = view;
     }
 
-    loadGuestHomePage(menu, wrapper){
-        this.view.showGuestHomePage(menu, wrapper);
+    loadGuestHomePage(wrapper){
+        this.view.showGuestHomePage(wrapper);
     }
 
     loadAbout(menu, wrapper){

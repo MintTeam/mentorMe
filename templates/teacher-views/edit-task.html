@@ -1,0 +1,108 @@
+<div class="modal fade" id="taskPreview" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title"></h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <p><strong>Deadline:</strong></p>
+                            <p><strong>Description:</strong></p>
+                            <p><strong>Resources:</strong></p>
+                            <p><strong>Students:</strong></p>
+                        </div>
+                        <div class="col-md-9">
+                            <p class="taskDeadline"></p>
+                            <p class="taskDescription"></p>
+                            <p class="taskResources"></p>
+                            <p class="taskStudents"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="col-md-12 col-sx-12 animated fadeIn">
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+            <header>
+                <h2>Tasks</h2>
+            </header>
+            <div class="well well-lg">
+                <section>
+                    <form name="editTaskForm" class="form-horizontal margin-top-20">
+                        <legend>Edit Task {{title}}</legend>
+                        <div class="form-group">
+                            <label for="title" class="col-sm-3">Title:</label>
+                            <div class=" col-sm-8">
+                                <input type="text" id="title" class="form-control" value="{{title}}" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-3">Description:</label>
+                            <div class="col-sm-8">
+                                <textarea id="description" class="form-control" value="{{description}}" required="required"></textarea>
+                            </div>
+                        </div>
+
+                        <!--TODO find a way how to visualize students -- students usernames as list-->
+                        <div class="form-group">
+                            <label for="addStudents" class="col-sm-3">Students:</label>
+                            <div class="col-sm-8">
+                                <button class="btn btn-info" id="addStudents">Add students&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></button>
+                            </div>
+                        </div>
+
+                        <!--TODO find a way how to visualize resources - resourcesAsList-->
+                        <div class="form-group">
+                            <label for="resource" class="col-sm-3">Resources:</label>
+                            <div class="input-group  col-sm-8">
+                                <input type="text" class="form-control" id="resource" placeholder="paste a url">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" id="addUrl" type="button"><span class="glyphicon glyphicon-plus"></span></button></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deadline" class="col-sm-3">Deadline:</label>
+                            <div class="input-group date col-sm-8" data-provide="datepicker">
+                                <input type="text" class="form-control datepicker-me" data-date-format="dd-mm-yyyy" data-date-orientation="auto" data-date-autoclose="true" id="deadline" value="{{deadline}}" required="required">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-horizontal padding-top-20">
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <a class="btn btn-default" type="button" data-toggle="modal" data-target="#taskPreview">Preview</a>
+                                    <!--<a class="btn btn-default" type="button" id="clearForm">Clear form</a>-->
+                                </div>
+                                <div class="col-sm-3">
+                                    <a class="btn btn-primary" type="button" id="addTask">Save changes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+        <!--<div class="col-md-4 col-xs-12">-->
+        <!--<aside>-->
+        <!--<h4>My tasks</h4>-->
+        <!--<div class="well well-sm">-->
+        <!--<button class="btn-primary">Controls</button>-->
+        <!--</div>-->
+        <!--</aside>-->
+        <!--</div>-->
+    </div>
+</div>

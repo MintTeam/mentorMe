@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>pm</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/spacelab/bootstrap.css">
+
     <link rel="stylesheet" href="styles/animate.css">
     <link rel="stylesheet" href="styles/styles.css">
-
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/sammy/lib/sammy.js"></script>
     <script src="node_modules/q/q.js"></script>
@@ -22,7 +22,37 @@
 <body>
 <div class="container">
     <div class="row">
-        <div id="menu"></div>
+        <div id="menu">
+            <nav class="navbar navbar-default animated fadeIn">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#/">
+                            <span><img src="img/vc-logo.png" class="vc-logo" alt="VC-logo"></span>
+                            <strong>mentorMe</strong>
+                        </a>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                        <ul class="nav navbar-nav">
+                            <li id="aboutMenuLink"><a href="#/about/">About</a></li>
+                            <li id="loginMenuLink"><a href="#/login/">Login <span class="sr-only">(current)</span></a></li>
+                            <li id="registerMenuLink"><a href="#/register/">Register</a></li>
+                            <li id="tasksMenuLink"><a href="#/tasks/">Tasks</a></li>
+                            <li id="studentsMenuLink"><a href="#/students/">Students</a></li>
+                            <li id="teamsMenuLink"><a href="#/teams/">Teams</a></li>
+                            <li id="blogMenuLink"><a href="#/blog/">Blog</a></li>
+                            <li id="logoutMenuLink"><a href="#/logout/">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
         <div id="wrapper"></div>
     </div>
 </div>
@@ -32,11 +62,17 @@
     <script src="scripts/views/home.view.js"></script>
     <script src="scripts/views/user.view.js"></script>
     <script src="scripts/views/task.view.js"></script>
+    <script src="scripts/views/team.view.js"></script>
+    <script src="scripts/views/blog.view.js"></script>
     <script src="scripts/models/user.model.js"></script>
     <script src="scripts/models/task.model.js"></script>
+    <script src="scripts/models/blog.model.js"></script>
+    <script src="scripts/models/team.model.js"></script>
     <script src="scripts/controllers/home.controller.js"></script>
     <script src="scripts/controllers/user.controller.js"></script>
     <script src="scripts/controllers/task.controller.js"></script>
+    <script src="scripts/controllers/blog.controller.js"></script>
+    <script src="scripts/controllers/team.controller.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

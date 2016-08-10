@@ -4,9 +4,9 @@ app.userView = class UserView{
     constructor(){
     }
 
-    showUserHomePage(menu, container, userTypeName){
-        this.loadUserMenu(menu, userTypeName);
-        switch(userTypeName){
+    showUserHomePage(container, type){
+        this.showUserMenu();
+        switch(type){
             case 'student':
                 $.get('templates/home/home-student.html', function(template){
                     var username = sessionStorage['username'];
@@ -24,22 +24,7 @@ app.userView = class UserView{
         }
     }
 
-    loadUserMenu(menu, userType) {
-        if(userType === 'student'){
-            $.get('templates/menus/menu-student.html', function(template){
-                $(menu).html(template);
-            });
-        }else{
-            $.get('templates/menus/menu-teacher.html', function(template){
-                $(menu).html(template);
-            });
-        }
-    }
-
-    showLoginPage(menu, container){
-        $.get("templates/menus/menu-guest.html", function(template){
-            $(menu).html(template);
-        });
+    showLoginPage(container){
         $.get("templates/login/login.html", function(template){
             $(container).html(template);
             $('#loginBtn').on("click", function(){
@@ -53,10 +38,7 @@ app.userView = class UserView{
         });
     }
 
-    showRegisterPage(menu, container) {
-        $.get('templates/menus/menu-guest.html', function(template){
-            $(menu).html(template);
-        });
+    showRegisterPage(container) {
         $.get('templates/register/register.html', function(template){
             $(container).html(template);
 
@@ -99,6 +81,7 @@ app.userView = class UserView{
                     }else{
                         noty({
                             layout: 'topLeft',
+                            theme: "bootstrapTheme",
                             type: 'error',
                             text: "One or more required fields are empty. Please, complete your registration.",
                             dismissQueue: true,
@@ -116,17 +99,11 @@ app.userView = class UserView{
         });
     }
 
-    showAllStudents(menu, container, students, type){
-        this.loadUserMenu(menu, type);
+    showAllStudents(container, students){
+        this.showUserMenu();
         $.get('templates/teacher-views/students.html', function(template){
             var rendered = Mustache.render(template, {students: students});
             $(container).html(rendered);
-
-            $(function () {
-                $('.example-popover').popover({
-                    container: 'body'
-                })
-            })
 
             $(".connectBtn").click(function(e){
                 var newConnectionId = $(e.target).parent().attr('id');
@@ -144,13 +121,20 @@ app.userView = class UserView{
         $(studentElement).append('<div class="btn btn-sm btn-default animated fadeIn"><span class="glyphicon glyphicon-ok"></span>Added</div>');
     }
 
-    //showAllConnections(menu, container, data){
-    //    $.get('templates/menus/menu-teacher.html', function(template){
-    //        $(menu).html(template);
-    //    });
+    //showAllConnections(container, data){
     //    $.get('templates/teacher-views/students.html', function(template){
     //        var rendered = Mustache.render(template, {connections: data});
     //        $(container).html(rendered);
     //    });
     //}
+
+    showUserMenu(){
+        $('#loginMenuLink').hide();
+        $('#registerMenuLink').hide();
+        $('#tasksMenuLink').show();
+        $('#studentsMenuLink').show();
+        $('#teamsMenuLink').show();
+        $('#blogMenuLink').show();
+        $('#logoutMenuLink').show();
+    }
 }
