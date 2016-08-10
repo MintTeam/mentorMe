@@ -8,16 +8,23 @@
   },
   "dependencies": {
     "jquery": "^1.9.1",
+<<<<<<< HEAD
     "moment": "^2.14.1",
+=======
+>>>>>>> 0e2504a102b01beb8c6d915ced88c1b4a8dddc83
     "mustache": "^2.2.1",
     "noty": "^2.3.5",
     "q": "^1.4.1",
     "sammy": "^0.7.6",
     "underscore": "^1.8.3"
   },
+<<<<<<< HEAD
   "devDependencies": {
     "babel-cli": "^6.11.4"
   },
+=======
+  "devDependencies": {},
+>>>>>>> 0e2504a102b01beb8c6d915ced88c1b4a8dddc83
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

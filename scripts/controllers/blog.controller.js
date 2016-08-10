@@ -6,7 +6,7 @@ app.blogController = class BlogController {
         this.model = model;
     }
 
-    loadAllPosts(menu, container) {
+    loadAllPosts(container) {
         var _this = this;
         this.model.getAllPosts()
             .then(function (data) {
@@ -29,19 +29,19 @@ app.blogController = class BlogController {
                 }
                 //TODO sort date
 
-                _this.view.showAllPosts(menu, container, posts);
+                _this.view.showAllPosts(container, posts);
             }).done();
     }
 
-    loadCreateNewPostPage(menu, container) {
-        this.view.showCreateNewPostPage(menu, container);
+    loadCreateNewPostPage(container) {
+        this.view.showCreateNewPostPage(container);
     }
 
-    loadEditPostPage(menu, container,id){
+    loadEditPostPage(container,id){
         var _this = this;
         return this.model.getPostById(id)
             .then(function(post){
-                _this.view.showEditPostPage(menu, container, post);
+                _this.view.showEditPostPage(container, post);
             })
     }
 

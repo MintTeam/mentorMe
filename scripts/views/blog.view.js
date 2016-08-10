@@ -4,7 +4,7 @@ app.blogView = class BlogView {
     constructor(){
     }
     
-    showAllPosts(menu, container, posts) {
+    showAllPosts(container, posts) {
         console.log(posts);
         $.get('templates/blog/posts.html', function (templ) {
             var rendered = Mustache.render(templ, {posts: posts});
@@ -55,8 +55,7 @@ app.blogView = class BlogView {
         });
     }
 
-    showEditPostPage(menu, container, post){
-        //load menu
+    showEditPostPage(container, post){
         $.get('templates/blog/edit-post.html', function (templ) {
             var rendered = Mustache.render(templ, {title: post.title, content: post.content, _id:post._id});
             $(container).html(rendered);
@@ -81,7 +80,7 @@ app.blogView = class BlogView {
         })
     }
 
-    showCreateNewPostPage(menu, container) {
+    showCreateNewPostPage(container) {
         $.get('templates/blog/create-post.html', function (templ) {
             $(container).html(templ);
 

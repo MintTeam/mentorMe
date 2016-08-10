@@ -16,6 +16,11 @@ app.router = Sammy(function(){
         userController = new app.userController(userView, userModel),
         taskController = new app.taskController(taskView, taskModel),
         blogController = new app.blogController(blogView, blogModel);
+        userModel = new app.userModel(requester),
+        taskModel = new app.taskModel(requester),
+        homeController = new app.homeController(homeView),
+        userController = new app.userController(userView, userModel),
+        taskController = new app.taskController(taskView, taskModel);
 
     this.before({except: {path: "#\/(login\/|register\/|about\/)?"}}, function(){
         if(!sessionStorage["sessionId"]){
@@ -125,11 +130,11 @@ app.router = Sammy(function(){
 
     //TODO blog
     this.get('#/blog/', function () {
-        blogController.loadAllPosts(menu, container);
+        blogController.loadAllPosts(container);
     });
 
     this.get('#/new-post/', function () {
-        blogController.loadCreateNewPostPage(menu, container);
+        blogController.loadCreateNewPostPage(container);
     });
     
     this.bind('create-post', function (ev, data) {
@@ -138,7 +143,7 @@ app.router = Sammy(function(){
 
     this.bind('show-edit-post-page', function(ev, data){
         "use strict";
-        blogController.loadEditPostPage(menu, container, data.id);
+        blogController.loadEditPostPage(container, data.id);
     });
     
     this.bind('edit-post', function (ev, data) {
@@ -149,7 +154,5 @@ app.router = Sammy(function(){
         blogController.deletePost(data.id);
     })
 });
-
-
 
 app.router.run('#/');
