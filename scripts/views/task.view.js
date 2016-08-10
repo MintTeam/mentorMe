@@ -87,6 +87,7 @@ app.taskView = class TaskView{
     }
 
     showEditTaskPage(container, task){
+        this.showUserMenu();
         $.get('templates/teacher-views/edit-task.html', function(template){
             var rendered = Mustache.render(template, {task: task});
             $(container).html(rendered);

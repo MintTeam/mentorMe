@@ -15,7 +15,9 @@
     "sammy": "^0.7.6",
     "underscore": "^1.8.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.11.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
