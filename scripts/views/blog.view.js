@@ -10,20 +10,21 @@ app.blogView = class BlogView {
             var rendered = Mustache.render(templ, {posts: posts});
             $(container).html(rendered);
 
-            $('#editButton').on('click', function(e){
+            $('.editButton').on('click', function(e){
                 var id = $(e.target).parent().attr('id');
                 Sammy(function () {
                     this.trigger('show-edit-post-page', {id:id});
                 });
             });
             
-            $('#deleteButton').on('click', function (e) {
+            $('.deleteButton').on('click', function (e) {
                 var id = $(e.target).parent().attr('id');
                 console.log(id);
                 var title = $("#title").html();
 
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'confirm',
                     text: "Are you sure you want to delete post with Title: <strong>"
                     + title + "?",
@@ -74,6 +75,10 @@ app.blogView = class BlogView {
                     Sammy(function () {
                         this.trigger("edit-post", {_id: id, title: title, content: content, author: author});
                     })
+                }else{
+                    Sammy(function(){
+                        this.trigger("redirectUrl", {url:"#/blog/"});
+                    });
                 }
             });
         })
@@ -95,8 +100,8 @@ app.blogView = class BlogView {
                 };
                 if(title && content) {
                     Sammy(function () {
-                        this.trigger('create-post', {title: title, content: content, author: author});
-                    })
+                        this.trigger('create-post', {title: title, content: content, author: author, comments:[]});
+                    });
                 }
                 
             })

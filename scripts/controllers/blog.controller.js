@@ -18,16 +18,24 @@ app.blogController = class BlogController {
                     if(sessionStorage['username'] === post.author._obj.username){
                         isAuthor=true;
                     }
+
                      posts.push({
                          _id: post._id,
                          author: post.author._obj.username,
                          title: post.title,
                          content: post.content,
-                         date: moment(post._kmd.ect).format("LL"),
+                         date: post._kmd.ect,
                          isAuthor: isAuthor
                      });
+
                 }
-                //TODO sort date
+                posts = posts.sort(function(a,b){
+                     return a.date < b.date;
+                 });
+
+                for (var i = 0; i < posts.length; i++) {
+                    posts[i].date = moment(post._kmd.ect).format("LL")
+                }
 
                 _this.view.showAllPosts(container, posts);
             }).done();
@@ -49,10 +57,9 @@ app.blogController = class BlogController {
         var _this = this;
         return this.model.sendPost(data)
             .then(function (success) {
-                //TODO notification for success
-
                 noty({
                     layout: 'topLeft',
+                    theme: "bootstrapTheme",
                     type: 'success',
                     text: "Successfully created new post!",
                     dismissQueue: true,
@@ -64,12 +71,26 @@ app.blogController = class BlogController {
                     },
                     timeout: 200
                 });
-
                 _this.view.clearFormFields();
                 Sammy(function () {
                     this.trigger('redirectUrl', {url: "#/blog/"});
                 })
-            })
+            }, function(error){
+                noty({
+                    layout: 'topLeft',
+                    theme: "bootstrapTheme",
+                    type: 'error',
+                    text: "Couldn't create the post!",
+                    dismissQueue: true,
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500
+                    },
+                    timeout: 500
+                });
+            }).done();
         
     }
 
@@ -77,12 +98,40 @@ app.blogController = class BlogController {
         var _this = this;
         this.model.sendChangesToPost(id, data)
             .then(function(success){
-                //TODO success notification
+                noty({
+                    layout: 'topLeft',
+                    theme: "bootstrapTheme",
+                    type: 'success',
+                    text: "Successfully edited new post!",
+                    dismissQueue: true,
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500
+                    },
+                    timeout: 200
+                });
+                _this.view.clearFormFields();
+
                 Sammy(function () {
                     this.trigger('redirectUrl', {url: "#/blog/"});
                 })
             }, function(error){
-                //TODO error notification
+                noty({
+                    layout: 'topLeft',
+                    theme: "bootstrapTheme",
+                    type: 'error',
+                    text: "Couldn't edit the post!",
+                    dismissQueue: true,
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500
+                    },
+                    timeout: 500
+                });
             }).done()
     }
     
@@ -90,12 +139,40 @@ app.blogController = class BlogController {
         var _this = this;
         this.model.deleteUserPost(id)
             .then(function (success) {
-                //TODO successfully notification
+                noty({
+                    layout: 'topLeft',
+                    theme: "bootstrapTheme",
+                    type: 'success',
+                    text: "Successfully deleted this post!",
+                    dismissQueue: true,
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500
+                    },
+                    timeout: 200
+                });
+                _this.view.clearFormFields();
                 Sammy(function () {
                     this.trigger('redirectUrl', {url: "#/blog/"});
                 })
             }, function (error) {
-                //TODO
+                noty({
+                    layout: 'topLeft',
+                    theme: "bootstrapTheme",
+                    type: 'error',
+                    text: "Couldn't delete the post!",
+                    dismissQueue: true,
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500
+                    },
+                    timeout: 500
+                });
+
             }).done()
     }
     
