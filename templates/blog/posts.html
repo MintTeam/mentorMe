@@ -1,17 +1,48 @@
-<div>
-    {{#posts}}
-        <div id="{{_id}}">
-            <h5 id="title">{{title}}</h5>
-            <p>{{content}}</p>
-            <p>{{author}}</p>
-            <p>{{date}}</p>
-            {{#isAuthor}}
-            <button class="editButton">Edit</button>
-            <button class="deleteButton">Delete post</button>
-            {{/isAuthor}}
+<div class="col-md-12 col-sx-12 animated fadeIn">
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+
+            <header>
+                <h1><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Posts</h1>
+
+                <p class="text-right">
+
+                    <button class="text-right btn btn-default" onclick="window.history.back()">
+                        <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
+                    </button>
+
+                    <a href="#/new-post/" class="btn-primary btn">Create New Post</a>
+                </p>
+            </header>
+
+
+
+            <div class="margin-top-20">
+
+                {{#posts}}
+
+                <p>{{date}}</p>
+
+                    <article class="postElement panel panel-default" id="{{_id}}">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" id="title">&quot;{{title}}&quot;
+                            <i>by {{author}}</i></h4>
+                        </div>
+
+                        <div class="panel-body">
+                            <p>&quot;{{content}}&quot;</p>
+                        </div>
+
+                        {{#isAuthor}}
+                            <button class="editButton">Edit</button>
+                            <button class="deleteButton">Delete post</button>
+                        {{/isAuthor}}
+                    </article>
+
+                {{/posts}}
+
+
+            </div>
         </div>
-    {{/posts}}
-
-    <a href="#/new-post/" class="btn-primary btn-lg">Create New Post</a>
-
+    </div>
 </div>
