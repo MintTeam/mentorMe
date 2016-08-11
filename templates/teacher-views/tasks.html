@@ -8,17 +8,21 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-3 col-xs-4">
-                            <p><strong>Deadline:</strong></p>
-                            <p><strong>Description:</strong></p>
-                            <p><strong>Resources:</strong></p>
-                            <p><strong>Progress:</strong></p>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-4"><strong>Deadline:</strong></label>
+                            <p class="col-md-8 col-xs-7 col-xs-offset-1 taskDeadline"></p>
                         </div>
-                        <div class="col-md-8 col-xs-7 col-xs-offset-1">
-                            <p class="taskDeadline"></p>
-                            <p class="taskDescription"></p>
-                            <p class="taskResources"></p>
-                            <p class="taskProgress"></p>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-4"><strong>Description:</strong></label>
+                            <p class="col-md-8 col-xs-7 col-xs-offset-1 taskDescription"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-4"><strong>Resources:</strong></label>
+                            <p class="col-md-8 col-xs-7 col-xs-offset-1 taskResources"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-4"><strong>Deadline:</strong></label>
+                            <p class="col-md-8 col-xs-7 col-xs-offset-1 taskProgress"></p>
                         </div>
                     </div>
                 </div>
@@ -38,10 +42,10 @@
                     <h1><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Tasks</h1>
 
                     <p class="text-right">
-                        <a href="#/new-task/" class="btn-primary btn">Create New Task</a>
-                        <button class="text-right btn btn-default" onclick="window.history.back()">
-                            <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
-                        </button>
+                        <a href="#/new-task/" class="btn-primary btn btn-lg">Create New Task</a>
+                        <!--<button class="text-right btn btn-default" onclick="window.history.back()">-->
+                            <!--<span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back-->
+                        <!--</button>-->
                     </p>
                 </header>
 
@@ -56,27 +60,9 @@
                         </header>
                         <div class="tabbed-task-body">
                             <!--dropdown actions-->
-                            <div class="col-md-3">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="actionsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="actionsMenu">
-                                        <li><a href="#" class="viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a></li>
-                                        <li><a href="#" class="assignTaskBtn">Assign</a></li>
-                                        <li><a href="#/edit-task/" class="editTaskBtn">Edit</a></li>
-                                        <li><a href="#" class="deleteTaskBtn">Delete</a></li>
-
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#" class="checkSubmissions">Check submissions</a></li>
-                                    </ul>
-                                </div>
-                            </div>
                             <div class="col-md-5">
                                 <section id="progress-bar">
-                                    <p><span class="glyphicon glyphicon-thumbs-up"></span><strong>&nbsp;Submissions progress:</strong>&nbsp;</p>
+                                    <p><span class="glyphicon glyphicon-thumbs-up"></span><strong>&nbsp;Submissions sent</strong>&nbsp;</p>
                                     <div class="progress">
                                         <!--TODO uncomment-->
                                         <!--<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="{{(progress}}" aria-valuemin="0" aria-valuemax="100"-->
@@ -91,7 +77,26 @@
                                 </section>
                             </div>
                             <div class="col-md-4">
-                                <p><span class="glyphicon glyphicon-calendar"></span><strong>&nbsp;Deadline:&nbsp;</strong>{{deadline}}</p>
+                                <p><span class="glyphicon glyphicon-calendar"></span><strong>&nbsp;Deadline</strong></p>
+                                <p>{{deadline}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="actionsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="actionsMenu">
+                                        <li><a href="#" class="viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a></li>
+                                        <li><a href="#" class="assignTaskBtn">Assign</a></li>
+                                        <li><a href="#/edit-task/{{_id}}" class="editTaskBtn">Edit</a href="#/edit-task/:id"></li>
+                                        <li><a href="#" class="deleteTaskBtn">Delete</a></li>
+
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" class="checkSubmissions">Check submissions</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </article>

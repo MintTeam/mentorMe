@@ -68,16 +68,15 @@ dd, td {
     padding-top: 20px;
 }
 
-.studentElement{
-
+.no-style-list{
+    list-style-type:none;
 }
 
 .taskElement{
-    background-color: rgba(204, 255, 204, 0.2);
+    background-color: rgba(0, 153, 153, 0.2);
 }
 
 .taskElement h4{
-    /*background-color: rgba(204, 255, 204, 0.1);*/
     border-radius: 2px;
     padding: 2px;
 }

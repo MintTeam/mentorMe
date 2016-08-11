@@ -22,7 +22,7 @@ app.taskModel = class TaskModel{
     };
 
     getTaskById(id){
-        var requestUrl = this.serviceUrl + id;
+        var requestUrl = this.serviceUrl + id + "/?resolve=students,resources";
         return this.requester.get(requestUrl, true);
     };
 };

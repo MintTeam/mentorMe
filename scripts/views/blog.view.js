@@ -14,7 +14,7 @@ app.blogView = class BlogView {
                 var id = $(e.target).parent().attr('id');
                 Sammy(function () {
                     this.trigger('show-edit-post-page', {id:id});
-                })
+                });
             });
             
             $('#deleteButton').on('click', function (e) {
@@ -39,19 +39,17 @@ app.blogView = class BlogView {
                             Sammy(function(){
                                 this.trigger('delete-post', {id: id});
                             });
-
                             $noty.close();
-                        }
+                            }
                         },
                         {
                             addClass: 'btn btn-danger', text: 'No', onClick: function($noty) {
                             $noty.close();
-                        }
+                            }
                         }
                     ]
                 });
             });
-
         });
     }
 
@@ -77,7 +75,7 @@ app.blogView = class BlogView {
                         this.trigger("edit-post", {_id: id, title: title, content: content, author: author});
                     })
                 }
-            })
+            });
         })
     }
 

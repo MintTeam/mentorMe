@@ -10,7 +10,7 @@ app.taskController = class TaskController{
         this.view.showCreateNewTaskPage(container);
     }
 
-    loadEditTaskHomePage(container, id){
+    loadEditTaskPage(container, id){
         var _this = this;
         return this.model.getTaskById(id)
             .then(function(task){

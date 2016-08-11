@@ -104,16 +104,11 @@ app.router = Sammy(function(){
     });
 
     //tasks
-    this.bind("load-edit-task-page", function(ev, data){
+    this.get("#/edit-task/:id", function(){
         "use strict";
-        taskController.loadEditTaskHomePage(container, data.id);
-    })
-
-    this.get('#/edit-task/', function(e){
-        "use strict";
-        console.log('eeee: ' + e);
-    })
-
+        var id = this.params['id'];
+        taskController.loadEditTaskPage(container, id);
+    });
 
     this.bind('show-task-details', function(ev, data){
         taskController.loadTaskPage(data.id);

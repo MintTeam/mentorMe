@@ -33,15 +33,15 @@ app.taskView = class TaskView{
             });
 
             //TODO assign
+
             //TODO edit
-            $('.editTaskBtn').on('click', function(ev){
-                var id = $(ev.target).closest('.taskElement').attr('id');
-
+            $('.editTaskBtn').on('click', function(e){
+                var url = $(e.target).attr('href');
+                console.log(url);
                 Sammy(function(){
-                    this.trigger('load-edit-task-page', {id:id});
-                })
-            })
-
+                    this.trigger("redirectUrl", {url: url});
+                });
+            });
 
             $('.deleteTaskBtn').on('click', function(ev){
                 var id = $(ev.target).closest('.taskElement').attr('id');
@@ -87,13 +87,29 @@ app.taskView = class TaskView{
     }
 
     showEditTaskPage(container, task){
+        var _this = this;
         this.showUserMenu();
         $.get('templates/teacher-views/edit-task.html', function(template){
-            var rendered = Mustache.render(template, {task: task});
+            //task.studentsList= _this.studentsAsList(task.students);
+            task.resourcesList = _this.resourcesAsList(task.resources);
+            console.log(task.students);
+            var rendered = Mustache.render(template, task);
             $(container).html(rendered);
+
+            $("#addStudents").on("click", function(){
+                //TODO
+            });
+
+            $("#addUrl").on('click', function(){
+                //TODO
+            });
+
+            $("#taskPreview").on('click', function(){
+                //TODO
+            });
+
         });
     }
-
 
     showCreateNewTaskPage(container){
         var _this = this;
@@ -220,17 +236,20 @@ app.taskView = class TaskView{
         $('select').val('default');
     }
 
+
+    //in modal
     resourcesAsList(array){
         var htmlElement = "";
         array.forEach(l =>
-            htmlElement += "<a href='" + l + "' target='_blank'>" + l +"</a>&NewLine;"
+            htmlElement += "<a href='" + l + "' target='_blank'>" + l +"</a></br>"
         );
         return htmlElement;
     }
 
     studentsAsList(array){
-        var htmlElement = "";
-        array.forEach(s => htmlElement += s + "&NewLine;");
+        var htmlElement = "<ul>";
+        array.forEach(s => htmlElement += "<li>" + s.username + "</li>");
+        htmlElement+= "</ul>";
         return htmlElement;
     }
 
