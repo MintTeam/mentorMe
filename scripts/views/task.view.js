@@ -8,6 +8,9 @@ app.taskView = class TaskView{
         var _this = this;
         var username = sessionStorage['username'];
         this.showUserMenu();
+        tasks.forEach(function(t){
+            _this.updateTaskProgress(t);
+        })
         $.get('templates/teacher-views/tasks.html', function(templ){
             var rendered = Mustache.render(templ, {username: username, tasks: tasks});
             $(container).html(rendered);
@@ -15,21 +18,21 @@ app.taskView = class TaskView{
             $('#taskPreview').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var taskId = $(button).closest('.taskElement').attr('id');
-                var task  = tasks.filter( t => t._id == taskId )[0];
+                var task  = tasks.filter(function(t){
+                    return t._id == taskId;
+                })[0];
+                console.log(tasks);
                 var title = task.title;
                 var description = task.description;
                 var deadline = task.deadline;
                 var resources = task.resources;
-                var progress = 0;
-                if (task.students.length > 0){
-                    progress = (task.submissions.length / task.students.length)*100;
-                }
+                var progress = task.progress;
                 var modal = $(this);
                 modal.find('.modal-title').text(title);
                 modal.find('.modal-body .taskDescription').html(description);
                 modal.find('.modal-body .taskDeadline').html(deadline);
                 modal.find('.modal-body .taskResources').html((resources.length)>0?_this.resourcesAsList(resources): "no resources");
-                modal.find('.modal-body .taskProgress').html(progress + "%");
+                modal.find('.modal-body .taskProgress').html(progress.toString() + "&percnt;");
             });
 
             //TODO assign
@@ -37,7 +40,6 @@ app.taskView = class TaskView{
             //TODO edit
             $('.editTaskBtn').on('click', function(e){
                 var url = $(e.target).attr('href');
-                console.log(url);
                 Sammy(function(){
                     this.trigger("redirectUrl", {url: url});
                 });
@@ -89,25 +91,108 @@ app.taskView = class TaskView{
     showEditTaskPage(container, task){
         var _this = this;
         this.showUserMenu();
+        this.updateTaskProgress(task);
         $.get('templates/teacher-views/edit-task.html', function(template){
-            //task.studentsList= _this.studentsAsList(task.students);
-            task.resourcesList = _this.resourcesAsList(task.resources);
-            console.log(task.students);
             var rendered = Mustache.render(template, task);
             $(container).html(rendered);
 
             $("#addStudents").on("click", function(){
-                //TODO
+                //TODO when students are added
+                //$(students list).append(username);
+                //task.students.push({kinvey ref})
+                // _this.updateTaskProgress(task);
             });
 
             $("#addUrl").on('click', function(){
-                //TODO
+                var linkField = $("#resource");
+                var link = linkField.val();
+                var pattern = /(www\.|http:\/\/|https:\/\/)[\w]+/;
+                if(pattern.test(link)){
+                    //add resource to task
+                    task.resources.push(link);
+
+                    $('#resourceList-ul').append('<li><span class="glyphicon glyphicon-link"></span>&nbsp;<a href="'+link+'">'+link+'</a></li>');
+                    noty({
+                        layout: 'topLeft',
+                        theme: "bootstrapTheme",
+                        type: 'success',
+                        text: "Successfully added a link to your resources!",
+                        dismissQueue: true,
+                        animation: {
+                            open: {height: 'toggle'},
+                            close: {height: 'toggle'},
+                            easing: 'swing',
+                            speed: 500
+                        },
+                        timeout: 500
+                    });
+                    linkField.val('');
+                }else{
+                    linkField.addClass('has-error');
+                    noty({
+                        layout: 'topLeft',
+                        theme: "bootstrapTheme",
+                        type: 'error',
+                        text: "The input doesn't look like a link!",
+                        dismissQueue: true,
+                        animation: {
+                            open: {height: 'toggle'},
+                            close: {height: 'toggle'},
+                            easing: 'swing',
+                            speed: 500
+                        },
+                        timeout: 500
+                    });
+                }
             });
 
-            $("#taskPreview").on('click', function(){
-                //TODO
+            $('#taskPreview').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var title = $("#title").val();
+                var description = $("#description").val();
+                var deadline = $("#deadline").val();
+                var resources = task.resources;
+                var progress = task.progress;
+                var modal = $(this);
+                modal.find('.modal-title').text(title);
+                modal.find('.modal-body .taskDescription').html(description);
+                modal.find('.modal-body .taskDeadline').html(deadline);
+                modal.find('.modal-body .taskResources').html((resources.length)>0?_this.resourcesAsList(resources): "no resources");
+                modal.find('.modal-body .taskProgress').html(progress.toString() + "&percnt;");
             });
 
+            $('#saveChangesToTask').on('click', function(){
+                var title = $("#title").val();
+                var description = $("#description").val();
+                var deadline = $("#deadline").val();
+                var resources = task.resources;
+                var students = task.students;
+
+                if(title && description && deadline){
+                    task.title = title;
+                    task.description = description;
+                    task.deadline = deadline;
+                    console.log(task);
+                    //Sammy(funciton(){
+                    //    this.trigger('save-changes-to-task', task);
+                    //});
+                }else{
+                    noty({
+                        layout: 'topLeft',
+                        theme: "bootstrapTheme",
+                        type: 'error',
+                        text: "Please fill in all required fields correctly!",
+                        dismissQueue: true,
+                        animation: {
+                            open: {height: 'toggle'},
+                            close: {height: 'toggle'},
+                            easing: 'swing',
+                            speed: 500
+                        },
+                        timeout: 500
+                    });
+                }
+            });
         });
     }
 
@@ -118,9 +203,14 @@ app.taskView = class TaskView{
         $.get('templates/teacher-views/create-task.html', function(template){
             $(container).html(template);
             var today = new Date();
+
+            //task object
             var data = {
                 resources: [],
-                students: []
+                students: [],
+                progress : 0,
+                students : [],
+                submissions : []
             };
 
             $(function(){
@@ -175,7 +265,7 @@ app.taskView = class TaskView{
             });
 
             $('#addStudent').on('click', function(){
-
+            //TODO
             });
 
             $('#taskPreview').on('show.bs.modal', function (event) {
@@ -189,7 +279,7 @@ app.taskView = class TaskView{
                 var modal = $(this);
                 modal.find('.modal-title').text(title);
                 modal.find('.modal-body .taskDescription').html(description);
-                modal.find('.modal-body .taskDeadline').html(deadline);
+                modal.find('.modal-body .taskDeadline').text(deadline);
                 modal.find('.modal-body .taskResources').html(((resources.length)> 0? _this.resourcesAsList(resources) : "no resources"));
                 modal.find('.modal-body .taskStudents').html(((students.length)> 0? _this.studentssAsList(resources) : "no students"));
             });
@@ -199,8 +289,6 @@ app.taskView = class TaskView{
                 data.title = $("#title").val();
                 data.description = descriptionArea.val();
                 data.deadline = $("#deadline").val();
-                data.students = [];
-                data.submissions = [];
 
                 if(data.title && data.description && data.deadline){
                     Sammy(function(){
@@ -234,6 +322,13 @@ app.taskView = class TaskView{
         $('input').val('');
         $('textarea').val('');
         $('select').val('default');
+    }
+
+    updateTaskProgress(task){
+        if (task.students.length > 0){
+            task.progress = (task.submissions.length / task.students.length)*100;
+        }
+        return task;
     }
 
 

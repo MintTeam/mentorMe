@@ -10,12 +10,34 @@ app.taskController = class TaskController{
         this.view.showCreateNewTaskPage(container);
     }
 
+    loadAllTeacherTasks(container){
+        var id = sessionStorage['userId'];
+        var _this = this;
+        return this.model.getAllTeacherTasks(id)
+            .then(function(data){
+                var sorted = data.sort(function(a,b){
+                    return a.deadline > b.deadline;
+                });
+                //sorted.forEach(function(task){
+                //    //calculate progress copy to edit method !!! doesn't send to server
+                //    task = _this.updateTaskProgress(task);
+                //});
+                _this.view.showAllTeacherTasks(container, sorted);
+            }).done();
+    };
+
     loadEditTaskPage(container, id){
         var _this = this;
         return this.model.getTaskById(id)
             .then(function(task){
                 _this.view.showEditTaskPage(container, task);
             }).done();
+    }
+
+    editTask(task){
+        return this.model.saveChangesToTask()
+            .then();
+        //TODO
     }
 
     loadTaskPage(id){
@@ -97,17 +119,13 @@ app.taskController = class TaskController{
             }).done();
     };
 
-    loadAllTeacherTasks(container){
-        var id = sessionStorage['userId'];
-        var _this = this;
-        return this.model.getAllTeacherTasks(id)
-            .then(function(data){
-                var sorted = data.sort(function(a,b){
-                    return a.deadline > b.deadline;
-                });
-                _this.view.showAllTeacherTasks(container, sorted);
-            }).done();
-    };
+    //updateTaskProgress(task){
+    //    if (task.students.length > 0){
+    //        task.progress = (task.submissions.length / task.students.length)*100;
+    //    }
+    //    console.log(task);
+    //    return task;
+    //}
 
     loadAllStudentTasks(container){
         //TODO

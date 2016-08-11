@@ -16,6 +16,11 @@ app.taskModel = class TaskModel{
         return this.requester.post(requestUrl, data, true);
     };
 
+    saveChangesToTask(data, id){
+        var requestUrl = this.serviceUrl+ data.id;
+        return this.requester.post
+    }
+
     deleteTask(id){
         var requestUrl = this.serviceUrl + id;
         return this.requester.delete(requestUrl, true);

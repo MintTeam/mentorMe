@@ -9,20 +9,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-4"><strong>Deadline:</strong></label>
-                            <p class="col-md-8 col-xs-7 col-xs-offset-1 taskDeadline"></p>
+                            <label class="col-md-3 col-xs-2"><strong>Deadline:</strong></label>
+                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDeadline"></p>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-4"><strong>Description:</strong></label>
-                            <p class="col-md-8 col-xs-7 col-xs-offset-1 taskDescription"></p>
+                            <label class="col-md-3 col-xs-2"><strong>Description:</strong></label>
+                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDescription"></p>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-4"><strong>Resources:</strong></label>
-                            <p class="col-md-8 col-xs-7 col-xs-offset-1 taskResources"></p>
+                            <label class="col-md-3 col-xs-2"><strong>Resources:</strong></label>
+                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskResources"></p>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 col-xs-4"><strong>Deadline:</strong></label>
-                            <p class="col-md-8 col-xs-7 col-xs-offset-1 taskProgress"></p>
+                            <label class="col-md-3 col-xs-2"><strong>Progress:</strong></label>
+                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskProgress"></p>
                         </div>
                     </div>
                 </div>
@@ -41,65 +41,66 @@
                 <header>
                     <h1><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Tasks</h1>
 
-                    <p class="text-right">
-                        <a href="#/new-task/" class="btn-primary btn btn-lg">Create New Task</a>
-                        <!--<button class="text-right btn btn-default" onclick="window.history.back()">-->
-                            <!--<span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back-->
-                        <!--</button>-->
-                    </p>
+                    <div class="row">
+                        <p class="text-right col-md-12">
+                            <button class="text-right btn btn-default" onclick="window.history.back()">
+                                <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
+                            </button>
+                            <a href="#/new-task/" class="btn btn-primary">Create New Task</a>
+                        </p>
+                    </div>
                 </header>
 
                 <div>
-                    <!--<header>-->
-                        <!--<h2>All tasks</h2>-->
-                    <!--</header>-->
                     {{#tasks}}
-                    <article class="col-md-12 taskElement well well-sm" id="{{_id}}">
-                        <header>
-                            <h4 class="lead">&quot;{{title}}&quot;</h4>
-                        </header>
-                        <div class="tabbed-task-body">
-                            <!--dropdown actions-->
-                            <div class="col-md-5">
-                                <section id="progress-bar">
-                                    <p><span class="glyphicon glyphicon-thumbs-up"></span><strong>&nbsp;Submissions sent</strong>&nbsp;</p>
-                                    <div class="progress">
-                                        <!--TODO uncomment-->
-                                        <!--<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="{{(progress}}" aria-valuemin="0" aria-valuemax="100"-->
-                                        <!--style="width: {{progress}}%">-->
-                                        <!--{{progress}}% Submitted
-                                        <!--</div>-->
-                                        <div class="progress-bar progress-bar-default" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-                                             style="width: 20%; min-width: 2em">
-                                            20%
+                        <div>
+                            <article class="col-md-12 taskElement green-transperant-bg well well-sm" id="{{_id}}">
+                                <header>
+                                    <h4 class="lead">&quot;{{title}}&quot;</h4>
+                                </header>
+                                <div class="tabbed-task-body">
+                                    <!--dropdown actions-->
+                                    <div class="col-md-5">
+                                        <section id="progress-bar">
+                                            <p><span class="glyphicon glyphicon-thumbs-up"></span><strong>&nbsp;Submissions sent</strong>&nbsp;</p>
+                                            <div class="progress">
+                                                <!--TODO uncomment-->
+                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"
+                                                    style="width:{{progress}}%; min-width: 2em">
+                                                    {{progress}}% Submitted
+                                                </div>
+                                                <!--<div class="progress-bar progress-bar-default" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"-->
+                                                     <!--style="width: 20%; min-width: 2em">-->
+                                                    <!--20%-->
+                                                <!--</div>-->
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p><span class="glyphicon glyphicon-calendar"></span><strong>&nbsp;Deadline</strong></p>
+                                        <p>{{deadline}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" type="button" id="actionsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                <span class="glyphicon glyphicon-star"></span>
+                                                Actions
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="actionsMenu">
+                                                <li><a href="#" class="viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a></li>
+                                                <li><a href="#" class="assignTaskBtn">Assign</a></li>
+                                                <li><a href="#/edit-task/{{_id}}" class="editTaskBtn">Edit</a href="#/edit-task/:id"></li>
+                                                <li><a href="#" class="deleteTaskBtn">Delete</a></li>
+
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="#" class="checkSubmissions">Check submissions</a></li>
+                                            </ul>
                                         </div>
                                     </div>
-                                </section>
-                            </div>
-                            <div class="col-md-4">
-                                <p><span class="glyphicon glyphicon-calendar"></span><strong>&nbsp;Deadline</strong></p>
-                                <p>{{deadline}}</p>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" id="actionsMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="actionsMenu">
-                                        <li><a href="#" class="viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a></li>
-                                        <li><a href="#" class="assignTaskBtn">Assign</a></li>
-                                        <li><a href="#/edit-task/{{_id}}" class="editTaskBtn">Edit</a href="#/edit-task/:id"></li>
-                                        <li><a href="#" class="deleteTaskBtn">Delete</a></li>
-
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#" class="checkSubmissions">Check submissions</a></li>
-                                    </ul>
                                 </div>
-                            </div>
+                            </article>
                         </div>
-                    </article>
                     {{/tasks}}
                     {{^tasks}}
                     <p>No tasks created so far, do you want to <a href="#/new-task/">create new task</a></p>

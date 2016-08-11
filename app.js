@@ -110,6 +110,10 @@ app.router = Sammy(function(){
         taskController.loadEditTaskPage(container, id);
     });
 
+    this.bind('save-changes-to-task', function(ev, data){
+        taskController.editTask(data);
+    })
+
     this.bind('show-task-details', function(ev, data){
         taskController.loadTaskPage(data.id);
     });
