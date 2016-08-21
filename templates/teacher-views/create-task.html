@@ -10,10 +10,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-2"><strong>Deadline:</strong></label>
-                                <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDeadline"></p>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-md-3 col-xs-2"><strong>Description:</strong></label>
                                 <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDescription"></p>
                             </div>
@@ -23,7 +19,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-2"><strong>Deadline:</strong></label>
-                                <p class="col-md-8 col-xs-9 col-xs-offset-1 taskProgress"></p>
+                                <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDeadline"></p>
                             </div>
                         </div>
                     </div>
@@ -51,7 +47,7 @@
                     </p>
                 </div>
             </header>
-                <div class="well well-lg green-transperant-bg">
+                <div class="well well-lg">
                     <section>
                         <form name="createTaskForm" class="form-horizontal margin-top-20">
                             <div class="form-group">
@@ -67,19 +63,24 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="addStudents" class="col-sm-3">Students:</label>
-                                <div class="col-sm-8">
-                                    <button class="btn btn-default" id="addStudents">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                        &nbsp;&nbsp;Add students
-                                    </button>
-                                </div>
-                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label for="addStudents" class="col-sm-3">Students:</label>-->
+                                <!--<div class="col-sm-8">-->
+                                    <!--<button class="btn btn-default" id="addStudents">-->
+                                        <!--<span class="glyphicon glyphicon-plus"></span>-->
+                                        <!--&nbsp;&nbsp;Add students-->
+                                    <!--</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
                             <div class="form-group">
                                 <label for="resource" class="col-sm-3">Resources:</label>
-                                <div class="input-group  col-sm-8">
+                                <ul class="col-sm-8 no-style-list" id="addedResources">
+                                </ul>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group col-sm-8 col-sm-offset-3">
                                     <input type="text" class="form-control" id="resource" placeholder="paste a url">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" id="addUrl" type="button">
@@ -104,7 +105,7 @@
                                         <a class="btn btn-default" type="button" id="clearForm">Clear form</a>
                                     </div>
                                     <div class="col-sm-3">
-                                        <a class="btn btn-primary" type="button" id="addTask">Submit Task</a>
+                                        <a class="btn btn-primary" type="button" id="saveTask">Submit Task</a>
                                     </div>
                                 </div>
                             </div>

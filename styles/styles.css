@@ -68,12 +68,17 @@ dd, td {
     padding-top: 20px;
 }
 
+.padding-bottom-5{
+    padding-bottom: 5px;
+}
+
 .no-style-list{
     list-style-type:none;
+    padding-left: 10px;
 }
 
 .green-transperant-bg{
-    background-color: rgba(0, 153, 153, 0.2);
+    background-color: rgba(0, 153, 153, 0.3);
 }
 
 .taskElement h4{
@@ -96,3 +101,10 @@ dd, td {
 .postElement{
     background-color: rgba(255, 255, 255, 0.75);
 }
+
+/*.description-area{*/
+    /*height: 8em;*/
+    /*padding: 5px;*/
+    /*overflow: scroll;*/
+    /*overflow-x: hidden;*/
+/*}*/

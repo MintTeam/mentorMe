@@ -12,7 +12,7 @@ app.userController = class UserController{
         var id = sessionStorage.userId;
         return this.model.getUserById(id)
             .then(function(data){
-                type = data.type._obj.name;
+                type = data.type;
                 _this.view.showUserHomePage(container, type);
             }, function(error){
                 console.error(error);
@@ -28,30 +28,27 @@ app.userController = class UserController{
     };
 
     registerUser(data){
-        //var _this = this;
-        //var _this = this;
         var userData = {
             firstName: data.firstName,
             lastName: data.lastName,
             username: data.username,
             password: data.password,
-            type: {
-                "_type" : "KinveyRef",
-                "_id": data.typeId,
-                "_collection": "user-types"
-            },
+            type: data.type,
             email: data.email,
             connections: [],
-            teams: [],
             tasks: []
+            //teams: []
         };
+        if( type==='student' ){
+            userData.submissions = [];
+        }
 
         return this.model.register(userData)
             .then(function(success){
+                console.log(success);
                 sessionStorage['sessionId'] = success._kmd.authtoken;
                 sessionStorage['username'] = success.username;
                 sessionStorage['userId'] = success._id;
-                sessionStorage['userType'] = success.type._id;
 
                 noty({
                     layout: 'topLeft',
@@ -67,7 +64,6 @@ app.userController = class UserController{
                     },
                     timeout: 200
                 });
-
                 Sammy(function(){
                     this.trigger('redirectUrl', {url: "#/"});
                 });
@@ -162,15 +158,15 @@ app.userController = class UserController{
 
     getUserType(){
         var type;
-        var id = sessionStorage.userId;
+        var id = sessionStorage['userId'];
         return this.model.getUserById(id)
             .then(function(data){
-                type = data.type._obj.name;
+                type = data.type;
                 return type;
             });
     };
 
-    loadAllStudents(container){
+    loadAllStudents(container, taskId){
         var students = [];
         var _this = this;
         var allUsers = [];
@@ -185,7 +181,7 @@ app.userController = class UserController{
                     .then(function(data){
                         currentConnections = data.connections;
                         for(var user in allUsers){
-                            if(allUsers[user].type._obj.name === 'student' && currentUserId != allUsers[user]._id){
+                            if(allUsers[user].type === 'student' && currentUserId != allUsers[user]._id){
                                 var student = allUsers[user];
                                 if(_.findWhere(currentConnections, {_id: student._id})){
                                     student['connected'] = true;
@@ -195,11 +191,28 @@ app.userController = class UserController{
                                 students.push(student);
                             }
                         }
-                        _this.view.showAllStudents(container, students);
+                        _this.view.showAllStudents(container, students, taskId);
                     });
-
             }).done();
     };
+
+    addTaskToCollection(taskId){
+        var _this = this;
+        var userId = sessionStorage['userId'];
+        return this.model.getUserById(userId)
+            .then(function(user){
+                user.tasks.push(	{
+                    "_type":"KinveyRef",
+                    "_id":taskId,
+                    "_collection":"tasks"
+                });
+                return _this.model.edit(user, userId)
+                    .then(function(success){
+                    }, function(error){
+                        console.error(error);
+                    });
+            }).done();
+    }
 
     addConnection(newConnectionId){
         var _this = this;
@@ -216,7 +229,7 @@ app.userController = class UserController{
                 }
                 currentUser = user;
             }).then(function() {
-                return _this.model.edit(currentUser)
+                return _this.model.edit(currentUser, userId)
                     .then(function(success){
                         //update ui
                         _this.view.updateConnectionDataUI(newConnectionId);

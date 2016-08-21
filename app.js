@@ -7,16 +7,16 @@ app.router = Sammy(function(){
         userView = new app.userView(),
         taskView = new app.taskView(),
         blogView = new app.blogView(),
-        teamView = new app.teamView(),
+        //teamView = new app.teamView(),
         userModel = new app.userModel(requester),
         taskModel = new app.taskModel(requester),
         blogModel = new app.blogModel(requester),
-        teamModel = new app.teamModel(requester),
+        //teamModel = new app.teamModel(requester),
         homeController = new app.homeController(homeView),
         userController = new app.userController(userView, userModel),
         taskController = new app.taskController(taskView, taskModel),
         blogController = new app.blogController(blogView, blogModel);
-        teamController = new app.teamController(teamView, teamModel);
+        //teamController = new app.teamController(teamView, teamModel);
 
     this.before({except: {path: "#\/(login\/|register\/|about\/)?"}}, function(){
         if(!sessionStorage["sessionId"]){
@@ -72,19 +72,29 @@ app.router = Sammy(function(){
 
     //tasks
     this.get('#/tasks/', function(){
-        let def = Q.defer();
-        let _this = this;
+        var type;
         userController.getUserType()
-            .then(function(type){
-                if(type === 'teacher') {
-                    def.resolve(taskController.loadAllTeacherTasks(container));
-                }else if(type === 'student'){
-                    def.resolve(taskController.loadAllStudentTasks(container));
-                }
-            }, function(){
-                def.reject();
-            });
-        return def.promise;
+            .then(function(t){
+                type = t;
+            }).then(function(success){
+                taskController.loadAllUserTasks(container, type);
+        }).done();
+        //let def = Q.defer();
+        //let _this = this;
+        //userController.getUserType()
+        //    .then(function(type){
+        //        if(type === 'teacher'){
+        //            def.resolve(taskController.loadAllTeacherTasks(container));
+        //        }else if(type === 'student'){
+        //            console.log(type === 'student');
+        //            taskController.loadAllStudentTasks(container)
+        //            //def.resolve(taskController.loadAllStudentTasks(container));
+        //        }
+        //    }, function(error){
+        //        def.reject(error);
+        //    });
+        //
+        //return def.promise;
     });
 
     this.get("#/new-task/", function(){
@@ -104,6 +114,10 @@ app.router = Sammy(function(){
     });
 
     //tasks
+    this.bind('load-all-students', function(ev, data){
+        userController.loadAllStudents(data.selector);
+    })
+
     this.get("#/edit-task/:id", function(){
         "use strict";
         var id = this.params['id'];
@@ -111,7 +125,11 @@ app.router = Sammy(function(){
     });
 
     this.bind('save-changes-to-task', function(ev, data){
-        taskController.editTask(data);
+        taskController.saveChangesToTask(data);
+    });
+
+    this.bind('add-to-task-collection', function(ev, data){
+        userController.addTaskToCollection(data.id);
     })
 
     this.bind('show-task-details', function(ev, data){
@@ -128,6 +146,16 @@ app.router = Sammy(function(){
         taskController.deleteTaskById(data.id);
     });
 
+    this.get('#/assign-task/:id', function(){
+        var taskId = this.params['id'];
+        userController.loadAllStudents(container, taskId);
+    });
+
+    this.bind("assign-task", function(ev, data){
+        taskController.assignTask(data.studentIds, data.taskId);
+        //taskController.put array with StudentRef in the task
+    });
+
     this.get('#/students/', function(){
         "use strict";
         userController.loadAllStudents(container);
@@ -139,15 +167,15 @@ app.router = Sammy(function(){
     });
 
     //teams
-    this.get('#/teams/', function(){
-        "use strict";
-        teamController.loadAllTeams(container);
-    });
-
-    this.get('#/new-team/', function(){
-        "use strict";
-        teamController.loadCreateNewTeamPage(container);
-    });
+    //this.get('#/teams/', function(){
+    //    "use strict";
+    //    teamController.loadAllTeams(container);
+    //});
+    //
+    //this.get('#/new-team/', function(){
+    //    "use strict";
+    //    teamController.loadCreateNewTeamPage(container);
+    //});
 
     //TODO blog
     this.get('#/blog/', function () {

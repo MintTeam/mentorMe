@@ -27,7 +27,7 @@ app.homeView = class HomeView{
         $('#registerMenuLink').show();
         $('#tasksMenuLink').hide();
         $('#studentsMenuLink').hide();
-        $('#teamsMenuLink').hide();
+        //$('#teamsMenuLink').hide();
         $('#blogMenuLink').hide();
         $('#logoutMenuLink').hide();
     }
@@ -37,7 +37,7 @@ app.homeView = class HomeView{
         $('#registerMenuLink').hide();
         $('#tasksMenuLink').show();
         $('#studentsMenuLink').show();
-        $('#teamsMenuLink').show();
+        //$('#teamsMenuLink').show();
         $('#blogMenuLink').show();
         $('#logoutMenuLink').show();
     }

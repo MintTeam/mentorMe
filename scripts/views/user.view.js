@@ -42,19 +42,8 @@ app.userView = class UserView{
         $.get('templates/register/register.html', function(template){
             $(container).html(template);
 
-            var pictureSize, file;
-
-            $("#uploadBtn").on('change', function () {
-                var fileContent = readURL(this);
-                pictureSize = this.files[0].size;
-                file = this.files[0];
-                console.log(file);
-                var filename = $('#uploadBtn').val();
-                $('#uploadFile').val(filename);
-            });
-
-            $('#registerBtn').on('click', function(){
-                var typeId = $("input[type='radio'][name='role']:checked").val();
+            $('#registerBtn').click(function(){
+                var type = $("input[type='radio'][name='role']:checked").val();
                 var firstName = $('#firstName').val();
                 var lastName = $('#lastName').val();
                 var username = $('#username').val();
@@ -65,7 +54,7 @@ app.userView = class UserView{
                 if(password !== confirmPassword){
                     $('#confirm-password').parent().addClass('has-error');
                 }else{
-                    if(typeId && firstName && lastName && username && email && password){
+                    if((type === 'student' || type === 'teacher') && (firstName && lastName && username && email && password)){
                         Sammy(function(){
                             this.trigger('register-user',
                                 {
@@ -74,8 +63,7 @@ app.userView = class UserView{
                                     username: username,
                                     password: password,
                                     email: email,
-                                    typeId: typeId,
-                                    //file: file
+                                    type: type
                                 });
                         });
                     }else{
@@ -99,10 +87,10 @@ app.userView = class UserView{
         });
     }
 
-    showAllStudents(container, students){
+    showAllStudents(container, students, taskId){
         this.showUserMenu();
         $.get('templates/teacher-views/students.html', function(template){
-            var rendered = Mustache.render(template, {students: students});
+            var rendered = Mustache.render(template, {students: students, taskId:taskId});
             $(container).html(rendered);
 
             $(".connectBtn").click(function(e){
@@ -110,13 +98,25 @@ app.userView = class UserView{
                 Sammy(function(){
                     this.trigger('add-connection', {newConnectionId: newConnectionId});
                 });
+            });
+
+            $('#addSelectedStudents').click(function(e){
+                var studentIds = $('input:checked')
+                    .map(function(){
+                        return $(this).val();
+                    });
+
+                Sammy(function(){
+                    this.trigger('assign-task', {taskId:taskId, studentIds: studentIds});
+                })
             })
         });
     }
 
+
     updateConnectionDataUI(id){
         var studentElement = "#" + id;
-        $(studentElement).find('button').addClass('animated fadeOut')
+        $(studentElement).find('button').addClass('animated fadeOut');
         $(studentElement).find('button').remove();
         $(studentElement).append('<div class="btn btn-sm btn-default animated fadeIn"><span class="glyphicon glyphicon-ok"></span>Added</div>');
     }
@@ -133,7 +133,7 @@ app.userView = class UserView{
         $('#registerMenuLink').hide();
         $('#tasksMenuLink').show();
         $('#studentsMenuLink').show();
-        $('#teamsMenuLink').show();
+        //$('#teamsMenuLink').show();
         $('#blogMenuLink').show();
         $('#logoutMenuLink').show();
     }
