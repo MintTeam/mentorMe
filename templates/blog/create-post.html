@@ -1,17 +1,20 @@
-<div class="animated fadeIn">
-    <h2>New Post</h2>
-    <form>
-        <div class="form-group">
-            <div>
-                <label for="postTitle">Post Title: </label></br>
-                <input type="text" id="postTitle" size="50">
-            </div>
-            <div>
-                <label for="postContent">Post Content: </label></br>
-                <textarea name="postContent" id="postContent" cols="50" rows="10"></textarea>
-            </div>
-        </div>
+<div class="col-md-12 col-sx-12 animated fadeIn">
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
 
-        <button type="button" id="sendPost">Send Post</button>
-    </form>
+            <div class="postElement well well-lg">
+
+                <label for="postTitle">Post Title: </label>
+                <input class="form-control" type="text" id="postTitle" size="50">
+                </br>
+                <label for="postContent">Post Content: </label>
+                <textarea class="form-control" name="postContent" id="postContent" cols="50" rows="10"></textarea>
+                </br>
+                <button class="btn btn-primary" type="button" id="sendPost">Create Post</button>
+
+            </div>
+
+        </div>
+    </div>
 </div>
+
