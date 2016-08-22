@@ -1,19 +1,55 @@
-<div class="col-md-12 animated fadeIn">
-    <div class="col-md-8 col-xs-12">
-        <h2>All students</h2>
-        <div class="well">
-            {{#students}}
-            <div class="studentElement" id="{{_id}}">
-                <img src="img/vc-logo.png" alt="logo" class=".width-height-140 img-square">
-                <p>{{username}}</p>
-                <p>{{firstName}} {{lastName}}</p>
-                {{#connected}}<div class="btn btn-sm btn-default"><span class="glyphicon glyphicon-ok"></span>Added</div>{{/connected}}
-                {{^connected}}<button class="btn btn-sm btn-primary connectBtn"><span class="glyphicon glyphicon-plus"></span>Connect</button>{{/connected}}
+<div class="col-md-12 col-sx-12 animated fadeIn">
+    <div class="row">
+        <div class="col-md-8 col-xs-12" id="studentsList" data-task-id="{{taskId}}">
+            <header class="col-md-12">
+                <h1><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Students</h1>
+                <div class="row">
+                    <p class="text-right col-md-12">
+                        <button class="text-right btn btn-default" onclick="window.history.back()">
+                            <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
+                        </button>
+                        {{#taskId}}
+                        <button type="button" class="btn btn-primary" id="addSelectedStudents">
+                            Assign task to selected students
+                        </button>
+                        {{/taskId}}
+
+                        <!--<a href="#/new-task/" class="btn btn-primary">Create New Task</a>-->
+                    </p>
+                </div>
+            </header>
+            <div class="col-md-12 margin-top-20">
+                {{#students}}
+                <div class="well well-sm col-md-12" id="{{_id}}">
+                        <div class="checkbox">
+                        {{#taskId}}
+                            <label>
+                                <input type="checkbox" value="{{_id}}">
+                            </label>
+                        {{/taskId}}
+                            <span><strong>{{username}}</strong></span>
+                            <span class="text-left">name:&nbsp;{{firstName}}&nbsp;{{lastName}}</span>
+                        </div>
+                    <!--{{#connected}}-->
+                    <!--<div class="btn btn-sm btn-default">-->
+                    <!--<span class="glyphicon glyphicon-ok"></span>-->
+                    <!--Added-->
+                    <!--</div>-->
+                    <!--{{/connected}}-->
+                    <!--{{^connected}}-->
+                    <!--<button class="btn btn-sm btn-primary connectBtn">-->
+                    <!--<span class="glyphicon glyphicon-plus"></span>-->
+                    <!--Connect-->
+                    <!--</button>-->
+                    <!--{{/connected}}-->
+                </div>
+                {{/students}}
+                {{^students}}
+                <p>No registered students so far.</p>
+                {{/students}}
+
+
             </div>
-            {{/students}}
         </div>
-    </div>
-    <div class="col-md-4 col-xs-12">
-        <button class="btn-primary btn">Controls</button>
     </div>
 </div>

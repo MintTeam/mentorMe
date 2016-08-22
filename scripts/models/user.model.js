@@ -21,13 +21,13 @@ app.userModel = class UserModel{
         return this.requester.post(requestUrl, null, true);
     };
 
-    edit(data){
-        var requestUrl = this.serviceUrl + sessionStorage['userId'];
+    edit(data, id){
+        var requestUrl = this.serviceUrl + id;
         return this.requester.put(requestUrl, data, true);
     };
 
     getUserById(id){
-        var requestUrl = this.serviceUrl + id + "/?resolve=type";
+        var requestUrl = this.serviceUrl + id;
         return this.requester.get(requestUrl, true);
     };
 

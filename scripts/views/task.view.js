@@ -8,6 +8,7 @@ app.taskView = class TaskView{
         var _this = this;
         var username = sessionStorage['username'];
         this.showUserMenu();
+
         $.get('templates/teacher-views/tasks.html', function(templ){
             var rendered = Mustache.render(templ, {username: username, tasks: tasks});
             $(container).html(rendered);
@@ -15,21 +16,20 @@ app.taskView = class TaskView{
             $('#taskPreview').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var taskId = $(button).closest('.taskElement').attr('id');
-                var task  = tasks.filter( t => t._id == taskId )[0];
+                var task  = tasks.filter(function(t){
+                    return t._id == taskId;
+                })[0];
                 var title = task.title;
                 var description = task.description;
                 var deadline = task.deadline;
                 var resources = task.resources;
-                var progress = 0;
-                if (task.students.length > 0){
-                    progress = (task.submissions.length / task.students.length)*100;
-                }
+                var progress = task.progress;
                 var modal = $(this);
                 modal.find('.modal-title').text(title);
                 modal.find('.modal-body .taskDescription').html(description);
                 modal.find('.modal-body .taskDeadline').html(deadline);
                 modal.find('.modal-body .taskResources').html((resources.length)>0?_this.resourcesAsList(resources): "no resources");
-                modal.find('.modal-body .taskProgress').html(progress + "%");
+                modal.find('.modal-body .taskProgress').html(progress.toString() + "&percnt;");
             });
 
             //TODO assign
@@ -37,7 +37,6 @@ app.taskView = class TaskView{
             //TODO edit
             $('.editTaskBtn').on('click', function(e){
                 var url = $(e.target).attr('href');
-                console.log(url);
                 Sammy(function(){
                     this.trigger("redirectUrl", {url: url});
                 });
@@ -83,46 +82,41 @@ app.taskView = class TaskView{
                     ]
                 });
             });
+
+            $('.checkSubmissions').on('click', function(ev){
+                var id = $(ev.target).closest('.taskElement').attr('id');
+                Sammy(function(){
+                    this.trigger('load-all-submission', {id:id});
+                });
+                //TODO
+            })
+        });
+    }
+
+    showAllStudentTasks(container, tasks){
+        var _this = this;
+        var username = sessionStorage['username'];
+        this.showUserMenu();
+
+        $.get('templates/student-views/tasks.html', function(templ){
+            var rendered = Mustache.render(templ, {username: username, tasks: tasks});
+            $(container).html(rendered);
+
+
+
         });
     }
 
     showEditTaskPage(container, task){
         var _this = this;
         this.showUserMenu();
+        var resources = task.resources;
         $.get('templates/teacher-views/edit-task.html', function(template){
-            //task.studentsList= _this.studentsAsList(task.students);
-            task.resourcesList = _this.resourcesAsList(task.resources);
-            console.log(task.students);
             var rendered = Mustache.render(template, task);
             $(container).html(rendered);
 
-            $("#addStudents").on("click", function(){
-                //TODO
-            });
-
-            $("#addUrl").on('click', function(){
-                //TODO
-            });
-
-            $("#taskPreview").on('click', function(){
-                //TODO
-            });
-
-        });
-    }
-
-    showCreateNewTaskPage(container){
-        var _this = this;
-        var username = sessionStorage['username'];
-        this.showUserMenu();
-        $.get('templates/teacher-views/create-task.html', function(template){
-            $(container).html(template);
+            //datepicker
             var today = new Date();
-            var data = {
-                resources: [],
-                students: []
-            };
-
             $(function(){
                 $('.date').datepicker({
                     format:"dd-mm-yyyy",
@@ -134,26 +128,22 @@ app.taskView = class TaskView{
                 });
             });
 
-            $('#addUrl').on('click',function(){
+            $("#addUrl").on('click', function(){
                 var linkField = $("#resource");
                 var link = linkField.val();
                 var pattern = /(www\.|http:\/\/|https:\/\/)[\w]+/;
                 if(pattern.test(link)){
-                    data.resources.push(link);
-                    noty({
-                        layout: 'topLeft',
-                        theme: "bootstrapTheme",
-                        type: 'success',
-                        text: "Successfully added a link!",
-                        dismissQueue: true,
-                        animation: {
-                            open: {height: 'toggle'},
-                            close: {height: 'toggle'},
-                            easing: 'swing',
-                            speed: 500
-                        },
-                        timeout: 500
-                    });
+                    //add resource to task
+                    resources.push(link);
+
+                    $('#resourceList-ul').append('<li class="animated fadeIn padding-bottom-5">' +
+                    '<span class="glyphicon glyphicon-link"></span>' +
+                    '&nbsp;<a href="'+link+'" target="_blank">'+link+'</a>&nbsp;' +
+                    '<button type="button" class="btn btn-default btn-xs removeUrl">' +
+                    '<span class="glyphicon glyphicon-remove"></span>' +
+                    '</button>' +
+                    '</li>');
+
                     linkField.val('');
                 }else{
                     linkField.addClass('has-error');
@@ -172,10 +162,157 @@ app.taskView = class TaskView{
                         timeout: 500
                     });
                 }
+
+                $('.removeUrl').on('click', function(e){
+                    e.preventDefault();
+                    var removeUrl = $(e.target).prev().html();
+                    console.log(removeUrl);
+                    resources = resources.filter(function(url){
+                        return url !== removeUrl;
+                        console.log(url);
+                        console.log(removeUrl);
+                    });
+                    $(e.target).closest('li').addClass('animated fadeOut');
+                    $(e.target).closest('li').remove();
+                });
             });
 
-            $('#addStudent').on('click', function(){
+            $('.removeUrl').on('click', function(e){
+                e.preventDefault();
+                var removeUrl = $(e.target).prev().html();
+                console.log(removeUrl);
+                resources = resources.filter(function(url){
+                    return url !== removeUrl;
+                    console.log(url);
+                    console.log(removeUrl);
+                });
+                $(e.target).closest('li').addClass('animated fadeOut');
+                $(e.target).closest('li').remove();
+            });
 
+            $('#taskPreview').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var title = $("#title").val();
+                var description = $("#description").val();
+                var deadline = $("#deadline").val();
+                //var resources = resources;
+                var progress = task.progress;
+                var modal = $(this);
+                modal.find('.modal-title').text(title ? title : "no title");
+                modal.find('.modal-body .taskDescription').html(description ? description : "no description");
+                modal.find('.modal-body .taskDeadline').html(deadline ? deadline : "no deadline");
+                modal.find('.modal-body .taskResources').html((resources.length)>0?_this.resourcesAsList(resources): "no resources");
+                modal.find('.modal-body .taskProgress').html(progress.toString() + "&percnt;");
+            });
+
+            $('#saveChangesToTask').on('click', function(){
+                var title = $("#title").val();
+                var description = $("#description").val();
+                var deadline = $("#deadline").val();
+
+                if(title && description && deadline){
+                    //task = _this.updateTaskProgress(task);//TODO move the logic in the controller
+                    task.title = title;
+                    task.description = description;
+                    task.deadline = deadline;
+                    task.resources = resources;
+
+                    Sammy(function(){
+                        this.trigger('save-changes-to-task', task);
+                    });
+                }else{
+                    noty({
+                        layout: 'topLeft',
+                        theme: "bootstrapTheme",
+                        type: 'error',
+                        text: "Please fill in all required fields correctly!",
+                        dismissQueue: true,
+                        animation: {
+                            open: {height: 'toggle'},
+                            close: {height: 'toggle'},
+                            easing: 'swing',
+                            speed: 500
+                        },
+                        timeout: 500
+                    });
+                }
+            });
+        });
+    }
+
+    showCreateNewTaskPage(container){
+        var _this = this;
+        var username = sessionStorage['username'];
+        this.showUserMenu();
+        $.get('templates/teacher-views/create-task.html', function(template){
+            $(container).html(template);
+            //datepicker
+            var today = new Date();
+            $(function(){
+                $('.date').datepicker({
+                    format:"dd-mm-yyyy",
+                    startDate: today,
+                    autoclose: true,
+                    todayHighlight: true,
+                    language: 'bg',
+                    orientation: 'auto'
+                });
+            });
+
+            //task object
+            var data = {
+                resources: [],
+                students: [],
+                progress : 0,
+                students : [],
+                submissions : []
+            };
+
+
+            $('#addUrl').on('click',function(){
+                var linkField = $("#resource");
+                var link = linkField.val();
+                var pattern = /(www\.|http:\/\/|https:\/\/)[\w]+/;
+                if(pattern.test(link)){
+
+                    data.resources.push(link);
+
+                    $('#addedResources').append('<li class="animated fadeIn padding-bottom-5">' +
+                        '<span class="glyphicon glyphicon-link"></span>' +
+                        '&nbsp;<a href="'+link+'">'+link+'</a>&nbsp;' +
+                        '<button type="button" class="btn btn-default btn-xs removeUrl">' +
+                        '<span class="glyphicon glyphicon-remove"></span>' +
+                        '</button>' +
+                        '</li>');
+
+                    linkField.val('');
+                }else{
+                    linkField.addClass('has-error');
+                    noty({
+                        layout: 'topLeft',
+                        theme: "bootstrapTheme",
+                        type: 'error',
+                        text: "The input doesn't look like a link!",
+                        dismissQueue: true,
+                        animation: {
+                            open: {height: 'toggle'},
+                            close: {height: 'toggle'},
+                            easing: 'swing',
+                            speed: 500
+                        },
+                        timeout: 500
+                    });
+                }
+
+                $('.removeUrl').on('click', function(e){
+                    e.preventDefault();
+                    var removeUrl = $(e.target).prev().attr('href');
+                    data.resources = data.resources.filter(function(url){
+                        return url !== removeUrl;
+                    });
+                    $(e.target).closest('li').addClass('animated fadeOut');
+                    $(e.target).closest('li').remove();
+                });
             });
 
             $('#taskPreview').on('show.bs.modal', function (event) {
@@ -189,18 +326,20 @@ app.taskView = class TaskView{
                 var modal = $(this);
                 modal.find('.modal-title').text(title);
                 modal.find('.modal-body .taskDescription').html(description);
-                modal.find('.modal-body .taskDeadline').html(deadline);
+                modal.find('.modal-body .taskDeadline').text(deadline);
                 modal.find('.modal-body .taskResources').html(((resources.length)> 0? _this.resourcesAsList(resources) : "no resources"));
                 modal.find('.modal-body .taskStudents').html(((students.length)> 0? _this.studentssAsList(resources) : "no students"));
             });
 
-            $('#addTask').click(function(){
+            $('#saveTask').click(function(){
                 var descriptionArea = $("#description");
                 data.title = $("#title").val();
                 data.description = descriptionArea.val();
                 data.deadline = $("#deadline").val();
-                data.students = [];
-                data.submissions = [];
+                data._acl = {
+                    "gr": true,
+                    "gw": true
+                };
 
                 if(data.title && data.description && data.deadline){
                     Sammy(function(){
@@ -235,7 +374,6 @@ app.taskView = class TaskView{
         $('textarea').val('');
         $('select').val('default');
     }
-
 
     //in modal
     resourcesAsList(array){

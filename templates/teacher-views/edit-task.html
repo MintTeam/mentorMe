@@ -8,17 +8,21 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-3">
-                            <p><strong>Deadline:</strong></p>
-                            <p><strong>Description:</strong></p>
-                            <p><strong>Resources:</strong></p>
-                            <p><strong>Students:</strong></p>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-2"><strong>Deadline:</strong></label>
+                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDeadline"></p>
                         </div>
-                        <div class="col-md-9">
-                            <p class="taskDeadline"></p>
-                            <p class="taskDescription"></p>
-                            <p class="taskResources"></p>
-                            <p class="taskStudents"></p>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-2"><strong>Description:</strong></label>
+                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDescription"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-2"><strong>Resources:</strong></label>
+                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskResources"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-2"><strong>Progress:</strong></label>
+                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskProgress"></p>
                         </div>
                     </div>
                 </div>
@@ -27,74 +31,70 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
             </div>
         </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+    </div><!-- /.moda-->
+</div>
 <div class="col-md-12 col-sx-12 animated fadeIn">
     <div class="row">
         <div class="col-md-8 col-xs-12">
-            <!--<header>-->
-                <!--<h2>Tasks</h2>-->
-            <!--</header>-->
-            <div class="well well-lg">
+            <header>
+                <h1><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Edit Task</h1>
+                <div class="row">
+                    <p class="text-right col-md-12">
+                        <button class="text-right btn btn-default" onclick="window.history.back()">
+                            <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
+                        </button>
+                        <a href="#/tasks/" class="btn btn-primary">All Tasks</a>
+                    </p>
+                </div>
+            </header>
+            <div class="well well-lg margin-top-20">
                 <section>
                     <form name="editTaskForm" class="form-horizontal margin-top-20">
-                        <legend>Edit Task&colon;&nbsp;&quot;{{title}}&quot;</legend>
+                        <legend>&quot;{{title}}&quot;</legend>
+                        <!--title-->
                         <div class="form-group">
                             <label for="title" class="col-sm-3">Title:</label>
                             <div class=" col-sm-8">
                                 <input type="text" id="title" class="form-control" value="{{title}}" required="required">
                             </div>
                         </div>
+                        <!--description-->
                         <div class="form-group">
                             <label for="description" class="col-sm-3">Description:</label>
                             <div class="col-sm-8">
                                 <textarea id="description" class="form-control" rows="7" required="required">{{description}}</textarea>
                             </div>
                         </div>
-
-                        <!--TODO find a way how to visualize students -- students usernames as list-->
+                        <!--status-->
                         <div class="form-group">
-                            <label for="addStudents" class="col-sm-3">Students:</label>
-                            <div class="col-sm-4" id="studentsList">
-                                <ul class="no-style-list">
-                                    {{#students}}
-                                    <li>
-                                        <span class="glyphicon glyphicon-user"></span>&nbsp;
-                                        <strong>{{_obj.username}}</strong>&nbsp;
-                                        <!--&lpar;{{_obj.firstName}}&nbsp;{{_obj.lastName}}&rpar;-->
-                                    </li>
-                                    {{/students}}
-                                    {{^students}}
-                                    <li><span class="glyphicon glyphicon-pencil"></span>&nbsp;No students added so far. Click the button on the right to add.</li>
-                                    {{/students}}
-                                <ul>
+                            <div class="col-sm-3">
+                                <label for="status">Status:</label>
                             </div>
-                            <div class="col-sm-4">
-                                <button class="btn btn-info" id="addStudents">Add students&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></button>
+                            <div class="col-sm-4" id="status">
+                                {{#students.length}}<p><span class="glyphicon glyphicon-user"></span>&nbsp;<strong>{{students.length}}</strong>&nbsp;student(s)</p>{{/students.length}}
+                                {{#submissions.length}} <p><span class="glyphicon glyphicon-file"></span>&nbsp;<strong>{{submissions.length}}</strong>&nbsp;submission(s)</p>{{/submissions.length}}
                             </div>
                         </div>
 
-                        <!--TODO find a way how to visualize resources - resourcesAsList-->
                         <div class="form-group">
-                            <label for="resource" class="col-sm-3">Resources:</label>
-                            <div id="resourcesList" class="col-sm-8">
-                                <ul class="no-style-list">
-                                {{#resources}}
-                                    <li>
-                                        <span class="glyphicon glyphicon-link"></span>&nbsp;
-                                        <a href="*{{.}}">{{.}}</a>
-                                    </li>
-                                {{/resources}}
-                                {{^resources}}
-                                    <li><span class="glyphicon glyphicon-pencil"></span>&nbsp;No urls added so far. Paste a link below and click to add it to the task.</li>
-                                {{/resources}}
+                            <label for="resource" class="col-sm-2">Resources:</label>
+                            <div id="resourcesList" class="col-sm-9">
+                                <ul class="no-style-list" id='resourceList-ul'>
+                                    {{#resources}}
+                                        <li class="text-left">
+                                            <span class="glyphicon glyphicon-link"></span>&nbsp;
+                                            <a href="*{{.}}" target="_blank">{{.}}</a>&nbsp;
+                                            <button type="button" class="btn btn-default btn-xs removeUrl">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </li>
+                                    {{/resources}}
                                 <ul>
                             </div>
                             <div class="input-group  col-sm-8 col-sm-offset-3">
                                 <input type="text" class="form-control" id="resource" placeholder="paste a url">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-primary" id="addUrl" type="button">
+                                    <button class="btn btn-default" id="addUrl" type="button">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
                                 </span>
@@ -118,7 +118,7 @@
                                     <!--<a class="btn btn-default" type="button" id="clearForm">Clear form</a>-->
                                 </div>
                                 <div class="col-sm-3">
-                                    <a class="btn btn-primary" type="button" id="addTask">Save changes</a>
+                                    <a class="btn btn-primary" type="button" id="saveChangesToTask">Save changes</a>
                                 </div>
                             </div>
                         </div>
@@ -126,13 +126,9 @@
                 </section>
             </div>
         </div>
-        <!--<div class="col-md-4 col-xs-12">-->
-        <!--<aside>-->
-        <!--<h4>My tasks</h4>-->
-        <!--<div class="well well-sm">-->
-        <!--<button class="btn-primary">Controls</button>-->
-        <!--</div>-->
-        <!--</aside>-->
-        <!--</div>-->
+        <div class="col-md-4 col-xs-12">
+            <aside id="allSudents">
+            </aside>
+        </div>
     </div>
 </div>
