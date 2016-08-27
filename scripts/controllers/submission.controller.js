@@ -6,11 +6,16 @@ app.submissionController = class SubmissionController{
         this.model = model;
     }
 
-    createSubmission(){
-        // TODO
+    loadCreateNewSubmissionPage(container, task){
+       this.view.showCreateNewSubmissionPage(container, task);
     }
 
-    loadSubmission(){
+    sendSubmission(submission){
+        var _this = this;
+        return this.model.postSubmission(submission);
+    }
+
+    loadSubmission(submissionId){
         //TODO
     }
 

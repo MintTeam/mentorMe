@@ -36,7 +36,7 @@ app.userController = class UserController{
             type: data.type,
             email: data.email,
             connections: [],
-            tasks: []
+            //tasks: []
             //teams: []
         };
         if( type==='student' ){
@@ -49,6 +49,7 @@ app.userController = class UserController{
                 sessionStorage['sessionId'] = success._kmd.authtoken;
                 sessionStorage['username'] = success.username;
                 sessionStorage['userId'] = success._id;
+                sessionStorage['userType'] = success.type;
 
                 noty({
                     layout: 'topLeft',
@@ -92,7 +93,7 @@ app.userController = class UserController{
                 sessionStorage['sessionId'] = success._kmd.authtoken;
                 sessionStorage['username'] = success.username;
                 sessionStorage['userId'] = success._id;
-                sessionStorage['userType'] = success.type._id;
+                sessionStorage['userType'] = success.type;
 
                 noty({
                     layout: 'topLeft',
@@ -236,6 +237,15 @@ app.userController = class UserController{
                     });
             }).done();
     };
+
+    loadUserInfo(id) {
+        return this.getUserById(id)
+            .then(function(user){
+                return user;
+            })
+    }
+
+
 
     //loadAllUserConnections(){
     //    //var _this = this;

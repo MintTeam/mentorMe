@@ -45,9 +45,12 @@
                             <li id="registerMenuLink"><a href="#/register/">Register</a></li>
                             <li id="tasksMenuLink"><a href="#/tasks/">Tasks</a></li>
                             <li id="studentsMenuLink"><a href="#/students/">Students</a></li>
-                            <!--<li id="teamsMenuLink"><a href="#/teams/">Teams</a></li>-->
                             <li id="blogMenuLink"><a href="#/blog/">Blog</a></li>
                             <li id="logoutMenuLink"><a href="#/logout/">Logout</a></li>
+
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="loggedUserInfo"><a></a></li>
                         </ul>
                     </div>
                 </div>
@@ -57,21 +60,23 @@
     </div>
 </div>
 <!--scripts-->
-    <script src="scripts/helpers/html-loader.js"></script>
     <script src="scripts/helpers/requester.js"></script>
     <script src="scripts/views/home.view.js"></script>
     <script src="scripts/views/user.view.js"></script>
     <script src="scripts/views/task.view.js"></script>
+    <script src="scripts/views/submission.view.js"></script>
     <!--<script src="scripts/views/team.view.js"></script>-->
     <script src="scripts/views/blog.view.js"></script>
     <script src="scripts/models/user.model.js"></script>
     <script src="scripts/models/task.model.js"></script>
     <script src="scripts/models/blog.model.js"></script>
+    <script src="scripts/models/submission.model.js"></script>
     <!--<script src="scripts/models/team.model.js"></script>-->
     <script src="scripts/controllers/home.controller.js"></script>
     <script src="scripts/controllers/user.controller.js"></script>
     <script src="scripts/controllers/task.controller.js"></script>
     <script src="scripts/controllers/blog.controller.js"></script>
+    <script src="scripts/controllers/submission.controller.js"></script>
     <!--<script src="scripts/controllers/team.controller.js"></script>-->
     <script src="app.js"></script>
 </body>

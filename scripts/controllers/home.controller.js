@@ -12,4 +12,8 @@ app.homeController = class HomeController{
     loadAbout(menu, wrapper){
         this.view.showAboutPage(menu, wrapper);
     }
+
+    loadUserMenu(){
+        this.vier.showUserMenu();
+    }
 };

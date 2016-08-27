@@ -32,9 +32,6 @@ app.taskView = class TaskView{
                 modal.find('.modal-body .taskProgress').html(progress.toString() + "&percnt;");
             });
 
-            //TODO assign
-
-            //TODO edit
             $('.editTaskBtn').on('click', function(e){
                 var url = $(e.target).attr('href');
                 Sammy(function(){
@@ -102,8 +99,6 @@ app.taskView = class TaskView{
             var rendered = Mustache.render(templ, {username: username, tasks: tasks});
             $(container).html(rendered);
 
-
-
         });
     }
 
@@ -166,11 +161,8 @@ app.taskView = class TaskView{
                 $('.removeUrl').on('click', function(e){
                     e.preventDefault();
                     var removeUrl = $(e.target).prev().html();
-                    console.log(removeUrl);
                     resources = resources.filter(function(url){
                         return url !== removeUrl;
-                        console.log(url);
-                        console.log(removeUrl);
                     });
                     $(e.target).closest('li').addClass('animated fadeOut');
                     $(e.target).closest('li').remove();
@@ -180,11 +172,8 @@ app.taskView = class TaskView{
             $('.removeUrl').on('click', function(e){
                 e.preventDefault();
                 var removeUrl = $(e.target).prev().html();
-                console.log(removeUrl);
                 resources = resources.filter(function(url){
                     return url !== removeUrl;
-                    console.log(url);
-                    console.log(removeUrl);
                 });
                 $(e.target).closest('li').addClass('animated fadeOut');
                 $(e.target).closest('li').remove();
@@ -340,6 +329,11 @@ app.taskView = class TaskView{
                     "gr": true,
                     "gw": true
                 };
+                data.author = 	{
+                    "_type":"KinveyRef",
+                    "_id": sessionStorage['userId'],
+                    "_collection":"user"
+                }
 
                 if(data.title && data.description && data.deadline){
                     Sammy(function(){
@@ -369,6 +363,25 @@ app.taskView = class TaskView{
         })
     }
 
+    showCheckSubmissionsPage(container, data){
+        this.showUserMenu();
+        $.get('templates/teacher-views/check-submissions.html', function(template){
+            var rendered = Mustache.render(template, data);
+            $(container).html(rendered);
+
+            $('#submissionPreview').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var title = $(button).closest(".submissionInfo").attr("data-submission-title");
+                var body = $(button).closest(".submissionInfo").attr("data-submission-content");
+                var modal = $(this);
+                modal.find('.modal-title').text(title);
+                modal.find('.modal-body .submissionContent').html(body);
+            });
+
+
+        });
+    }
+
     clearFormFields(){
         $('input').val('');
         $('textarea').val('');
@@ -392,11 +405,14 @@ app.taskView = class TaskView{
     }
 
     showUserMenu(){
+        var username = sessionStorage['username'];
+        var usertype = sessionStorage['userType'];
+        $('#loggedUserInfo a').html('<img src="img/vc-logo.png">'+username + ", " + usertype);
+        //$('#loggedUserInfo a').html(username + ", " + usertype);
         $('#loginMenuLink').hide();
         $('#registerMenuLink').hide();
         $('#tasksMenuLink').show();
         $('#studentsMenuLink').show();
-        $('#teamsMenuLink').show();
         $('#blogMenuLink').show();
         $('#logoutMenuLink').show();
     }
