@@ -15,37 +15,55 @@ app.taskController = class TaskController{
         var id = sessionStorage['userId'];
         return this.model.getAllUserTasks(id, type)
             .then(function(data){
-            var sorted = data.sort(function(a,b){
-                return a.deadline > b.deadline;
-            });
-            if(type === 'teacher'){
-                _this.view.showAllTeacherTasks(container, sorted);
-            }else if(type === 'student'){
-                var studentTasks = [];
-
+                var now = new Date();
+                var sorted = data.sort(sortByDate);
                 sorted.forEach(function(task){
-                    var taskEntry = {
-                        _id: task._id,
-                        title: task.title,
-                        description: task.description,
-                        author: task.author._obj.username,
-                        resources: task.resources,
-                        deadline: task.deadline,
-                        submission: task.submissions.some(function(subm){
-                            return subm._obj._acl.creator == id;
-                        })
-                    };
-                    studentTasks.push(taskEntry);
-                })
-                _this.view.showAllStudentTasks(container, studentTasks);
-            }
+                    if(new Date(task.deadline) < now){
+                        task["over"] = true;
+                    }
+                    task.deadline = moment(task.deadline).format('LL');
+                });
+                console.log(sorted);
+                if(type === 'teacher'){
+                    _this.view.showAllTeacherTasks(container, sorted);
+                }else if(type === 'student'){
+                    var studentTasks = [];
+
+                    sorted.forEach(function(task){
+                        var submissionTitle = "";
+                        var submissionContent = "";
+                        var taskEntry = {
+                            _id: task._id,
+                            title: task.title,
+                            description: task.description,
+                            author: task.author._obj.username,
+                            resources: task.resources,
+                            over: task.over,
+                            deadline: task.deadline,
+                            submission: task.submissions.filter(function(subm){
+                                return subm._obj._acl.creator == id;
+                            })[0]
+                        };
+                        studentTasks.push(taskEntry);
+                    })
+                    _this.view.showAllStudentTasks(container, studentTasks);
+                }
             }).done();
+
+        function sortByDate(taskA, taskB){
+            return taskA.deadline > taskB.deadline;
+        }
+
+        //function sortByProgress(taskA, taskB){
+        //    return taskA.progress > taskB.progress;
+        //}
     }
 
     loadEditTaskPage(container, id){
         var _this = this;
         return this.model.getTaskById(id)
             .then(function(task){
+                task.deadline = moment(task.deadline).format('LL');
                 _this.view.showEditTaskPage(container, task);
             }).done();
     }

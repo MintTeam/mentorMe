@@ -26,7 +26,7 @@
         <div class="col-md-8 col-xs-12">
             <header class="col-md-12">
                 <h1><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;&nbsp;Check Submissions</h1>
-                <span>about task&nbsp;</span><span class="lead">&quot;{{taskInfo.title}}&quot; </span>
+                <span>for task&nbsp;</span><span class="lead">&quot;{{taskInfo.title}}&quot; </span>
                 <div class="row">
                     <p class="text-right col-md-12">
                         <button class="text-right btn btn-default" onclick="window.history.back()">
@@ -45,7 +45,7 @@
                                 <div class="col-sm-9 col-xs-3">
                                     {{#submission}}
                                     <span class="label label-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Submission sent</span>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submissionPreview">Details</button>
+                                    <a class="btn btn-info btn-xs" type="button" data-toggle="modal" data-target="#submissionPreview"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;Submission details</a>
                                     {{/submission}}
                                     {{^submission}}
                                     <span class="label label-danger"><span class="glyphicon glyphicon-minus"></span>&nbsp;No submission</span>
@@ -54,6 +54,9 @@
                             </div>
                         </div>
                     </li>
+                    {{/submissions}}
+                    {{^submissions}}
+                    <li>No submissions have been sent for this task.</li>
                     {{/submissions}}
                 </ul>
             </div>

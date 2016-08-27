@@ -1,4 +1,4 @@
-<div class="modal fade" id="taskPreview" tabindex="-1" role="dialog">
+<div class="modal fade" id="submissionPreview" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,33 +7,19 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-2"><strong>Deadline:</strong></label>
-                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDeadline"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-2"><strong>Description:</strong></label>
-                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskDescription"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-2"><strong>Resources:</strong></label>
-                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskResources"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 col-xs-2"><strong>Progress:</strong></label>
-                            <p class="col-md-8 col-xs-9 col-xs-offset-1 taskProgress"></p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="col-md-12 submissionContent"></p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!--modal-->
+</div><!-- /.modal -->
 
 <div class="col-md-12 col-sx-12 animated fadeIn">
     <div class="row">
@@ -51,43 +37,47 @@
             </header>
             <div class="col-md-12 margin-top-20">
                 {{#tasks}}
-                <div class="panel panel-primary taskElement" id="{{_id}}">
+                <div class="panel panel-{{^over}}primary{{/over}}{{#over}}default{{/over}} taskElement" id="{{_id}}">
                     <div class="panel-heading">
-                        <h4 class="panel-title"><strong>&quot;{{title}}&quot;</strong></h4>
-                        <span><em>by&nbsp;<strong>{{author}}</strong></em></span>
+                        <h4 class="panel-title">
+                            <strong>&quot;{{title}}&quot;</strong>
+                        </h4>
+                        <span>
+                            <em>by&nbsp;<strong>{{author}}</strong></em>
+                        </span>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12 col-xs-12 text-left description">
                             <h5><span class="glyphicon glyphicon-list-alt"></span><strong>&nbsp;Description</strong></h5>
                             <p class="text-justify description-area"><em>{{description}}</em></p>
                         </div>
-                            <div class="col-md-12 col-xs-12 text-left resources">
-                                <h5><span class="glyphicon glyphicon-link"></span><strong>&nbsp;Resources</strong></h5>
-                                <ol class="no-style-list">
-                                    {{#resources}}
-                                    <li><a href="*{{.}}" target="_blank">{{.}}</a></li>
-                                    {{/resources}}
-                                    {{^resources}}
-                                    <li>No resources</li>
-                                    {{/resources}}
-                                </ol>
-                            </div>
-                            <!--<div class="col-md-12 col-xs-12 text-left">-->
-                                <div class=" col-md-6 col-sx-12 deadline">
-                                    <h5><span class="glyphicon glyphicon-calendar"></span><strong>&nbsp;Deadline</strong></h5>
-                                    <p>{{deadline}}</p>
-                                </div>
-                                <div class="col-md-6 col-xs-12 text-right submissions margin-top-20">
-                                    <!--TODO - submisson not submissions-->
-                                    {{#submission}}
-                                    <span class="label label-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Submission sent</span>
-                                    {{/submission}}
-                                    {{^submission}}
-                                    <a href="#/create-submission/{{_id}}/" class="btn btn-primary createSubmission">Create Submission</a>
-                                    {{/submission}}
-                                </div>
-                            <!--</div>-->
-                    </div>
+                        <div class="col-md-12 col-xs-12 text-left resources">
+                            <h5><span class="glyphicon glyphicon-link"></span><strong>&nbsp;Resources</strong></h5>
+                            <ol class="no-style-list">
+                                {{#resources}}
+                                <li><a href="*{{.}}" target="_blank">{{.}}</a></li>
+                                {{/resources}}
+                                {{^resources}}
+                                <li>No resources</li>
+                                {{/resources}}
+                            </ol>
+                        </div>
+                        <!--<div class="col-md-12 col-xs-12 text-left">-->
+                        <div class=" col-md-6 col-sx-12 deadline">
+                            <h5><span class="glyphicon glyphicon-calendar"></span><strong>&nbsp;Deadline</strong></h5>
+                            <p>{{deadline}}</p>
+                        </div>
+                        <div class="col-md-6 col-xs-12 text-right submissions margin-top-20">
+                            {{#submission}}
+                            <span class="label label-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Submission sent</span>
+                            <a class="btn btn-info btn-xs" type="button" data-toggle="modal" data-target="#submissionPreview"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;Submission details</a>
+                            {{/submission}}
+                            {{^submission}}
+                            <a href="#/create-submission/{{_id}}/" class="btn btn-primary createSubmission {{#over}}disabled{{/over}}">Create Submission</a>
+                            {{/submission}}
+                        </div>
+                    <!--</div>-->
+            </div>
                 </div>
                 {{/tasks}}
                 {{^tasks}}
