@@ -8,6 +8,7 @@ app.blogController = class BlogController {
 
     loadAllPosts(container) {
         var _this = this;
+
         this.model.getAllPosts()
             .then(function (data) {
                 var posts = [];
@@ -113,7 +114,6 @@ app.blogController = class BlogController {
                     timeout: 200
                 });
                 _this.view.clearFormFields();
-
                 Sammy(function () {
                     this.trigger('redirectUrl', {url: "#/blog/"});
                 })

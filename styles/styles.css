@@ -77,6 +77,11 @@ dd, td {
     padding: 0;
 }
 
+
+.taskElement {
+    background-color: rgba(0, 153, 153, 0.2);
+}
+
 .green-transperant-bg{
     background-color: rgba(0, 153, 153, 0.3);
 }
@@ -98,9 +103,15 @@ dd, td {
     border-top: 1px solid grey;
 }
 
-.postElement{
+.postElement {
     background-color: rgba(255, 255, 255, 0.75);
+
 }
+
+.taskElementHome {
+    width: 30%;
+}
+
 .task-ref{
     background:rgba(255, 255, 205, 0.2);
     display:block;
@@ -133,3 +144,16 @@ dd, td {
     content:url(../img/vc-logo.png);
     padding: 5px;
 }
+
+.teachersHomeWrap .postElement {
+    width: 67%;
+    margin-right: 3%;
+}
+
+@media (max-width: 768px) {
+    .teachersHomeWrap .postElement.col-xs-12,
+    .taskElementHome.col-xs-12 {
+        width: 100%;
+    }
+}
+

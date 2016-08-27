@@ -1,9 +1,22 @@
-<div>
-    <div id="{{_id}}">
-        <label for="title">Title: </label>
-        <input type="text" id="title" value="{{title}}">
-        <label for="content">Content: </label>
-        <textarea name="content" id="content" cols="30" rows="10">{{content}}</textarea>
-        <button id="savePostChanges">Save Changes</button>
+<div class="col-md-12 col-sx-12 animated fadeIn">
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+
+            <div class="postElement well well-lg" id="{{_id}}">
+
+                <label for="title" >Title: </label>
+                <input class="form-control" type="text" id="title" value="{{title}}">
+                <br>
+                <label for="content">Content: </label>
+                <textarea class="form-control" name="content" id="content" cols="50" rows="10">{{content}}</textarea>
+                <br>
+                <button class="btn btn-primary" type="button" id="savePostChanges">Save Changes</button>
+
+            </div>
+
+        </div>
     </div>
 </div>
+
+
+
