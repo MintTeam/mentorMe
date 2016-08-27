@@ -82,12 +82,12 @@ dd, td {
 
 .no-style-list{
     list-style-type:none;
-    padding-left: 10px;
+    padding: 0;
 }
 
 
 .taskElement {
-    background-color: rgba(0, 153, 153, 0.2);
+    /*background-color: rgba(0, 153, 153, 0.2);*/
 }
 
 .green-transperant-bg{
@@ -103,8 +103,8 @@ dd, td {
     margin-left:20px;
 }
 
-.vc-logo {
-    margin-top: -12px;
+.mentorMe-logo {
+    margin-top: -8px;
 }
 
 .border-top{
@@ -120,6 +120,39 @@ dd, td {
     width: 30%;
 }
 
+.task-ref{
+    background:rgba(255, 255, 205, 0.2);
+    display:block;
+    font-size: 1em;
+    padding:1em;
+    -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+    -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.3);
+    box-shadow: 5px 5px 7px rgba(33,33,33,.3);
+    -moz-transition:-moz-transform .15s linear;
+    -o-transition:-o-transform .15s linear;
+    -webkit-transition:-webkit-transform .15s linear;
+    -webkit-transform: rotate(1.5deg);
+    -o-transform: rotate(1.5deg);
+    -moz-transform:rotate(1.5deg);
+    word-wrap: break-word;
+    z-index:1;
+}
+
+.task-ref:hover{
+    box-shadow:10px 10px 7px rgba(0,0,0,.3);
+    -moz-box-shadow:10px 10px 7px rgba(0,0,0,.3);
+    -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.3);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    position:relative;
+    /*z-index:1;*/
+}
+.userIcon::before{
+    content:url(../img/vc-logo.png);
+    padding: 5px;
+}
+
 .teachersHomeWrap .postElement {
     width: 67%;
     margin-right: 3%;
@@ -132,10 +165,3 @@ dd, td {
     }
 }
 
-
-/*.description-area{*/
-    /*height: 8em;*/
-    /*padding: 5px;*/
-    /*overflow: scroll;*/
-    /*overflow-x: hidden;*/
-/*}*/

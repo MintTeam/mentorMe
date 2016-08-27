@@ -40,6 +40,7 @@
         <div class="col-md-8 col-xs-12">
             <header class="col-md-12">
                 <h1><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Tasks</h1>
+                <p>All the tasks that have been assigned to you</p>
                 <div class="row">
                     <p class="text-right col-md-12">
                         <button class="text-right btn btn-default" onclick="window.history.back()">
@@ -53,6 +54,7 @@
                 <div class="panel panel-primary taskElement" id="{{_id}}">
                     <div class="panel-heading">
                         <h4 class="panel-title"><strong>&quot;{{title}}&quot;</strong></h4>
+                        <span><em>by&nbsp;<strong>{{author}}</strong></em></span>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12 col-xs-12 text-left description">
@@ -70,21 +72,21 @@
                                     {{/resources}}
                                 </ol>
                             </div>
-                            <div class="col-md-12 col-xs-12 text-left">
+                            <!--<div class="col-md-12 col-xs-12 text-left">-->
                                 <div class=" col-md-6 col-sx-12 deadline">
                                     <h5><span class="glyphicon glyphicon-calendar"></span><strong>&nbsp;Deadline</strong></h5>
                                     <p>{{deadline}}</p>
                                 </div>
-                                <div class="col-md-6 col-xs-12 text-right submissions">
-                                    <h5><span class="glyphicon glyphicon-send"></span><strong>&nbsp;Submission status</strong></h5>
-                                    {{#submissions.length}}
-                                    <span class="label label-success">Submission sent</span>
-                                    {{/submissions.length}}
-                                    {{^submissions.length}}
-                                    <a class="btn btn-primary" href="#/create-submission/">Create Submission</a>
-                                    {{/submissions.length}}
+                                <div class="col-md-6 col-xs-12 text-right submissions margin-top-20">
+                                    <!--TODO - submisson not submissions-->
+                                    {{#submission}}
+                                    <span class="label label-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Submission sent</span>
+                                    {{/submission}}
+                                    {{^submission}}
+                                    <a href="#/create-submission/{{_id}}/" class="btn btn-primary createSubmission">Create Submission</a>
+                                    {{/submission}}
                                 </div>
-                            </div>
+                            <!--</div>-->
                     </div>
                 </div>
                 {{/tasks}}
@@ -93,7 +95,8 @@
                 {{/tasks}}
             </div>
         </div>
-        <div class="col-md-3 col-xs-12">
+        <div class="col-md-4 col-xs-12">
         </div>
     </div>
 </div>
+

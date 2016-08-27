@@ -1,0 +1,84 @@
+<div class="modal fade" id="submissionPreview" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title"></h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="col-md-12 submissionContent"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="col-md-12 col-sx-12 animated fadeIn">
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+            <header class="col-md-12">
+                <h1><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Create New Submission</h1>
+                <span>for task&nbsp;</span><span class="lead">&quot;{{title}}&quot; </span>
+                <!--<p>{{description}}</p>-->
+                <div class="row">
+                    <p class="text-right col-md-12">
+                        <button class="text-right btn btn-default" onclick="window.history.back()">
+                            <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
+                        </button>
+                    </p>
+                </div>
+            </header>
+            <div class="col-md-12 margin-top-20">
+                <form name="createSubmissionForm" class="well form-horizontal col-md-12">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2">Title:</label>
+                        <div class=" col-sm-10">
+                            <input type="text" id="title" class="form-control" placeholder="submission title" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="col-sm-2">Body:</label>
+                        <div class="col-sm-10">
+                            <textarea id="content" class="form-control" rows="10" placeholder="submission body" required="required"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-horizontal padding-top-20">
+                        <div class="form-group">
+                            <div class="col-sm-6 col-xs-6 text-left">
+                                <a class="btn btn-default" type="button" data-toggle="modal" data-target="#submissionPreview">Preview</a>
+                                <a class="btn btn-default" type="button" id="clearForm">Clear form</a>
+                            </div>
+                            <div class="col-sm-6 col-xs-6 text-right">
+                                <a class="btn btn-primary" type="button" id="sendSubmission">Send Submission</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4 hidden-sm hidden-xs">
+            <div class="task-ref">
+                <u><h3>Task Information</h3></u>
+                <h4><strong>{{title}}</strong></h4>
+                <ul class="no-style-list" id='resourceList-ul'>
+                    {{#resources}}
+                    <li class="text-left">
+                        <span class="glyphicon glyphicon-link"></span>&nbsp;
+                        <a href="*{{.}}" target="_blank">{{.}}</a>&nbsp;
+                    </li>
+                    {{/resources}}
+                </ul>
+                <div class="margin-top-20"><em>{{description}}</em></div>
+            </div>
+        </div>
+    </div>
+
+</div>

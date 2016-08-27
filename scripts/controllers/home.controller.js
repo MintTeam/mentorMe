@@ -12,4 +12,12 @@ app.homeController = class HomeController{
     loadAbout(menu, wrapper){
         this.view.showAboutPage(menu, wrapper);
     }
+
+    loadUserMenu() {
+        this.view.showUserMenu();
+    }
+
+    loadGuestMenu(){
+        this.view.showGuestMenu();
+    }
 };

@@ -10,50 +10,41 @@ app.taskController = class TaskController{
         this.view.showCreateNewTaskPage(container);
     }
 
-    //loadAllTeacherTasks(container){
-    //    var id = sessionStorage['userId'];
-    //    var _this = this;
-    //    return this.model.getAllTeacherTasks(id)
-    //        .then(function(data){
-    //            var sorted = data.sort(function(a,b){
-    //                return a.deadline > b.deadline;
-    //            });
-    //            _this.view.showAllTeacherTasks(container, sorted);
-    //        }).done();
-    //};
-    //
-    //loadAllStudentTasks(container){
-    //    var id = sessionStorage['userId'];
-    //    console.log('ctrl   '+ id);
-    //    return this.model.getAllStudentTasks(id)
-    //        .then(function(success){
-    //            console.log("contr");
-    //        }, function(error){
-    //            console.error(error);
-    //        }).done();
-    //}
-
     loadAllUserTasks(container, type){
         var _this = this;
         var id = sessionStorage['userId'];
         return this.model.getAllUserTasks(id, type)
             .then(function(data){
-                var sorted = data.sort(function(a,b){
-                    return a.deadline > b.deadline;
-                });
-                console.log(data);
-                if(type === 'teacher'){
-                    _this.view.showAllTeacherTasks(container, sorted);
-                }else if(type === 'student'){
-                    _this.view.showAllStudentTasks(container, sorted);
-                    //load all user submissions
-                }
+            var sorted = data.sort(function(a,b){
+                return a.deadline > b.deadline;
+            });
+            if(type === 'teacher'){
+                _this.view.showAllTeacherTasks(container, sorted);
+            }else if(type === 'student'){
+                var studentTasks = [];
+
+                sorted.forEach(function(task){
+                    var taskEntry = {
+                        _id: task._id,
+                        title: task.title,
+                        description: task.description,
+                        author: task.author._obj.username,
+                        resources: task.resources,
+                        deadline: task.deadline,
+                        submission: task.submissions.some(function(subm){
+                            return subm._obj._acl.creator == id;
+                        })
+                    };
+                    studentTasks.push(taskEntry);
+                })
+                _this.view.showAllStudentTasks(container, studentTasks);
+            }
             }).done();
     }
 
     loadEditTaskPage(container, id){
         var _this = this;
-        return this.model.getTaskById(id, true)
+        return this.model.getTaskById(id)
             .then(function(task){
                 _this.view.showEditTaskPage(container, task);
             }).done();
@@ -69,13 +60,86 @@ app.taskController = class TaskController{
             }).done();
     }
 
-    loadTaskPage(id){
+    loadTaskInfo(id){
+        return this.model.getTaskById(id);
+    }
+
+    checkSubmissions(container, taskId){
         var _this = this;
-        return this.model.getTaskById(id, true)
-            .then(function(assignment){
-                _this.view.showTaskPage(assignment);
+        return this.model.getTaskById(taskId, true)
+            .then(function(task){
+                var studentSubmissionPairs = [];
+                task.students.forEach(function(student){
+                    var studentId = student._id;
+                    var username = student._obj.username;
+                    var firstName = student._obj.firstName;
+                    var lastName = student._obj.lastName;
+                    task.submissions.forEach(function(submission){
+                        if(submission._obj.author._id === studentId){
+                            studentSubmissionPairs.push({
+                                "username": username,
+                                "firstName": firstName,
+                                "lastName": lastName,
+                                "submission": {
+                                    title: submission._obj.title,
+                                    content: submission._obj.content
+                                }
+                            });
+                        }else{
+                            studentSubmissionPairs.push({
+                                "username": username
+                            });
+                        }
+                    });
+                })
+                var sortedSubmissionsByUsername = studentSubmissionPairs.sort(function(a,b){
+                   return a.username > b.username;
+                });
+
+                var data = {
+                    taskInfo: {
+                        title: task.title,
+                        description: task.description,
+                        id: task._id
+                    },
+                    submissions: sortedSubmissionsByUsername
+                };
+                _this.view.showCheckSubmissionsPage(container, data)
+            })
+    }
+
+    addSubmissionToTask(taskId, submissionId){
+        var _this = this;
+        return this.model.getTaskById(taskId)
+            .then(function(task){
+                task.submissions.push({
+                        "_type":"KinveyRef",
+                        "_id":submissionId,
+                        "_collection":"submissions"
+                    });
+                task = _this.updateTaskProgress(task);
+                return _this.model.editTask(task)
+                    .then(function(success){
+                        noty({
+                            layout: 'topLeft',
+                            theme: "bootstrapTheme",
+                            type: 'success',
+                            text: "Successful submission!",
+                            dismissQueue: true,
+                            animation: {
+                        		open: {height: 'toggle'},
+                        		close: {height: 'toggle'},
+                        		easing: 'swing',
+                        		speed: 500
+                            },
+                            timeout: 800
+                        });
+                        Sammy(function(){
+                           this.trigger('redirectUrl', {url: "#/tasks/"});
+                        });
+                    })
             }).done();
-    };
+    }
 
     createTask(data){
         var _this = this;
@@ -194,9 +258,5 @@ app.taskController = class TaskController{
             task.progress = Math.round((task.submissions.length / task.students.length) * 100);
         }
         return task;
-    }
-
-    loadAllStudentTasks(container){
-        //TODO
     }
 }

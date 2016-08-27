@@ -23,21 +23,23 @@ app.homeView = class HomeView{
     }
 
     showGuestMenu(){
+        $('#loggedUserInfo a').html("");
         $('#loginMenuLink').show();
         $('#registerMenuLink').show();
         $('#tasksMenuLink').hide();
         $('#studentsMenuLink').hide();
-        //$('#teamsMenuLink').hide();
         $('#blogMenuLink').hide();
         $('#logoutMenuLink').hide();
     }
 
     showUserMenu(){
+        var username = sessionStorage['username'];
+        var usertype = sessionStorage['userType'];
+        $('#loggedUserInfo a').html("<strong>"+username+"</strong>" + "&nbsp;<span class='label label-info'>"+ usertype + "</span>");
         $('#loginMenuLink').hide();
         $('#registerMenuLink').hide();
         $('#tasksMenuLink').show();
         $('#studentsMenuLink').show();
-        //$('#teamsMenuLink').show();
         $('#blogMenuLink').show();
         $('#logoutMenuLink').show();
     }

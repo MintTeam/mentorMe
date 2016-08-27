@@ -121,20 +121,19 @@ app.userView = class UserView{
         $(studentElement).append('<div class="btn btn-sm btn-default animated fadeIn"><span class="glyphicon glyphicon-ok"></span>Added</div>');
     }
 
-    //showAllConnections(container, data){
-    //    $.get('templates/teacher-views/students.html', function(template){
-    //        var rendered = Mustache.render(template, {connections: data});
-    //        $(container).html(rendered);
-    //    });
-    //}
-
     showUserMenu(){
-        $('#loginMenuLink').hide();
-        $('#registerMenuLink').hide();
-        $('#tasksMenuLink').show();
-        $('#studentsMenuLink').show();
-        //$('#teamsMenuLink').show();
-        $('#blogMenuLink').show();
-        $('#logoutMenuLink').show();
+        Sammy(function(){
+            this.trigger('show-user-menu');
+        });
+    //    var username = sessionStorage['username'];
+    //    var usertype = sessionStorage['userType'];
+    //    $('#loggedUserInfo a').html('<img src="img/vc-logo.png">'+username + ", " + usertype);
+    //    //$('#loggedUserInfo a').html(username + ", " + usertype);
+    //    $('#loginMenuLink').hide();
+    //    $('#registerMenuLink').hide();
+    //    $('#tasksMenuLink').show();
+    //    $('#studentsMenuLink').show();
+    //    $('#blogMenuLink').show();
+    //    $('#logoutMenuLink').show();
     }
 }

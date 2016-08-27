@@ -20,7 +20,7 @@ app.taskModel = class TaskModel{
     getAllUserTasks(id, type){
         var requestUrl;
         if(type === 'student'){
-            requestUrl = this.serviceUrl + '?query={"students._id":"'+id+'"}&resolve=submissions?query={"submissions._obj._acl.creator":"'+id+'"}';
+            requestUrl = this.serviceUrl + '?query={"students._id":"'+id+'"}&resolve_depth=3';
         }else if(type === 'teacher'){
             requestUrl = this.serviceUrl + '?query={"_acl.creator":"'+id+'"}&resolve=submissions';
         }
@@ -45,7 +45,7 @@ app.taskModel = class TaskModel{
     getTaskById(id, isDetailed){
         var requestUrl;
         if(isDetailed){
-            requestUrl = this.serviceUrl + id + "/?resolve=students,resources";
+            requestUrl = this.serviceUrl + id + "/?resolve=students,submissions";
         }else{
             requestUrl = this.serviceUrl + id;
         }

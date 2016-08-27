@@ -7,16 +7,16 @@ app.router = Sammy(function(){
         userView = new app.userView(),
         taskView = new app.taskView(),
         blogView = new app.blogView(),
-        //teamView = new app.teamView(),
+        submissionView = new app.submissionView();
         userModel = new app.userModel(requester),
         taskModel = new app.taskModel(requester),
         blogModel = new app.blogModel(requester),
-        //teamModel = new app.teamModel(requester),
+        submissionModel = new app.submissionModel(requester),
         homeController = new app.homeController(homeView),
         userController = new app.userController(userView, userModel),
         taskController = new app.taskController(taskView, taskModel),
-        blogController = new app.blogController(blogView, blogModel);
-        //teamController = new app.teamController(teamView, teamModel);
+        blogController = new app.blogController(blogView, blogModel),
+        submissionController = new app.submissionController(submissionView, submissionModel);
 
     this.before({except: {path: "#\/(login\/|register\/|about\/)?"}}, function(){
         if(!sessionStorage["sessionId"]){
@@ -30,6 +30,7 @@ app.router = Sammy(function(){
             homeController.loadGuestHomePage(container);
         }else{
             userController.loadUserHomePage(container);
+            //edit with proper data call
         }
     });
 
@@ -57,7 +58,6 @@ app.router = Sammy(function(){
         userController.logoutUser();
     });
 
-    //user binds
     this.bind('user-login', function(ev, data){
         userController.loginUser(data);
     });
@@ -70,6 +70,14 @@ app.router = Sammy(function(){
         this.redirect(data.url);
     });
 
+    this.bind('show-user-menu', function(ev, data){
+        homeController.loadUserMenu();
+    });
+
+    this.bind('show-guest-menu', function(ev, data){
+        homeController.loadGuestMenu();
+    })
+
     //tasks
     this.get('#/tasks/', function(){
         var type;
@@ -79,22 +87,6 @@ app.router = Sammy(function(){
             }).then(function(success){
                 taskController.loadAllUserTasks(container, type);
         }).done();
-        //let def = Q.defer();
-        //let _this = this;
-        //userController.getUserType()
-        //    .then(function(type){
-        //        if(type === 'teacher'){
-        //            def.resolve(taskController.loadAllTeacherTasks(container));
-        //        }else if(type === 'student'){
-        //            console.log(type === 'student');
-        //            taskController.loadAllStudentTasks(container)
-        //            //def.resolve(taskController.loadAllStudentTasks(container));
-        //        }
-        //    }, function(error){
-        //        def.reject(error);
-        //    });
-        //
-        //return def.promise;
     });
 
     this.get("#/new-task/", function(){
@@ -113,12 +105,11 @@ app.router = Sammy(function(){
         return def.promise;
     });
 
-    //tasks
     this.bind('load-all-students', function(ev, data){
         userController.loadAllStudents(data.selector);
     })
 
-    this.get("#/edit-task/:id", function(){
+    this.get("#/edit-task/:id/", function(){
         "use strict";
         var id = this.params['id'];
         taskController.loadEditTaskPage(container, id);
@@ -132,10 +123,6 @@ app.router = Sammy(function(){
         userController.addTaskToCollection(data.id);
     })
 
-    this.bind('show-task-details', function(ev, data){
-        taskController.loadTaskPage(data.id);
-    });
-
     this.bind('create-task', function(ev, data){
         "use strict";
         taskController.createTask(data);
@@ -146,25 +133,56 @@ app.router = Sammy(function(){
         taskController.deleteTaskById(data.id);
     });
 
-    this.get('#/assign-task/:id', function(){
+    this.get('#/assign-task/:id/', function(){
         var taskId = this.params['id'];
         userController.loadAllStudents(container, taskId);
     });
 
     this.bind("assign-task", function(ev, data){
         taskController.assignTask(data.studentIds, data.taskId);
-        //taskController.put array with StudentRef in the task
     });
 
+    this.get('#/check-submissions/:id/', function(){
+        var taskId = this.params['id'];
+        taskController.checkSubmissions(container, taskId);
+    });
+
+    //students
     this.get('#/students/', function(){
         "use strict";
         userController.loadAllStudents(container);
     });
 
+    //connections
     this.bind('add-connection', function(ev, data){
         "use strict";
         userController.addConnection(data.newConnectionId);
     });
+
+    //submissions
+    this.get('#/create-submission/:id/', function(){
+        var taskId = this.params['id'];
+        taskController.loadTaskInfo(taskId)
+            .then(function(task){
+                var taskInfo = {
+                    title: task.title,
+                    id: task._id,
+                    resources: task.resources,
+                    description: task.description
+                }
+                submissionController.loadCreateNewSubmissionPage(container, taskInfo);
+            })
+    });
+
+    this.bind('send-submission', function(ev, data){
+        submissionController.sendSubmission(data)
+            .then(function(success){
+                var taskId = success.task._id;
+                var submissionId = success._id;
+                return taskController.addSubmissionToTask(taskId, submissionId)
+            }).done();
+    });
+
 
     //teams
     //this.get('#/teams/', function(){
