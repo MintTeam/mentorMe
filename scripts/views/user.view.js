@@ -122,15 +122,18 @@ app.userView = class UserView{
     }
 
     showUserMenu(){
-        var username = sessionStorage['username'];
-        var usertype = sessionStorage['userType'];
-        $('#loggedUserInfo a').html('<img src="img/vc-logo.png">'+username + ", " + usertype);
-        //$('#loggedUserInfo a').html(username + ", " + usertype);
-        $('#loginMenuLink').hide();
-        $('#registerMenuLink').hide();
-        $('#tasksMenuLink').show();
-        $('#studentsMenuLink').show();
-        $('#blogMenuLink').show();
-        $('#logoutMenuLink').show();
+        Sammy(function(){
+            this.trigger('show-user-menu');
+        });
+    //    var username = sessionStorage['username'];
+    //    var usertype = sessionStorage['userType'];
+    //    $('#loggedUserInfo a').html('<img src="img/vc-logo.png">'+username + ", " + usertype);
+    //    //$('#loggedUserInfo a').html(username + ", " + usertype);
+    //    $('#loginMenuLink').hide();
+    //    $('#registerMenuLink').hide();
+    //    $('#tasksMenuLink').show();
+    //    $('#studentsMenuLink').show();
+    //    $('#blogMenuLink').show();
+    //    $('#logoutMenuLink').show();
     }
 }

@@ -18,7 +18,6 @@ app.taskController = class TaskController{
             var sorted = data.sort(function(a,b){
                 return a.deadline > b.deadline;
             });
-            console.log(sorted);
             if(type === 'teacher'){
                 _this.view.showAllTeacherTasks(container, sorted);
             }else if(type === 'student'){

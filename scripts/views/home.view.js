@@ -23,7 +23,7 @@ app.homeView = class HomeView{
     }
 
     showGuestMenu(){
-        $('#loggedUserInfo a').html();
+        $('#loggedUserInfo a').html("");
         $('#loginMenuLink').show();
         $('#registerMenuLink').show();
         $('#tasksMenuLink').hide();
@@ -35,7 +35,7 @@ app.homeView = class HomeView{
     showUserMenu(){
         var username = sessionStorage['username'];
         var usertype = sessionStorage['userType'];
-        $('#loggedUserInfo a').html('<img src="img/vc-logo.png">'+username + ", " + usertype);
+        $('#loggedUserInfo a').html("<strong>"+username+"</strong>" + "&nbsp;<span class='label label-info'>"+ usertype + "</span>");
         $('#loginMenuLink').hide();
         $('#registerMenuLink').hide();
         $('#tasksMenuLink').show();

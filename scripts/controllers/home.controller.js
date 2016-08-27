@@ -13,7 +13,11 @@ app.homeController = class HomeController{
         this.view.showAboutPage(menu, wrapper);
     }
 
-    loadUserMenu(){
-        this.vier.showUserMenu();
+    loadUserMenu() {
+        this.view.showUserMenu();
+    }
+
+    loadGuestMenu(){
+        this.view.showGuestMenu();
     }
 };

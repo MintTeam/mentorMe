@@ -79,7 +79,7 @@ dd, td {
 
 
 .taskElement {
-    background-color: rgba(0, 153, 153, 0.2);
+    /*background-color: rgba(0, 153, 153, 0.2);*/
 }
 
 .green-transperant-bg{
@@ -95,8 +95,8 @@ dd, td {
     margin-left:20px;
 }
 
-.vc-logo {
-    margin-top: -12px;
+.mentorMe-logo {
+    margin-top: -8px;
 }
 
 .border-top{

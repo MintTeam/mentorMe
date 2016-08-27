@@ -70,6 +70,14 @@ app.router = Sammy(function(){
         this.redirect(data.url);
     });
 
+    this.bind('show-user-menu', function(ev, data){
+        homeController.loadUserMenu();
+    });
+
+    this.bind('show-guest-menu', function(ev, data){
+        homeController.loadGuestMenu();
+    })
+
     //tasks
     this.get('#/tasks/', function(){
         var type;

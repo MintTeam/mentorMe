@@ -152,8 +152,13 @@ app.userController = class UserController{
                 });
 
                 Sammy(function(){
+                    this.trigger('show-guest-menu');
+                });
+
+                Sammy(function(){
                     this.trigger('redirectUrl', {url: "#/"})
                 });
+
             }).done();
     };
 
