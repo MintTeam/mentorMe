@@ -23,7 +23,6 @@ app.taskController = class TaskController{
                     }
                     task.deadline = moment(task.deadline).format('LL');
                 });
-                console.log(sorted);
                 if(type === 'teacher'){
                     _this.view.showAllTeacherTasks(container, sorted);
                 }else if(type === 'student'){
