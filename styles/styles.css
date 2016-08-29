@@ -148,10 +148,6 @@ dd, td {
     position:relative;
     /*z-index:1;*/
 }
-.userIcon::before{
-    content:url(../img/vc-logo.png);
-    padding: 5px;
-}
 
 .teachersHomeWrap .postElement {
     width: 67%;

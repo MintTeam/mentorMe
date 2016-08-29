@@ -51,7 +51,7 @@
                 </header>
                 <div class="col-md-12 margin-top-20">
                     {{#tasks}}
-                        <div class="panel panel-primary taskElement" id="{{_id}}">
+                        <div class="panel panel-{{^over}}primary{{/over}}{{#over}}default{{/over}} taskElement" id="{{_id}}">
                             <div class="panel-heading">
                                 <h4 class="panel-title"><strong>&quot;{{title}}&quot;</strong></h4>
                             </div>
@@ -92,13 +92,13 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="actionsMenu">
-                                            <li><a href="#" class="viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a></li>
-                                            <li><a href="#/assign-task/{{_id}}/" class="assignTaskBtn">Assign</a></li>
-                                            <li><a href="#/edit-task/{{_id}}/" class="editTaskBtn">Edit</a href="#/edit-task/:id"></li>
-                                            <li><a class="deleteTaskBtn">Delete</a></li>
+                                            <li><a href="#" class="btn btn-link viewTaskBtn" data-toggle="modal" data-target="#taskPreview">Details</a></li>
+                                            <li><a href="#/assign-task/{{_id}}/" class="assignTaskBtn btn btn-link {{#over}}disabled{{/over}}">Assign</a></li>
+                                            <li><a href="#/edit-task/{{_id}}/" class="editTaskBtn btn btn-link  {{#over}}disabled{{/over}}">Edit</a href="#/edit-task/:id"></li>
+                                            <li><a class="deleteTaskBtn btn btn-link {{#over}}disabled{{/over}}">Delete</a></li>
 
                                             <li role="separator" class="divider"></li>
-                                            <li><a href="#/check-submissions/{{_id}}/" class="checkSubmissions">Check submissions</a></li>
+                                            <li><a href="#/check-submissions/{{_id}}/" class="btn btn-link checkSubmissions">Check submissions</a></li>
                                         </ul>
                                     </div>
                                 </div>

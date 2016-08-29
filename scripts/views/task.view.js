@@ -21,7 +21,7 @@ app.taskView = class TaskView{
                 })[0];
                 var title = task.title;
                 var description = task.description;
-                var deadline = task.deadline;
+                var deadline = moment(task.deadline).format('LL');
                 var resources = task.resources;
                 var progress = task.progress;
                 var modal = $(this);
@@ -94,11 +94,22 @@ app.taskView = class TaskView{
         var _this = this;
         var username = sessionStorage['username'];
         this.showUserMenu();
-
         $.get('templates/student-views/tasks.html', function(templ){
             var rendered = Mustache.render(templ, {username: username, tasks: tasks});
             $(container).html(rendered);
 
+            $('#submissionPreview').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var taskId = $(button).closest('.taskElement').attr('id');
+                var task = tasks.filter(function(t){
+                    return t._id === taskId;
+                })[0];
+                var title = task.submission._obj.title;
+                var body  = task.submission._obj.content;
+                var modal = $(this);
+                modal.find('.modal-title').text(title);
+                modal.find('.modal-body .submissionContent').html(body);
+            });
         });
     }
 
@@ -114,7 +125,7 @@ app.taskView = class TaskView{
             var today = new Date();
             $(function(){
                 $('.date').datepicker({
-                    format:"dd-mm-yyyy",
+                    format:"MM d, yyyy",
                     startDate: today,
                     autoclose: true,
                     todayHighlight: true,
@@ -203,7 +214,7 @@ app.taskView = class TaskView{
                     //task = _this.updateTaskProgress(task);//TODO move the logic in the controller
                     task.title = title;
                     task.description = description;
-                    task.deadline = deadline;
+                    task.deadline = new Date(deadline);
                     task.resources = resources;
 
                     Sammy(function(){
@@ -239,7 +250,7 @@ app.taskView = class TaskView{
             var today = new Date();
             $(function(){
                 $('.date').datepicker({
-                    format:"dd-mm-yyyy",
+                    format:"MM d, yyyy",
                     startDate: today,
                     autoclose: true,
                     todayHighlight: true,
@@ -324,7 +335,7 @@ app.taskView = class TaskView{
                 var descriptionArea = $("#description");
                 data.title = $("#title").val();
                 data.description = descriptionArea.val();
-                data.deadline = $("#deadline").val();
+                data.deadline = new Date($('#deadline').val());
                 data._acl = {
                     "gr": true,
                     "gw": true
