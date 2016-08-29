@@ -109,14 +109,9 @@ app.blogView = class BlogView {
     }
 
     showUserMenu(){
-        $('#loginMenuLink').hide();
-        $('#registerMenuLink').hide();
-        $('#tasksMenuLink').show();
-        $('#studentsMenuLink').show();
-        $('#teamsMenuLink').show();
-        $('#blogMenuLink').show();
-        $('#logoutMenuLink').show();
-    }
+        Sammy(function(){
+            this.trigger('show-user-menu');
+        });
 
     clearFormFields(){
         $('input').val('');
