@@ -18,12 +18,13 @@ app.taskController = class TaskController{
                 var now = new Date();
                 var sorted = data.sort(sortByDate);
                 sorted.forEach(function(task){
-                    if(new Date(task.deadline) < now){
+                    var deadline = new Date(task.deadline);
+                    //deadline.setHours(23, 59);
+                    if(deadline.getTime() <= now.getTime()){
                         task["over"] = true;
                     }
                     task.deadline = moment(task.deadline).format('LL');
                 });
-                console.log(sorted);
                 if(type === 'teacher'){
                     _this.view.showAllTeacherTasks(container, sorted);
                 }else if(type === 'student'){

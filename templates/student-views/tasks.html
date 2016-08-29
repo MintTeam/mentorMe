@@ -39,14 +39,20 @@
                 {{#tasks}}
                 <div class="panel panel-{{^over}}primary{{/over}}{{#over}}default{{/over}} taskElement" id="{{_id}}">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 class="panel-title col-md-10">
                             <strong>&quot;{{title}}&quot;</strong>
                         </h4>
-                        <span>
-                            <em>by&nbsp;<strong>{{author}}</strong></em>
-                        </span>
+                        <div class="row">
+                            <div class="col-md-2 text-right">
+                                {{^over}} <span class="label label-success"><span class="glyphicon glyphicon-play"></span>&nbsp;Active</span>{{/over}}
+                                {{#over}}<span class="label label-default"><span class="glyphicon glyphicon-stop"></span>&nbsp;Ended</span>{{/over}}
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body">
+                        <span class="col-md-12 text-right">
+                            Author:<em>&nbsp;<strong>{{author}}</strong></em>
+                        </span>
                         <div class="col-md-12 col-xs-12 text-left description">
                             <h5><span class="glyphicon glyphicon-list-alt"></span><strong>&nbsp;Description</strong></h5>
                             <p class="text-justify description-area"><em>{{description}}</em></p>

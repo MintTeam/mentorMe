@@ -85,7 +85,6 @@ app.taskView = class TaskView{
                 Sammy(function(){
                     this.trigger('load-all-submission', {id:id});
                 });
-                //TODO
             })
         });
     }
@@ -129,7 +128,7 @@ app.taskView = class TaskView{
                     startDate: today,
                     autoclose: true,
                     todayHighlight: true,
-                    language: 'bg',
+                    //language: 'bg',
                     orientation: 'auto'
                 });
             });
@@ -211,10 +210,10 @@ app.taskView = class TaskView{
                 var deadline = $("#deadline").val();
 
                 if(title && description && deadline){
-                    //task = _this.updateTaskProgress(task);//TODO move the logic in the controller
                     task.title = title;
                     task.description = description;
-                    task.deadline = new Date(deadline);
+                    task.deadline = new Date(deadline).setHours(3);
+                    task.deadline = new Date(task.deadline);
                     task.resources = resources;
 
                     Sammy(function(){
@@ -248,13 +247,14 @@ app.taskView = class TaskView{
             $(container).html(template);
             //datepicker
             var today = new Date();
+
             $(function(){
                 $('.date').datepicker({
                     format:"MM d, yyyy",
                     startDate: today,
                     autoclose: true,
                     todayHighlight: true,
-                    language: 'bg',
+                    //language: 'en',
                     orientation: 'auto'
                 });
             });
@@ -335,7 +335,9 @@ app.taskView = class TaskView{
                 var descriptionArea = $("#description");
                 data.title = $("#title").val();
                 data.description = descriptionArea.val();
-                data.deadline = new Date($('#deadline').val());
+                //date
+                data.deadline = new Date($('#deadline').val()).setHours(3);
+                data.deadline = new Date(data.deadline);
                 data._acl = {
                     "gr": true,
                     "gw": true
@@ -419,16 +421,6 @@ app.taskView = class TaskView{
         Sammy(function(){
             this.trigger('show-user-menu');
         });
-        //var username = sessionStorage['username'];
-        //var usertype = sessionStorage['userType'];
-        //$('#loggedUserInfo a').html('<img src="img/vc-logo.png">'+username + ", " + usertype);
-        ////$('#loggedUserInfo a').html(username + ", " + usertype);
-        //$('#loginMenuLink').hide();
-        //$('#registerMenuLink').hide();
-        //$('#tasksMenuLink').show();
-        //$('#studentsMenuLink').show();
-        //$('#blogMenuLink').show();
-        //$('#logoutMenuLink').show();
     }
 
 };

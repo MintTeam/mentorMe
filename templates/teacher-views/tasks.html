@@ -53,7 +53,13 @@
                     {{#tasks}}
                         <div class="panel panel-{{^over}}primary{{/over}}{{#over}}default{{/over}} taskElement" id="{{_id}}">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><strong>&quot;{{title}}&quot;</strong></h4>
+                                <h4 class="panel-title col-md-10"><strong>&quot;{{title}}&quot;</strong></h4>
+                                <div class="row">
+                                    <div class="col-md-2 text-right">
+                                        {{^over}} <span class="label label-success"><span class="glyphicon glyphicon-play"></span>&nbsp;Active</span>{{/over}}
+                                        {{#over}}<span class="label label-default"><span class="glyphicon glyphicon-stop"></span>&nbsp;Ended</span>{{/over}}
+                                    </div>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <!--progress bar & status-->

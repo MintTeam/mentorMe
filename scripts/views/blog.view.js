@@ -107,7 +107,6 @@ app.blogView = class BlogView {
             })
         });
     }
-
     showUserMenu(){
         Sammy(function(){
             this.trigger('show-user-menu');
