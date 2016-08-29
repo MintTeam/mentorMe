@@ -107,7 +107,6 @@ app.blogView = class BlogView {
             })
         });
     }
-
     showUserMenu(){
         $('#loginMenuLink').hide();
         $('#registerMenuLink').hide();

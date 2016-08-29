@@ -89,7 +89,7 @@ app.userView = class UserView{
 
     showAllStudents(container, students, taskId){
         this.showUserMenu();
-        $.get('templates/teacher-views/students.html', function(template){
+        $.get('templates/common/students.html', function(template){
             var rendered = Mustache.render(template, {students: students, taskId:taskId});
             $(container).html(rendered);
 
@@ -125,15 +125,5 @@ app.userView = class UserView{
         Sammy(function(){
             this.trigger('show-user-menu');
         });
-    //    var username = sessionStorage['username'];
-    //    var usertype = sessionStorage['userType'];
-    //    $('#loggedUserInfo a').html('<img src="img/vc-logo.png">'+username + ", " + usertype);
-    //    //$('#loggedUserInfo a').html(username + ", " + usertype);
-    //    $('#loginMenuLink').hide();
-    //    $('#registerMenuLink').hide();
-    //    $('#tasksMenuLink').show();
-    //    $('#studentsMenuLink').show();
-    //    $('#blogMenuLink').show();
-    //    $('#logoutMenuLink').show();
     }
 }

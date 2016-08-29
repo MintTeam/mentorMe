@@ -81,14 +81,5 @@ app.submissionView = class SubmissionView{
         Sammy(function(){
             this.trigger('show-user-menu');
         });
-        //var username = sessionStorage['username'];
-        //var usertype = sessionStorage['userType'];
-        //$('#loggedUserInfo a').html('<img src="img/vc-logo.png">'+username + ", " + usertype);
-        //$('#loginMenuLink').hi1de();
-        //$('#registerMenuLink').hide();
-        //$('#tasksMenuLink').show();
-        //$('#studentsMenuLink').show();
-        //$('#blogMenuLink').show();
-        //$('#logoutMenuLink').show();
     }
 }
