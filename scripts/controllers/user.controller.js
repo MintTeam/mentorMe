@@ -34,14 +34,8 @@ app.userController = class UserController{
             username: data.username,
             password: data.password,
             type: data.type,
-            email: data.email,
-            connections: [],
-            //tasks: []
-            //teams: []
+            email: data.email
         };
-        if( type==='student' ){
-            userData.submissions = [];
-        }
 
         return this.model.register(userData)
             .then(function(success){

@@ -56,7 +56,7 @@ app.userView = class UserView{
                 }else{
                     if((type === 'student' || type === 'teacher') && (firstName && lastName && username && email && password)){
                         Sammy(function(){
-                            this.trigger('register-user',
+                                this.trigger('register-user',
                                 {
                                     firstName: firstName,
                                     lastName: lastName,
