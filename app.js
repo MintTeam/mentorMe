@@ -29,8 +29,19 @@ app.router = Sammy(function(){
         if(!sessionStorage['sessionId']){
             homeController.loadGuestHomePage(container);
         }else{
-            userController.loadUserHomePage(container);
-            //edit with proper data call
+            var type;
+            userController.getUserType()
+                .then(function(t){
+                    type = t;
+                }).then(function(success){
+                taskController.loadTopUserTasks(type)
+                    .then(function(tasks){
+                        blogController.loadLatestBlogPosts()
+                            .then(function(posts){
+                                userController.loadUserHomePage(container, tasks, posts);
+                            }).done();
+                    }).done();
+            }).done();
         }
     });
 
@@ -119,9 +130,9 @@ app.router = Sammy(function(){
         taskController.saveChangesToTask(data);
     });
 
-    this.bind('add-to-task-collection', function(ev, data){
-        userController.addTaskToCollection(data.id);
-    })
+    //this.bind('add-to-task-collection', function(ev, data){
+    //    userController.addTaskToCollection(data.id);
+    //})
 
     this.bind('create-task', function(ev, data){
         "use strict";

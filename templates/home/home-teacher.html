@@ -1,30 +1,56 @@
-<div class="col-md-8 animated fadeIn">
+<div class="col-md-12 animated fadeIn">
     <h2>Welcome, {{username}}</h2>
-    <p>You are a teacher, what to put here?</p>
-</div>
+    <div class="col-md-12 teachersHomeWrap">
+        <div class="row margin-top-20">
+            <div class="col-md-8 col-xs-12 tasksHome" >
+                <header>
+                    <h3><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Task Board</h3>
+                    <span><em>Tasks with approaching deadline</em></span>
+                </header>
+                <div class="margin-top-20 border-right">
+                    <div class="list-group">
+                        {{#tasks}}
+                        <button type="button" class="list-group-item">
+                            <div class="col-md-9 text-left">
+                                <h4 class="list-group-item-heading ">{{title}}</h4>
+                            </div>
+                            <div class="col-md-3 text-right">
+                                <span class="label label-warning">{{deadline}}</span>
+                            </div>
+                        </button>
+                        {{/tasks}}
+                    </div>
+                </div>
+                <div class="margin-top-20">
+                    <a href="#/tasks/" class="btn btn-default">View All Tasks</a>
+                    <a href="#/new-task/" class="btn btn-primary">Create New Task</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12 postsHome">
+                <header>
+                    <h3><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Blog Feed</h3>
+                    <span><em>Latest blog posts</em></span>
+                </header>
+                <div class="margin-top-20">
+                    <div class="list-group margin-top-20">
+                        {{#posts}}
+                        <button type="button" class="list-group-item">
+                            <span class="badge">{{author._obj.username}}</span>
+                            <h5 class="list-group-item-heading">
+                                {{title}}
+                            </h5>
+                        </button>
+                        {{/posts}}
+                    </div>
+                </div>
+                <div class="margin-top-20">
+                    <a href="#/posts/" class="btn btn-default">Read All</a>
+                    <a href="#/new-post/" class="btn btn-primary">Write New Post</a>
+                </div>
+            </div>
 
-
-<div class="col-md-12 teachersHomeWrap animated fadeIn">
-    <div class="row">
-
-        <div class="col-xs-12 postElement well well-sm">
-            <header>
-                <h3><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Recent Posts</h3>
-            </header>
-        </div>
-
-        <div class="col-xs-12 taskElement taskElementHome well well-sm">
-            <header>
-                <h3><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Task Board</h3>
-                <ul>
-                    <li><h4>Avery task with very long description</h4></li>
-                    <li><h4>Plant trees</h4></li>
-                    <li><h4>Write an essay about shopping</h4></li>
-                </ul>
-                <a href="#/tasks/" class="btn btn-default btn-sm">See More Tasks</a>
-                <a href="#/new-task/" class="btn btn-primary btn-sm">Create New Task</a>
-            </header>
         </div>
     </div>
 </div>
+
 

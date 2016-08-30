@@ -19,15 +19,16 @@
             </header>
             <div class="col-md-12 margin-top-20">
                 {{#students}}
-                <div class="well well-sm col-md-12" id="{{_id}}">
+                <div class="well well-sm col-md-4" id="{{_id}}">
                         <div class="checkbox">
                         {{#taskId}}
                             <label>
                                 <input type="checkbox" value="{{_id}}">
                             </label>
                         {{/taskId}}
-                            <span><strong>{{username}}</strong></span>
-                            <span class="text-left">name:&nbsp;{{firstName}}&nbsp;{{lastName}}</span>
+                            <p><strong>{{username}}</strong></p>
+                            <p class="text-left">name:&nbsp;{{firstName}}&nbsp;{{lastName}}</p>
+                            <p>{{email}}</p>
                         </div>
                     <!--{{#connected}}-->
                     <!--<div class="btn btn-sm btn-default">-->

@@ -6,14 +6,14 @@ app.userController = class UserController{
         this.model = model;
     }
 
-    loadUserHomePage(container){
+    loadUserHomePage(container, urgentTasks, latestPosts){
         var type;
         var _this = this;
         var id = sessionStorage.userId;
         return this.model.getUserById(id)
             .then(function(data){
                 type = data.type;
-                _this.view.showUserHomePage(container, type);
+                _this.view.showUserHomePage(container, type, urgentTasks, latestPosts);
             }, function(error){
                 console.error(error);
             }).done();
@@ -39,7 +39,6 @@ app.userController = class UserController{
 
         return this.model.register(userData)
             .then(function(success){
-                console.log(success);
                 sessionStorage['sessionId'] = success._kmd.authtoken;
                 sessionStorage['username'] = success.username;
                 sessionStorage['userId'] = success._id;
@@ -152,7 +151,6 @@ app.userController = class UserController{
                 Sammy(function(){
                     this.trigger('redirectUrl', {url: "#/"})
                 });
-
             }).done();
     };
 
@@ -181,23 +179,23 @@ app.userController = class UserController{
             }).done();
     };
 
-    addTaskToCollection(taskId){
-        var _this = this;
-        var userId = sessionStorage['userId'];
-        return this.model.getUserById(userId)
-            .then(function(user){
-                user.tasks.push(	{
-                    "_type":"KinveyRef",
-                    "_id":taskId,
-                    "_collection":"tasks"
-                });
-                return _this.model.edit(user, userId)
-                    .then(function(success){
-                    }, function(error){
-                        console.error(error);
-                    });
-            }).done();
-    }
+    //addTaskToCollection(taskId){
+    //    var _this = this;
+    //    var userId = sessionStorage['userId'];
+    //    return this.model.getUserById(userId)
+    //        .then(function(user){
+    //            user.tasks.push(	{
+    //                "_type":"KinveyRef",
+    //                "_id":taskId,
+    //                "_collection":"tasks"
+    //            });
+    //            return _this.model.edit(user, userId)
+    //                .then(function(success){
+    //                }, function(error){
+    //                    console.error(error);
+    //                });
+    //        }).done();
+    //}
 
     //addConnection(newConnectionId){
     //    var _this = this;
