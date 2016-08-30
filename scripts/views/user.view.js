@@ -4,20 +4,20 @@ app.userView = class UserView{
     constructor(){
     }
 
-    showUserHomePage(container, type){
+    showUserHomePage(container, type, urgentTasks, latestPosts){
         this.showUserMenu();
         switch(type){
             case 'student':
                 $.get('templates/home/home-student.html', function(template){
                     var username = sessionStorage['username'];
-                    var rendered = Mustache.render(template, {username: username});
+                    var rendered = Mustache.render(template, {username: username, tasks: urgentTasks, posts: latestPosts});
                     $(container).html(rendered);
                 });
                 break;
             case 'teacher':
                 $.get('templates/home/home-teacher.html', function(template){
                     var username = sessionStorage['username'];
-                    var rendered = Mustache.render(template, {username: username});
+                    var rendered = Mustache.render(template, {username: username, tasks: urgentTasks, posts: latestPosts});
                     $(container).html(rendered);
                 });
                 break;
@@ -92,13 +92,6 @@ app.userView = class UserView{
         $.get('templates/common/students.html', function(template){
             var rendered = Mustache.render(template, {students: students, taskId:taskId});
             $(container).html(rendered);
-
-            $(".connectBtn").click(function(e){
-                var newConnectionId = $(e.target).parent().attr('id');
-                Sammy(function(){
-                    this.trigger('add-connection', {newConnectionId: newConnectionId});
-                });
-            });
 
             $('#addSelectedStudents').click(function(e){
                 var studentIds = $('input:checked')

@@ -20,9 +20,19 @@ app.taskModel = class TaskModel{
     getAllUserTasks(id, type){
         var requestUrl;
         if(type === 'student'){
-            requestUrl = this.serviceUrl + '?query={"students._id":"'+id+'"}&resolve_depth=3';
+            requestUrl = this.serviceUrl + '?query={"students._id":"'+id+'"}&resolve_depth=3&sort=deadline';
         }else if(type === 'teacher'){
-            requestUrl = this.serviceUrl + '?query={"_acl.creator":"'+id+'"}&resolve=submissions';
+            requestUrl = this.serviceUrl + '?query={"_acl.creator":"'+id+'"}&resolve=submissions&sort=deadline';
+        }
+        return this.requester.get(requestUrl, true);
+    }
+
+    getTopUserTasks(id, type){
+        var requestUrl;
+        if(type === 'student'){
+            requestUrl = this.serviceUrl + '?query={"students._id":"'+id+'"}&resolve_depth=3&sort=deadline&limit=5';
+        }else if(type === 'teacher'){
+            requestUrl = this.serviceUrl + '?query={"_acl.creator":"'+id+'"}&resolve=submissions&sort=deadline&limit=5';
         }
         return this.requester.get(requestUrl, true);
     }
@@ -51,4 +61,5 @@ app.taskModel = class TaskModel{
         }
         return this.requester.get(requestUrl, true);
     };
+
 };

@@ -19,7 +19,7 @@ app.taskController = class TaskController{
                 var sorted = data.sort(sortByDate);
                 sorted.forEach(function(task){
                     var deadline = new Date(task.deadline);
-                    //deadline.setHours(23, 59);
+                    deadline.setHours(23, 59);
                     if(deadline.getTime() <= now.getTime()){
                         task["over"] = true;
                     }
@@ -54,10 +54,25 @@ app.taskController = class TaskController{
         function sortByDate(taskA, taskB){
             return taskA.deadline > taskB.deadline;
         }
+    }
 
-        //function sortByProgress(taskA, taskB){
-        //    return taskA.progress > taskB.progress;
-        //}
+    loadTopUserTasks(type){
+        var output = [];
+        var _this = this;
+        var userId = sessionStorage['userId'];
+        return this.model.getTopUserTasks(userId, type)
+            .then(function(tasks){
+                var now = new Date();
+                tasks.forEach(function(task){
+                    var deadline = new Date(task.deadline);
+                    deadline.setHours(23, 59);
+                    if(deadline.getTime() > now.getTime()){
+                        task.deadline = moment(task.deadline).format('LL');
+                        output.push(task);
+                    }
+                });
+                return output;
+            });
     }
 
     loadEditTaskPage(container, id){
@@ -251,9 +266,9 @@ app.taskController = class TaskController{
                     },
                     timeout: 500
                 });
-                Sammy(function(){
-                    this.trigger('redirectUrl', {url: "#/tasks/"});
-                });
+                //Sammy(function(){
+                //    this.trigger('redirectUrl', {url: "#/tasks/"});
+                //});
             }, function(error){
                 noty({
                     layout: 'topLeft',

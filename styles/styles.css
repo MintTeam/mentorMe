@@ -111,8 +111,20 @@ dd, td {
     border-top: 1px solid grey;
 }
 
-.taskElementHome {
-    width: 30%;
+/*.postElement {*/
+    /*background-color: rgba(255, 255, 255, 0.75);*/
+/*}*/
+
+.tasksHome{
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    /*width: 30%;*/
+    padding: 0 20px 0 20px;
+}
+.border-right{
+}
+
+.postsHome{
+    padding: 0 20px 0 20px;
 }
 
 .task-ref{
@@ -144,17 +156,17 @@ dd, td {
     /*z-index:1;*/
 }
 
-.teachersHomeWrap .postElement {
-    width: 67%;
-    margin-right: 3%;
-}
+/*.teachersHomeWrap .postElement {*/
+    /*width: 67%;*/
+    /*margin-right: 3%;*/
+/*}*/
 
-@media (max-width: 768px) {
-    .teachersHomeWrap .postElement.col-xs-12,
-    .taskElementHome.col-xs-12 {
-        width: 100%;
-    }
-}
+/*@media (max-width: 768px) {*/
+    /*.teachersHomeWrap .postElement.col-xs-12,*/
+    /*.taskElementHome.col-xs-12 {*/
+        /*width: 100%;*/
+    /*}*/
+/*}*/
 
 /*.studentIdCard {*/
     /*margin: 20px;*/

@@ -64,6 +64,7 @@ app.taskView = class TaskView{
                     buttons: [
                         {
                             addClass: 'btn btn-primary', text: 'Yes', onClick: function($noty) {
+                                $('#'+id).addClass('animated fadeOut').remove();
                                 Sammy(function(){
                                     this.trigger('delete-task', {id: id});
                                 });

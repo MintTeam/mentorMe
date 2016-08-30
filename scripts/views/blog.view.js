@@ -108,12 +108,15 @@ app.blogView = class BlogView {
         });
     }
 
-    showUserMenu(){
-        Sammy(function(){
+    showUserMenu() {
+        Sammy(function () {
             this.trigger('show-user-menu');
         });
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> e709dc39828d4c0dd3c2d262fcdbfebf0aaab8cc
     clearFormFields(){
         $('input').val('');
         $('textarea').val('');

@@ -15,10 +15,6 @@ app.submissionController = class SubmissionController{
         return this.model.postSubmission(submission);
     }
 
-    loadSubmission(submissionId){
-        //TODO
-    }
-
     saveChangesToSubmission(){
         //TODO
     }
@@ -26,5 +22,4 @@ app.submissionController = class SubmissionController{
     deleteSubmission(){
         //TODO
     }
-
 }
