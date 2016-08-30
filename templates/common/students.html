@@ -19,28 +19,26 @@
             </header>
             <div class="col-md-12 margin-top-20">
                 {{#students}}
-                <div class="well well-sm col-md-12" id="{{_id}}">
-                        <div class="checkbox">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="studentIdCard panel panel-primary" id="{{_id}}">
+                        <!--<div class="checkbox">-->
                         {{#taskId}}
-                            <label>
-                                <input type="checkbox" value="{{_id}}">
-                            </label>
+                        <label>
+                            <input type="checkbox" value="{{_id}}">
+                        </label>
                         {{/taskId}}
-                            <span><strong>{{username}}</strong></span>
-                            <span class="text-left">name:&nbsp;{{firstName}}&nbsp;{{lastName}}</span>
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>{{username}}</strong></h3>
                         </div>
-                    <!--{{#connected}}-->
-                    <!--<div class="btn btn-sm btn-default">-->
-                    <!--<span class="glyphicon glyphicon-ok"></span>-->
-                    <!--Added-->
-                    <!--</div>-->
-                    <!--{{/connected}}-->
-                    <!--{{^connected}}-->
-                    <!--<button class="btn btn-sm btn-primary connectBtn">-->
-                    <!--<span class="glyphicon glyphicon-plus"></span>-->
-                    <!--Connect-->
-                    <!--</button>-->
-                    <!--{{/connected}}-->
+                        <div class="panel-body">
+                            <span class="text-left"><strong>first name:</strong>&nbsp;{{firstName}}</span>
+                            <br>
+                            <span class="text-left"><strong>last name:</strong>&nbsp;{{lastName}}</span>
+                            <span class="text-left"><strong>e-mail:</strong><a href="mailto:#">&nbsp;{{email}}</a></span>
+                        </div>
+
+                        <!--</div>-->
+                    </div>
                 </div>
                 {{/students}}
                 {{^students}}

@@ -15,15 +15,13 @@
                 </p>
             </header>
 
-
-
             <div class="margin-top-20">
 
                 {{#posts}}
 
-                <p>{{date}}</p>
+                <p><span class="glyphicon glyphicon-time"></span> {{date}}</p>
 
-                    <article class="postElement panel panel-default" id="{{_id}}">
+                    <article class="postElement panel panel-primary" id="{{_id}}">
                         <div class="panel-heading">
                             <h4 class="panel-title" id="title">&quot;{{title}}&quot;
                             <i>by {{author}}</i></h4>
@@ -38,10 +36,10 @@
                             <button class="deleteButton btn btn-primary btn-sm">Delete post</button>
                         {{/isAuthor}}
                     </article>
-
                 {{/posts}}
-
-
+                {{^posts}}
+                    <p>No posts created so far, do you want to <a href="#/new-post/">create new post!</a></p>
+                {{/posts}}
             </div>
         </div>
     </div>

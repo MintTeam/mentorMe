@@ -1,8 +1,19 @@
 <div class="col-md-12 col-sx-12 animated fadeIn">
     <div class="row">
         <div class="col-md-8 col-xs-12">
+            <header>
+                <h1><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Create New Post</h1>
 
-            <div class="postElement well well-lg">
+                <div class="row">
+                    <p class="text-right col-md-12">
+                        <button class="text-right btn btn-default" onclick="window.history.back()">
+                            <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
+                        </button>
+                        <a href="#/blog/" class="btn btn-primary">All Posts</a>
+                    </p>
+                </div>
+            </header>
+            <div class="well well-lg">
 
                 <label for="postTitle">Post Title: </label>
                 <input class="form-control" type="text" id="postTitle" size="50">
@@ -10,7 +21,7 @@
                 <label for="postContent">Post Content: </label>
                 <textarea class="form-control" name="postContent" id="postContent" cols="50" rows="10"></textarea>
                 </br>
-                <button class="btn btn-primary" type="button" id="sendPost">Create Post</button>
+                <button class="btn btn-primary" type="button" id="sendPost">Send</button>
 
             </div>
 

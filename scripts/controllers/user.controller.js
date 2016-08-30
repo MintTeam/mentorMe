@@ -34,14 +34,8 @@ app.userController = class UserController{
             username: data.username,
             password: data.password,
             type: data.type,
-            email: data.email,
-            connections: [],
-            //tasks: []
-            //teams: []
+            email: data.email
         };
-        if( type==='student' ){
-            userData.submissions = [];
-        }
 
         return this.model.register(userData)
             .then(function(success){
@@ -187,23 +181,23 @@ app.userController = class UserController{
             }).done();
     };
 
-    addTaskToCollection(taskId){
-        var _this = this;
-        var userId = sessionStorage['userId'];
-        return this.model.getUserById(userId)
-            .then(function(user){
-                user.tasks.push(	{
-                    "_type":"KinveyRef",
-                    "_id":taskId,
-                    "_collection":"tasks"
-                });
-                return _this.model.edit(user, userId)
-                    .then(function(success){
-                    }, function(error){
-                        console.error(error);
-                    });
-            }).done();
-    }
+    // addTaskToCollection(taskId){
+    //     var _this = this;
+    //     var userId = sessionStorage['userId'];
+    //     return this.model.getUserById(userId)
+    //         .then(function(user){
+    //             user.tasks.push(	{
+    //                 "_type":"KinveyRef",
+    //                 "_id":taskId,
+    //                 "_collection":"tasks"
+    //             });
+    //             return _this.model.edit(user, userId)
+    //                 .then(function(success){
+    //                 }, function(error){
+    //                     console.error(error);
+    //                 });
+    //         }).done();
+    // }
 
     //addConnection(newConnectionId){
     //    var _this = this;

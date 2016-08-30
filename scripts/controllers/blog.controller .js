@@ -8,9 +8,9 @@ app.blogController = class BlogController {
 
     loadAllPosts(container) {
         var _this = this;
-
         this.model.getAllPosts()
             .then(function (data) {
+                console.log(data);
                 var posts = [];
                 var collection = Array.prototype.slice.call(data, 0);
                 for(var i = 0; i < collection.length; i++){
@@ -42,6 +42,10 @@ app.blogController = class BlogController {
             }).done();
     }
 
+    loadLatestBlogPosts(){
+        return this.model.getLatestPosts();
+    }
+
     loadCreateNewPostPage(container) {
         this.view.showCreateNewPostPage(container);
     }
@@ -56,6 +60,10 @@ app.blogController = class BlogController {
 
     createNewPost(data) {
         var _this = this;
+        data._acl = {
+            "gr": true,
+            "gw": true
+        };
         return this.model.sendPost(data)
             .then(function (success) {
                 noty({

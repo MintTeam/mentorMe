@@ -119,9 +119,9 @@ app.router = Sammy(function(){
         taskController.saveChangesToTask(data);
     });
 
-    this.bind('add-to-task-collection', function(ev, data){
-        userController.addTaskToCollection(data.id);
-    })
+    // this.bind('add-to-task-collection', function(ev, data){
+    //     userController.addTaskToCollection(data.id);
+    // })
 
     this.bind('create-task', function(ev, data){
         "use strict";

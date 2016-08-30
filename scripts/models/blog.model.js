@@ -7,7 +7,12 @@ app.blogModel = class BlogModel {
     }
 
     getAllPosts() {
-        var requestUrl = this.serviceUrl + "?resolve=author,comments";
+        var requestUrl = this.serviceUrl + "?resolve=author";
+        return this.requester.get(requestUrl, true);
+    }
+
+    getLatestPosts(){
+        var requestUrl = this.serviceUrl + "?resolve=author&sort=_kmd.ect&limit=5";
         return this.requester.get(requestUrl, true);
     }
 
@@ -17,7 +22,7 @@ app.blogModel = class BlogModel {
     }
 
     getPostById(id) {
-        var requestUrl = this.serviceUrl + id + "/?resolve=author,comments";
+        var requestUrl = this.serviceUrl + id + "/?resolve=author";
         return this.requester.get(requestUrl, true);
     }
 
