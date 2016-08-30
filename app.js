@@ -87,7 +87,7 @@ app.router = Sammy(function(){
 
     this.bind('show-guest-menu', function(ev, data){
         homeController.loadGuestMenu();
-    })
+    });
 
     //tasks
     this.get('#/tasks/', function(){
@@ -118,7 +118,7 @@ app.router = Sammy(function(){
 
     this.bind('load-all-students', function(ev, data){
         userController.loadAllStudents(data.selector);
-    })
+    });
 
     this.get("#/edit-task/:id/", function(){
         "use strict";
@@ -230,7 +230,7 @@ app.router = Sammy(function(){
 
     this.bind('delete-post', function (ev, data) {
         blogController.deletePost(data.id);
-    })
+    });
 
 });
 

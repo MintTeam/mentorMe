@@ -181,7 +181,6 @@ app.blogController = class BlogController {
                     timeout: 500
                 });
 
-            }).done()
+            }).done();
     }
-    
 };

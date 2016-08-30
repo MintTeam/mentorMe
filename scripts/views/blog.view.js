@@ -113,14 +113,11 @@ app.blogView = class BlogView {
             this.trigger('show-user-menu');
         });
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> e709dc39828d4c0dd3c2d262fcdbfebf0aaab8cc
     clearFormFields(){
         $('input').val('');
         $('textarea').val('');
         $('select').val('default');
     }
-}
+};
 
