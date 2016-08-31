@@ -75,11 +75,11 @@ app.userView = class UserView{
             });
         });
     }
-
-    showAllStudents(container, students, taskId){
+//taskInfo
+    showAllStudents(container, students, taskInfo){
         this.showUserMenu();
         $.get('templates/common/students.html', function(template){
-            var rendered = Mustache.render(template, {students: students, taskId:taskId});
+            var rendered = Mustache.render(template, {students: students, taskId:taskInfo._id, title: taskInfo.title});
             $(container).html(rendered);
 
             $('#addSelectedStudents').click(function(e){
@@ -89,7 +89,7 @@ app.userView = class UserView{
                     });
 
                 Sammy(function(){
-                    this.trigger('assign-task', {taskId:taskId, studentIds: studentIds});
+                    this.trigger('assign-task', {taskId:taskInfo._id, studentIds: studentIds});
                 })
             })
         });

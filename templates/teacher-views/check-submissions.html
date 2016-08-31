@@ -38,7 +38,7 @@
             <div class="col-md-12 margin-top-20">
                     {{#submissions}}
                     <div class="col-md-4 col-sm-8 col-xs-12">
-                        <div class="panel {{#submission}}panel-success{{/submission}}{{^submission}}panel-info{{/submission}}" data-submission-title="{{submission.title}}" data-submission-content="{{submission.content}}">
+                        <div class="panel {{#submission}}panel-success{{/submission}}{{^submission}}panel-info{{/submission}} submissionInfo" data-submission-title="{{submission.title}}" data-submission-content="{{submission.content}}">
                             <div class="panel-heading"><span class="glyphicon glyphicon-send"></span>
                                 <span class="panel-title">{{username}}</span>
                             </div>
@@ -71,7 +71,7 @@
                     </div>
                     {{/submissions}}
                     {{^submissions}}
-                    <p>No submissions have been sent for this task.</p>
+                    <p class="alert alert-warning">No submissions have been sent for this task.</p>
                     {{/submissions}}
                 </d>
             </div>

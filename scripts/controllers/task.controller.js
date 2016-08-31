@@ -113,6 +113,7 @@ app.taskController = class TaskController{
                     var username = student._obj.username;
                     var firstName = student._obj.firstName;
                     var lastName = student._obj.lastName;
+
                     task.submissions.forEach(function(submission){
                         if(submission._obj.author._id === studentId){
                             studentSubmissionPairs.push({
@@ -123,12 +124,6 @@ app.taskController = class TaskController{
                                     title: submission._obj.title,
                                     content: submission._obj.content
                                 }
-                            });
-                        }else{
-                            studentSubmissionPairs.push({
-                                "username": username,
-                                "firstName": firstName,
-                                "lastName": lastName
                             });
                         }
                     });

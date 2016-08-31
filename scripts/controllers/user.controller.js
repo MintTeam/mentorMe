@@ -145,7 +145,7 @@ app.userController = class UserController{
             }).done();
     };
 
-    loadAllStudents(container, assignees, taskId){
+    loadAllStudents(container, assignees, taskInfo){
         var _this = this;
         var outputStudents = [];
         var currentUserId = sessionStorage['userId'];
@@ -164,7 +164,7 @@ app.userController = class UserController{
                         }
                     }
                 });
-                _this.view.showAllStudents(container, outputStudents, taskId);
+                _this.view.showAllStudents(container, outputStudents, taskInfo);
             }).done();
     };
 

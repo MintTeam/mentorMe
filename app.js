@@ -130,11 +130,11 @@ app.router = Sammy(function(){
     this.get('#/assign-task/:id/', function(){
         var taskId = this.params['id'];
         var assignees;
-        //get all students in task.students
         taskController.loadTaskInfo(taskId, true)
             .then(function(task){
                 assignees = task.students;
-                userController.loadAllStudents(container, assignees, taskId);
+                var taskInfo = {_id : task._id, title: task.title}
+                userController.loadAllStudents(container, assignees, taskInfo);
             })
     });
 

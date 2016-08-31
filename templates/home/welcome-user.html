@@ -8,18 +8,21 @@
                     <span><em>Tasks with approaching deadline</em></span>
                 </header>
                 <div class="margin-top-20">
-                    <div class="list-group">
+                    <ul class="list-group">
                         {{#tasks}}
-                        <button type="button" class="list-group-item">
-                            <div class="col-md-9 text-left">
-                                <h4 class="list-group-item-heading">{{title}}</h4>
-                            </div>
-                            <div class="col-md-3 text-right">
-                                <span class="label label-warning">{{deadline}}</span>
-                            </div>
-                        </button>
+                        <li type="button" class="list-group-item">
+                            <span class="badge">{{deadline}}</span>
+                            <h4 class="list-group-item-heading">{{title}}</h4>
+
+                            <!--<div class="col-md-9 text-left">-->
+                                <!--<h4 class="list-group-item-heading">{{title}}</h4>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-3 text-right">-->
+                                <!--<span class="label label-warning">{{deadline}}</span>-->
+                            <!--</div>-->
+                        </li>
                         {{/tasks}}
-                    </div>
+                    </ul>
                 </div>
             </div>
             <div class="col-md-4 col-xs-12 postsHome border-left">
@@ -28,16 +31,16 @@
                     <span><em>Latest blog posts</em></span>
                 </header>
                 <div class="margin-top-20">
-                    <div class="list-group margin-top-20">
+                    <ul class="list-group margin-top-20">
                         {{#posts}}
-                        <button type="button" class="list-group-item">
+                        <li type="button" class="list-group-item">
                             <span class="badge">{{author._obj.username}}</span>
                             <h5 class="list-group-item-heading">
                                 {{title}}
                             </h5>
-                        </button>
+                        </li>
                         {{/posts}}
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
