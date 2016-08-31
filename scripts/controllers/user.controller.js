@@ -6,17 +6,8 @@ app.userController = class UserController{
         this.model = model;
     }
 
-    loadUserHomePage(container, urgentTasks, latestPosts){
-        var type;
-        var _this = this;
-        var id = sessionStorage.userId;
-        return this.model.getUserById(id)
-            .then(function(data){
-                type = data.type;
-                _this.view.showUserHomePage(container, type, urgentTasks, latestPosts);
-            }, function(error){
-                console.error(error);
-            }).done();
+    loadUserHomePage(container, urgentTasks, latestPosts, isStudent){
+        this.view.showUserHomePage(container, urgentTasks, latestPosts, isStudent);
     };
 
     loadLoginPage(container){

@@ -4,24 +4,13 @@ app.userView = class UserView{
     constructor(){
     }
 
-    showUserHomePage(container, type, urgentTasks, latestPosts){
+    showUserHomePage(container, urgentTasks, latestPosts, isStudent){
         this.showUserMenu();
-        switch(type){
-            case 'student':
-                $.get('templates/home/home-student.html', function(template){
-                    var username = sessionStorage['username'];
-                    var rendered = Mustache.render(template, {username: username, tasks: urgentTasks, posts: latestPosts});
-                    $(container).html(rendered);
-                });
-                break;
-            case 'teacher':
-                $.get('templates/home/home-teacher.html', function(template){
-                    var username = sessionStorage['username'];
-                    var rendered = Mustache.render(template, {username: username, tasks: urgentTasks, posts: latestPosts});
-                    $(container).html(rendered);
-                });
-                break;
-        }
+        $.get('templates/home/welcome-user.html', function(template){
+            var username = sessionStorage['username'];
+            var rendered = Mustache.render(template, {username: username, tasks: urgentTasks, posts: latestPosts, isStudent: isStudent});
+            $(container).html(rendered);
+        });
     }
 
     showLoginPage(container){
@@ -115,6 +104,7 @@ app.userView = class UserView{
     }
 
     showUserMenu(){
+        console.log('called');
         Sammy(function(){
             this.trigger('show-user-menu');
         });

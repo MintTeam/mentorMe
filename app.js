@@ -38,7 +38,11 @@ app.router = Sammy(function(){
                     .then(function(tasks){
                         blogController.loadLatestBlogPosts()
                             .then(function(posts){
-                                userController.loadUserHomePage(container, tasks, posts);
+                                var isStudent = false;
+                                if(type === 'student'){
+                                    isStudent = true;
+                                }
+                                userController.loadUserHomePage(container, tasks, posts, isStudent);
                             }).done();
                     }).done();
             }).done();

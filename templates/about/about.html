@@ -8,6 +8,9 @@
             <p>It is a platform where a teacher can create tasks with title and description, add links to useful resources, set deadline. Teachers can assign the tasks they created
                 to any registered student. Tasks can be editted or deleted before the deadline.</p>
             <p>Students are expected to complete their tasks on or before the deadline. They can use the blog to ask questions about the tasks.</p>
+            {{^userId}}
+            <p><a href="#/login/">Login</a> or <a href="#/register/">register</a> tp try the app.</p>
+            {{/userId}}
         </section>
     </div>
 </div>

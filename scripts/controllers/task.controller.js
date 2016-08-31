@@ -121,13 +121,15 @@ app.taskController = class TaskController{
                             });
                         }else{
                             studentSubmissionPairs.push({
-                                "username": username
+                                "username": username,
+                                "firstName": firstName,
+                                "lastName": lastName
                             });
                         }
                     });
                 })
                 var sortedSubmissionsByUsername = studentSubmissionPairs.sort(function(a,b){
-                   return a.username > b.username;
+                   return a.submission > b.submission;
                 });
 
                 var data = {
