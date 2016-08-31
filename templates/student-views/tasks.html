@@ -37,7 +37,7 @@
             </header>
             <div class="col-md-12 margin-top-20">
                 {{#tasks}}
-                <div class="panel panel-{{^over}}primary{{/over}}{{#over}}default{{/over}} taskElement" id="{{_id}}">
+                <div class="panel panel-{{^over}}info{{/over}}{{#over}}default{{/over}} taskElement" id="{{_id}}">
                     <div class="panel-heading">
                         <h4 class="panel-title col-md-10">
                             <strong>&quot;{{title}}&quot;</strong>
@@ -75,8 +75,9 @@
                         </div>
                         <div class="col-md-6 col-xs-12 text-right submissions margin-top-20">
                             {{#submission}}
-                            <span class="label label-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Submission sent</span>
-                            <a class="btn btn-info btn-xs" type="button" data-toggle="modal" data-target="#submissionPreview"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;Submission details</a>
+                            <span class="label label-success"><span class="glyphicon glyphicon-ok"></span></span>
+                            <a class="btn btn-info btn-xs" type="button" data-toggle="modal" data-target="#submissionPreview">
+                                <span class="glyphicon glyphicon-zoom-in"></span>&nbsp;Details</a>
                             {{/submission}}
                             {{^submission}}
                             <a href="#/create-submission/{{_id}}/" class="btn btn-primary createSubmission {{#over}}disabled{{/over}}">Create Submission</a>

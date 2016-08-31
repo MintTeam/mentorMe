@@ -379,6 +379,7 @@ app.taskView = class TaskView{
 
     showCheckSubmissionsPage(container, data){
         this.showUserMenu();
+        console.log(data);
         $.get('templates/teacher-views/check-submissions.html', function(template){
             var rendered = Mustache.render(template, data);
             $(container).html(rendered);

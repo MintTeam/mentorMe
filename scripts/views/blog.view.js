@@ -10,13 +10,6 @@ app.blogView = class BlogView {
             var rendered = Mustache.render(templ, {posts: posts});
             $(container).html(rendered);
 
-            $('.editButton').on('click', function(e){
-                var id = $(e.target).parent().attr('id');
-                Sammy(function () {
-                    this.trigger('show-edit-post-page', {id:id});
-                });
-            });
-            
             $('.deleteButton').on('click', function (e) {
                 var id = $(e.target).parent().attr('id');
                 console.log(id);
@@ -57,7 +50,7 @@ app.blogView = class BlogView {
     showEditPostPage(container, post){
         this.showUserMenu();
         $.get('templates/blog/edit-post.html', function (templ) {
-            var rendered = Mustache.render(templ, {title: post.title, content: post.content, _id:post._id});
+            var rendered = Mustache.render(templ, {title: post.title, content: post.content, _id : post._id});
             $(container).html(rendered);
 
             $("#savePostChanges").on('click', function (e){

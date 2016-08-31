@@ -17,8 +17,10 @@ app.homeView = class HomeView{
         }else{
             this.showUserMenu();
         }
+        var userId = sessionStorage['userId'];
         $.get("templates/about/about.html", function(template){
-            $(container).html(template);
+            var rendered = Mustache.render(template, {userId: userId})
+            $(container).html(rendered);
         });
     }
 

@@ -116,11 +116,10 @@ dd, td {
 /*}*/
 
 .tasksHome{
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-    /*width: 30%;*/
     padding: 0 20px 0 20px;
 }
-.border-right{
+.border-left{
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .postsHome{
@@ -154,6 +153,10 @@ dd, td {
     -o-transform: scale(1.1);
     position:relative;
     /*z-index:1;*/
+}
+
+.home-footer{
+    line-height: 2em;
 }
 
 .student-checkbox {

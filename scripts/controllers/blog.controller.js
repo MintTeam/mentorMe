@@ -10,7 +10,6 @@ app.blogController = class BlogController {
         var _this = this;
         this.model.getAllPosts()
             .then(function (data) {
-                console.log(data);
                 var posts = [];
                 var collection = Array.prototype.slice.call(data, 0);
                 for(var i = 0; i < collection.length; i++){

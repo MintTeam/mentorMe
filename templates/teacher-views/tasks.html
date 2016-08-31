@@ -51,7 +51,7 @@
                 </header>
                 <div class="col-md-12 margin-top-20">
                     {{#tasks}}
-                        <div class="panel panel-{{^over}}primary{{/over}}{{#over}}default{{/over}} taskElement" id="{{_id}}">
+                        <div class="panel panel-{{^over}}info{{/over}}{{#over}}default{{/over}} taskElement" id="{{_id}}">
                             <div class="panel-heading">
                                 <h4 class="panel-title col-md-10"><strong>&quot;{{title}}&quot;</strong></h4>
                                 <div class="row">
@@ -68,7 +68,7 @@
                                         <h5><span class="glyphicon glyphicon-thumbs-up"></span><strong>&nbsp;Status</strong>&nbsp;</h5>
                                         <div class="progress">
                                             <!--TODO uncomment-->
-                                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"
                                                 style="width:{{progress}}%; min-width: 2em">
                                                 {{progress}}% Submitted
                                             </div>
