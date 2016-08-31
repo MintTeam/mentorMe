@@ -21,15 +21,16 @@
                 {{#students}}
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="studentIdCard panel panel-primary" id="{{_id}}">
-                        <!--<div class="checkbox">-->
-                        {{#taskId}}
-                        <label>
-                            <input type="checkbox" value="{{_id}}">
-                        </label>
-                        {{/taskId}}
+
                         <div class="panel-heading">
-                            <h3 class="panel-title"><strong>{{username}}</strong></h3>
+                            <h3 class="studentHeader panel-title"><strong>{{username}}</strong></h3>
+                                {{#taskId}}
+                                <div class="student-checkbox">
+                                    <input type="checkbox" value="{{_id}}">
+                                </div>
+                                {{/taskId}}
                         </div>
+
                         <div class="panel-body">
                             <span class="text-left"><strong>first name:</strong>&nbsp;{{firstName}}</span>
                             <br>

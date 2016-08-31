@@ -1,7 +1,20 @@
 <div class="col-md-12 col-sx-12 animated fadeIn">
     <div class="row">
         <div class="col-md-8 col-xs-12">
+            <header>
+                <h1><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit Post</h1>
 
+                <div class="row">
+                    <p class="text-right col-md-12">
+                        <button class="text-right btn btn-default" onclick="window.history.back()">
+                            <span class="glyphicon glyphicon-menu-left"></span>&nbsp;Back
+                        </button>
+                        <a href="#/blog/" class="btn btn-primary">All Posts</a>
+                    </p>
+                </div>
+            </header>
+
+            <p>for {{title}}</p>
             <div class="postElement well well-lg" id="{{_id}}">
 
                 <label for="title" >Title: </label>

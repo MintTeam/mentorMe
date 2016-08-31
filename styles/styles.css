@@ -156,6 +156,15 @@ dd, td {
     /*z-index:1;*/
 }
 
+.student-checkbox {
+    display: inline-block;
+    float: right;
+}
+
+.studentHeader {
+    display: inline-block;
+}
+
 /*.teachersHomeWrap .postElement {*/
     /*width: 67%;*/
     /*margin-right: 3%;*/
