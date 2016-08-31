@@ -36,29 +36,44 @@
                 </div>
             </header>
             <div class="col-md-12 margin-top-20">
-                <ul class="no-style-list">
                     {{#submissions}}
-                    <li class="col-md-12">
-                        <div class="well well-lg submissionInfo" data-submission-title="{{submission.title}}" data-submission-content="{{submission.content}}">
-                            <div class="form-group">
-                                <label class="col-sm-3 col-xs-3"><strong>{{username}}</strong></label>
-                                <div class="col-sm-9 col-xs-3">
-                                    {{#submission}}
-                                    <span class="label label-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Submission sent</span>
-                                    <a class="btn btn-info btn-xs" type="button" data-toggle="modal" data-target="#submissionPreview"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;Submission details</a>
-                                    {{/submission}}
-                                    {{^submission}}
-                                    <span class="label label-danger"><span class="glyphicon glyphicon-minus"></span>&nbsp;No submission</span>
-                                    {{/submission}}
+                    <div class="col-md-4 col-sm-8 col-xs-12">
+                        <div class="panel {{#submission}}panel-success{{/submission}}{{^submission}}panel-info{{/submission}}" data-submission-title="{{submission.title}}" data-submission-content="{{submission.content}}">
+                            <div class="panel-heading"><span class="glyphicon glyphicon-send"></span>
+                                <span class="panel-title">{{username}}</span>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <!--<span class="col-md-4">username:</span>-->
+                                        <span class="col-md-12 text-right"><strong>{{username}}</strong></span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <!--<span class="col-md-4">name:</span>-->
+                                        <span class="col-md-12 text-right">{{firstName}}&nbsp;{{lastName}}</span>
+                                    </div>
+                                    <div class="col-md-12 margin-top-20">
+                                        <div class="col-md-12 text-right">
+                                            {{#submission}}
+                                            <span class="label label-success"><span class="glyphicon glyphicon-ok"></span></span>
+                                            <a class="btn btn-info btn-xs" type="button" data-toggle="modal" data-target="#submissionPreview">
+                                                <span class="glyphicon glyphicon-zoom-in"></span>&nbsp;Details
+                                            </a>
+                                            {{/submission}}
+                                            {{^submission}}
+                                            <span class="label label-danger"><span class="glyphicon glyphicon-minus"></span>&nbsp;&nbsp;No Submission</span>
+                                            {{/submission}}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </div>
                     {{/submissions}}
                     {{^submissions}}
-                    <li>No submissions have been sent for this task.</li>
+                    <p>No submissions have been sent for this task.</p>
                     {{/submissions}}
-                </ul>
+                </d>
             </div>
         </div>
     </div>

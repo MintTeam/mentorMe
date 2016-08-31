@@ -145,90 +145,28 @@ app.userController = class UserController{
             }).done();
     };
 
-    getUserType(){
-        var type;
-        var id = sessionStorage['userId'];
-        return this.model.getUserById(id)
-            .then(function(data){
-                type = data.type;
-                return type;
-            });
-    };
-
-    loadAllStudents(container, taskId){
+    loadAllStudents(container, assignees, taskId){
         var _this = this;
-        var students = [];
+        var outputStudents = [];
         var currentUserId = sessionStorage['userId'];
         return this.model.getAllUsers()
             .then(function(users){
                 users.forEach(function(user){
                     if(user.type === 'student' && currentUserId != user._id){
-                        students.push(user);
+                        if(assignees){
+                            if(!assignees.some(function(student){
+                                return student._id === user._id;
+                            })){
+                                outputStudents.push(user);
+                            }
+                        }else{
+                            outputStudents.push(user);
+                        }
                     }
                 });
-                _this.view.showAllStudents(container, students, taskId);
+                _this.view.showAllStudents(container, outputStudents, taskId);
             }).done();
     };
-
-    // addTaskToCollection(taskId){
-    //     var _this = this;
-    //     var userId = sessionStorage['userId'];
-    //     return this.model.getUserById(userId)
-    //         .then(function(user){
-    //             user.tasks.push(	{
-    //                 "_type":"KinveyRef",
-    //                 "_id":taskId,
-    //                 "_collection":"tasks"
-    //             });
-    //             return _this.model.edit(user, userId)
-    //                 .then(function(success){
-    //                 }, function(error){
-    //                     console.error(error);
-    //                 });
-    //         }).done();
-    // }
-
-    //addTaskToCollection(taskId){
-    //    var _this = this;
-    //    var userId = sessionStorage['userId'];
-    //    return this.model.getUserById(userId)
-    //        .then(function(user){
-    //            user.tasks.push(	{
-    //                "_type":"KinveyRef",
-    //                "_id":taskId,
-    //                "_collection":"tasks"
-    //            });
-    //            return _this.model.edit(user, userId)
-    //                .then(function(success){
-    //                }, function(error){
-    //                    console.error(error);
-    //                });
-    //        }).done();
-    //}
-
-
-    //addConnection(newConnectionId){
-    //    var _this = this;
-    //    var userId = sessionStorage['userId'];
-    //    var currentUser = {};
-    //    return this.model.getUserById(userId)
-    //        .then(function(user){
-    //            if(!(_.findWhere(user.connections, {_id: newConnectionId}))){
-    //                user.connections.push({
-    //                    "_type":"KinveyRef",
-    //                    "_id":newConnectionId,
-    //                    "_collection":"user"
-    //                });
-    //            }
-    //            currentUser = user;
-    //        }).then(function() {
-    //            return _this.model.edit(currentUser, userId)
-    //                .then(function(success){
-    //                    //update ui
-    //                    _this.view.updateConnectionDataUI(newConnectionId);
-    //                });
-    //        }).done();
-    //};
 
     loadUserInfo(id) {
         return this.getUserById(id)
@@ -236,28 +174,4 @@ app.userController = class UserController{
                 return user;
             })
     }
-
-
-
-    //loadAllUserConnections(){
-    //    //var _this = this;
-    //    var connections = [];
-    //    var currentUserId = sessionStorage['userId'];
-    //    return this.model.getAllUserConnections(currentUserId)
-    //        .then(function (data){
-    //            data = data.connections;
-    //            console.log(data);
-    //            for(var index in data){
-    //                connections.push({
-    //                    _id: data[index]._obj._id,
-    //                    username: data[index]._obj.username,
-    //                    firstName: data[index]._obj.firstName,
-    //                    lastName: data[index]._obj.lastName
-    //                });
-    //            }
-    //            //this.view.showAllConnections(container, connections);
-    //        }, function(error){
-    //            console.error(error);
-    //        });
-    //};
 }

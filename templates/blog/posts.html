@@ -21,7 +21,7 @@
 
                 <p><span class="glyphicon glyphicon-time"></span> {{date}}</p>
 
-                    <article class="postElement panel panel-primary" id="{{_id}}">
+                    <article class="postElement panel panel-info" id="{{_id}}">
                         <div class="panel-heading">
                             <h4 class="panel-title" id="title">&quot;{{title}}&quot;
                             <i>by {{author}}</i></h4>
@@ -32,7 +32,7 @@
                         </div>
 
                         {{#isAuthor}}
-                            <button class="editButton btn btn-primary btn-sm">Edit</button>
+                            <a href="#/edit-post/{{_id}}/" type="button" class="editButton btn btn-primary btn-sm">Edit</a>
                             <button class="deleteButton btn btn-primary btn-sm">Delete post</button>
                         {{/isAuthor}}
                     </article>

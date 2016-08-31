@@ -20,7 +20,7 @@
             <div class="col-md-12 margin-top-20">
                 {{#students}}
                 <div class="col-md-4 col-sm-6 col-xs-12">
-                    <div class="studentIdCard panel panel-primary" id="{{_id}}">
+                    <div class="studentIdCard panel panel-info" id="{{_id}}">
 
                         <div class="panel-heading">
                             <h3 class="studentHeader panel-title"><strong>{{username}}</strong></h3>
@@ -32,18 +32,26 @@
                         </div>
 
                         <div class="panel-body">
-                            <span class="text-left"><strong>first name:</strong>&nbsp;{{firstName}}</span>
-                            <br>
-                            <span class="text-left"><strong>last name:</strong>&nbsp;{{lastName}}</span>
-                            <span class="text-left"><strong>e-mail:</strong><a href="mailto:#">&nbsp;{{email}}</a></span>
+                            <div class="form-group text-right">
+                                <div class="col-md-12">
+                                    <!--<span class="col-md-4">username:</span>-->
+                                    <span class=""><strong>{{username}}</strong></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <!--<span class="col-md-4">name:</span>-->
+                                    <span class="">{{firstName}}&nbsp;{{lastName}}</span>
+                                </div>
+                                <div class="col-md-12">
+                                    <span class=""><a href="mailto:#">{{email}}</a></span>
+                                </div>
+                            </div>
                         </div>
-
-                        <!--</div>-->
                     </div>
                 </div>
                 {{/students}}
                 {{^students}}
-                <p>No registered students so far.</p>
+                {{#taskId}}<p>Task has been assigned to all registered students.</p>{{/taskId}}
+                {{^taskId}}<p>No registered students.</p>{{/taskId}}
                 {{/students}}
             </div>
         </div>

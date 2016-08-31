@@ -22,10 +22,15 @@ app.taskController = class TaskController{
                     deadline.setHours(23, 59);
                     if(deadline.getTime() <= now.getTime()){
                         task["over"] = true;
+                    }else{
+                        task["over"] = false;
                     }
                     task.deadline = moment(task.deadline).format('LL');
                 });
                 if(type === 'teacher'){
+                    sorted.sort(function(a,b){
+                        return a.over > b.over;
+                    })
                     _this.view.showAllTeacherTasks(container, sorted);
                 }else if(type === 'student'){
                     var studentTasks = [];
@@ -94,8 +99,8 @@ app.taskController = class TaskController{
             }).done();
     }
 
-    loadTaskInfo(id){
-        return this.model.getTaskById(id);
+    loadTaskInfo(id, isDetailed){
+        return this.model.getTaskById(id, isDetailed);
     }
 
     checkSubmissions(container, taskId){
@@ -208,7 +213,6 @@ app.taskController = class TaskController{
 
     assignTask(studentsIds, taskId) {
         var _this = this;
-
         return this.model.getTaskById(taskId)
             .then(function(task){
                 var students = task.students;

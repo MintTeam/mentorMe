@@ -104,7 +104,6 @@ app.userView = class UserView{
     }
 
     showUserMenu(){
-        console.log('called');
         Sammy(function(){
             this.trigger('show-user-menu');
         });

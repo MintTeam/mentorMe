@@ -29,23 +29,18 @@ app.router = Sammy(function(){
         if(!sessionStorage['sessionId']){
             homeController.loadGuestHomePage(container);
         }else{
-            var type;
-            userController.getUserType()
-                .then(function(t){
-                    type = t;
-                }).then(function(success){
-                taskController.loadTopUserTasks(type)
-                    .then(function(tasks){
-                        blogController.loadLatestBlogPosts()
-                            .then(function(posts){
-                                var isStudent = false;
-                                if(type === 'student'){
-                                    isStudent = true;
-                                }
-                                userController.loadUserHomePage(container, tasks, posts, isStudent);
-                            }).done();
-                    }).done();
-            }).done();
+            var type = sessionStorage['userType'];
+            taskController.loadTopUserTasks(type)
+                .then(function(tasks){
+                    blogController.loadLatestBlogPosts()
+                        .then(function(posts){
+                            var isStudent = false;
+                            if(type === 'student'){
+                                isStudent = true;
+                            }
+                            userController.loadUserHomePage(container, tasks, posts, isStudent);
+                        }).done();
+                }).done();
         }
     });
 
@@ -95,29 +90,17 @@ app.router = Sammy(function(){
 
     //tasks
     this.get('#/tasks/', function(){
-        var type;
-        userController.getUserType()
-            .then(function(t){
-                type = t;
-            }).then(function(success){
-                taskController.loadAllUserTasks(container, type);
-        }).done();
+        var type = sessionStorage['userType'];
+        taskController.loadAllUserTasks(container, type)
     });
 
     this.get("#/new-task/", function(){
-        let def = Q.defer();
-        let _this = this;
-        userController.getUserType()
-            .then(function(type){
-                if(type === 'teacher') {
-                    def.resolve(taskController.loadCreateNewTaskPage(container));
-                }else{
-                    _this.redirect('#/tasks/');
-                }
-            }, function(error){
-                def.reject(error);
-            });
-        return def.promise;
+        let type = sessionStorage['userType'];
+        if(type === 'teacher') {
+            taskController.loadCreateNewTaskPage(container);
+        }else{
+            this.redirect('#/tasks/');
+        }
     });
 
     this.bind('load-all-students', function(ev, data){
@@ -133,10 +116,6 @@ app.router = Sammy(function(){
     this.bind('save-changes-to-task', function(ev, data){
         taskController.saveChangesToTask(data);
     });
-    
-    // this.bind('add-to-task-collection', function(ev, data){
-    //     userController.addTaskToCollection(data.id);
-    // })
 
     this.bind('create-task', function(ev, data){
         "use strict";
@@ -150,7 +129,13 @@ app.router = Sammy(function(){
 
     this.get('#/assign-task/:id/', function(){
         var taskId = this.params['id'];
-        userController.loadAllStudents(container, taskId);
+        var assignees;
+        //get all students in task.students
+        taskController.loadTaskInfo(taskId, true)
+            .then(function(task){
+                assignees = task.students;
+                userController.loadAllStudents(container, assignees, taskId);
+            })
     });
 
     this.bind("assign-task", function(ev, data){
@@ -166,12 +151,6 @@ app.router = Sammy(function(){
     this.get('#/students/', function(){
         "use strict";
         userController.loadAllStudents(container);
-    });
-
-    //connections
-    this.bind('add-connection', function(ev, data){
-        "use strict";
-        userController.addConnection(data.newConnectionId);
     });
 
     //submissions
@@ -198,19 +177,7 @@ app.router = Sammy(function(){
             }).done();
     });
 
-
-    //teams
-    //this.get('#/teams/', function(){
-    //    "use strict";
-    //    teamController.loadAllTeams(container);
-    //});
-    //
-    //this.get('#/new-team/', function(){
-    //    "use strict";
-    //    teamController.loadCreateNewTeamPage(container);
-    //});
-
-    //TODO blog
+    //blog
     this.get('#/blog/', function () {
         blogController.loadAllPosts(container);
     });
@@ -223,9 +190,9 @@ app.router = Sammy(function(){
         blogController.createNewPost(data);
     });
 
-    this.bind('show-edit-post-page', function(ev, data){
-        "use strict";
-        blogController.loadEditPostPage(container, data.id);
+    this.get('#/edit-post/:id/', function(){
+        var id = this.params['id'];
+        blogController.loadEditPostPage(container, id);
     });
 
     this.bind('edit-post', function (ev, data) {
