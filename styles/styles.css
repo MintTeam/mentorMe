@@ -158,6 +158,16 @@ dd, td {
 .home-footer{
     line-height: 2em;
 }
+
+.student-checkbox {
+    display: inline-block;
+    float: right;
+}
+
+.studentHeader {
+    display: inline-block;
+}
+
 /*.teachersHomeWrap .postElement {*/
     /*width: 67%;*/
     /*margin-right: 3%;*/
