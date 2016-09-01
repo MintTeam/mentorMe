@@ -93,6 +93,20 @@ app.taskController = class TaskController{
         task = this.updateTaskProgress(task);
         return this.model.editTask(task)
             .then(function(success){
+                noty({
+                    layout: 'topLeft',
+                    theme: "bootstrapTheme",
+                    type: 'success',
+                    text: "Successfully edited your task!",
+                    dismissQueue: true,
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500
+                    },
+                    timeout: 500
+                });
                 Sammy(function(){
                     this.trigger('redirectUrl', {url: "#/tasks/"});
                 });
