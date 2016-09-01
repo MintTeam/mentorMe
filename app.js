@@ -134,7 +134,7 @@ app.router = Sammy(function(){
             .then(function(task){
                 assignees = task.students;
                 var taskInfo = {_id : task._id, title: task.title}
-                userController.loadAllStudents(container, assignees, taskInfo);
+                userController.loadPossibleAssignees(container, assignees, taskInfo);
             })
     });
 

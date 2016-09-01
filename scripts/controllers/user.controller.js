@@ -145,26 +145,35 @@ app.userController = class UserController{
             }).done();
     };
 
-    loadAllStudents(container, assignees, taskInfo){
+    loadPossibleAssignees(container, assignees, taskInfo){
         var _this = this;
         var outputStudents = [];
         var currentUserId = sessionStorage['userId'];
         return this.model.getAllUsers()
             .then(function(users){
                 users.forEach(function(user){
-                    if(user.type === 'student' && currentUserId != user._id){
-                        if(assignees){
-                            if(!assignees.some(function(student){
-                                return student._id === user._id;
-                            })){
-                                outputStudents.push(user);
-                            }
-                        }else{
+                    if(user.type === 'student' && currentUserId != user._id && !assignees.some(function(student){
+                            return student._id === user._id;
+                        })){
                             outputStudents.push(user);
                         }
+                });
+                _this.view.showPossibleAssignees(container, outputStudents, taskInfo);
+            }).done();
+    }
+
+    loadAllStudents(container){
+        var _this = this;
+        var students = [];
+        var currentUserId = sessionStorage['userId'];
+        return this.model.getAllUsers()
+            .then(function(users){
+                users.forEach(function(user){
+                    if(user.type === 'student' && currentUserId != user._id){
+                        students.push(user);
                     }
                 });
-                _this.view.showAllStudents(container, outputStudents, taskInfo);
+                _this.view.showAllStudents(container, students);
             }).done();
     };
 

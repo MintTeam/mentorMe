@@ -76,11 +76,12 @@ app.userView = class UserView{
         });
     }
 //taskInfo
-    showAllStudents(container, students, taskInfo){
+    showPossibleAssignees(container, students, taskInfo){
         this.showUserMenu();
         $.get('templates/common/students.html', function(template){
-            var rendered = Mustache.render(template, {students: students, taskId:taskInfo._id, title: taskInfo.title});
+            var rendered = Mustache.render(template, {students: students, taskId: taskInfo._id, title: taskInfo.title});
             $(container).html(rendered);
+            console.log('assign');
 
             $('#addSelectedStudents').click(function(e){
                 var studentIds = $('input:checked')
@@ -90,8 +91,17 @@ app.userView = class UserView{
 
                 Sammy(function(){
                     this.trigger('assign-task', {taskId:taskInfo._id, studentIds: studentIds});
-                })
+                });
             })
+        });
+    }
+
+    showAllStudents(container, students){
+        this.showUserMenu();
+        $.get('templates/common/students.html', function(template){
+            var rendered = Mustache.render(template, {students: students});
+            $(container).html(rendered);
+            console.log('show st');
         });
     }
 
